@@ -1,0 +1,1114 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>De Casablanca au cochonnet</title>
+<meta name="description" content="Patrick Messonnier et Henri Perez fêtent leurs 60 ans : samedi 15 mai 2027 au Bistro Bull, à Valence. Tournoi, babouches et pétanque party.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700;800;900&family=Cormorant+Garamond:ital,wght@1,600;1,700&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
+<style>
+/* Layout : une invitation de riad au coucher du soleil — bandeaux de zellige, arches mauresques, onglets comme les portes d'un patio */
+:root{
+  --creme:#FBF3E4; --creme-2:#F4E6CC; --carte:#FFFAF1; --filet:#E4D1AE;
+  --encre:#18393F; --encre-douce:#5E6F6B;
+  --zellige:#126169; --zellige-fonce:#0C4349;
+  --fez:#BE3A24; --safran:#EFA23A; --or:#C08A2D; --or-clair:#EBC46E;
+  --rose:#D9487A; --menthe:#2E8B62;
+  --coucher:linear-gradient(180deg,#F8D49F 0%,#F6BE8E 38%,#F3D8B8 72%,#FBF3E4 100%);
+  --f-titre:"Cinzel","Trajan Pro",Georgia,serif;
+  --f-script:"Cormorant Garamond",Georgia,"Times New Roman",serif;
+  --f-corps:"Nunito",system-ui,-apple-system,"Segoe UI",sans-serif;
+  --r:20px;
+  color-scheme:light;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{background:var(--creme);color:var(--encre);font-family:var(--f-corps);font-size:16px;line-height:1.55;overflow-x:hidden}
+#confetti{position:fixed;inset:0;pointer-events:none;z-index:0;width:100%;height:100%}
+header.site,main,footer{position:relative;z-index:1}
+.wrap{max-width:1160px;margin:0 auto;padding-left:max(18px,env(safe-area-inset-left,0px));padding-right:max(18px,env(safe-area-inset-right,0px))}
+h1,h2,h3{font-family:var(--f-titre);line-height:1.08;text-wrap:balance}
+a{color:inherit}
+:focus-visible{outline:3px solid var(--safran);outline-offset:3px}
+.script{font-family:var(--f-script);font-style:italic;font-weight:700}
+
+/* Zellige */
+.zellige{height:30px;background-color:var(--zellige);background-size:30px 30px;border-block:3px solid var(--or)}
+
+/* Navigation à onglets */
+header.site{position:sticky;top:env(safe-area-inset-top,0px);z-index:20;background:rgba(251,243,228,.93);backdrop-filter:blur(10px);border-bottom:1px solid var(--filet)}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:30;background:var(--creme)}
+header.site .wrap{display:flex;align-items:center;justify-content:space-between;gap:14px;min-height:62px}
+.logo{font-family:var(--f-titre);font-weight:800;font-size:1.25rem;color:var(--zellige);text-decoration:none;white-space:nowrap}
+.logo span{color:var(--fez)}
+.onglets{display:flex;gap:4px;overflow-x:auto;scrollbar-width:none;min-width:0}
+.onglets a{flex:none;text-decoration:none;font-weight:800;font-size:.95rem;color:var(--encre-douce);padding:9px 15px;border-radius:999px;border:1px solid transparent;transition:background .2s,color .2s}
+.onglets a:hover{color:var(--fez)}
+.onglets a[aria-current="page"]{background:var(--zellige);color:#FFF6E4;border-color:var(--or)}
+.jours{flex:none;font-family:var(--f-titre);font-weight:800;color:var(--fez);background:var(--carte);border:1px solid var(--or);border-radius:999px;padding:5px 12px;font-size:.9rem}
+@media(max-width:720px){
+  header.site .wrap{flex-wrap:wrap;row-gap:0;padding-block:8px}
+  .onglets{order:3;width:100%;padding-bottom:4px}
+  .onglets a{padding:7px 10px;font-size:.84rem}
+  .onglets .long{display:none}
+}
+
+[hidden]{display:none!important}
+
+/* HÉROS */
+.hero{background:var(--coucher);position:relative;overflow:hidden}
+.hero .wrap{display:grid;grid-template-columns:minmax(0,1.2fr) minmax(0,.8fr);gap:44px;align-items:center;padding-block:46px 56px}
+.hero-txt{min-width:0;display:flex;flex-direction:column;gap:14px}
+.kicker{align-self:flex-start;display:inline-block;padding:7px 16px;border-radius:999px;background:var(--fez);color:#FFF3DF;font-weight:800;letter-spacing:2px;text-transform:uppercase;font-size:.78rem;border:2px solid var(--or-clair)}
+.hotes{font-family:var(--f-titre);font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--zellige-fonce);font-size:clamp(.85rem,1.6vw,1rem)}
+.date-big{font-family:var(--f-titre);font-weight:900;font-size:clamp(4.6rem,15vw,10rem);line-height:.88;letter-spacing:-.01em;
+  background:linear-gradient(90deg,#A86F12,#E9BE5C,#FFF0B8,#D99A2B,#A86F12);background-size:300% 100%;
+  -webkit-background-clip:text;background-clip:text;color:transparent;animation:brille 9s linear infinite;
+  filter:drop-shadow(0 3px 0 rgba(120,70,10,.25))}
+@keyframes brille{to{background-position:300% 0}}
+.hero h1{font-size:clamp(2rem,5vw,3.5rem);font-weight:800;color:var(--zellige)}
+.hero h1 em{font-style:normal;color:var(--fez);display:block}
+.hero .devise{font-family:var(--f-script);font-style:italic;font-weight:700;font-size:clamp(1.35rem,2.6vw,1.75rem);color:var(--fez)}
+.confirmes{align-self:flex-start;display:inline-flex;align-items:baseline;gap:8px;flex-wrap:wrap;padding:8px 18px 8px 10px;border-radius:999px;background:var(--zellige);color:#FFF3DF;font-weight:700;border:2px solid var(--or)}
+.confirmes b{font-family:var(--f-titre);font-weight:900;font-size:1.6rem;line-height:1;color:var(--or-clair);background:var(--zellige-fonce);border-radius:999px;padding:4px 12px}
+.confirmes a{color:var(--or-clair);font-weight:800}
+.chips{display:flex;flex-wrap:wrap;gap:8px;margin-top:4px}
+.chip{padding:8px 15px;border-radius:999px;background:rgba(255,250,241,.85);border:1px solid var(--or);font-weight:700;font-size:.95rem}
+.chip b{color:var(--fez)}
+.cta{display:flex;gap:12px;flex-wrap:wrap;margin-top:8px}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:14px 24px;border-radius:999px;font-weight:800;font-size:1rem;border:0;cursor:pointer;text-decoration:none;transition:transform .2s,box-shadow .2s,background .2s;font-family:var(--f-corps)}
+.btn:hover{transform:translateY(-3px)}
+.btn-main{background:linear-gradient(135deg,var(--fez),#E0662F);color:#FFF6E8;box-shadow:0 10px 26px rgba(190,58,36,.32)}
+.btn-ghost{background:rgba(255,250,241,.7);color:var(--zellige-fonce);border:2px solid var(--zellige)}
+.btn-ghost:hover{background:var(--zellige);color:#FFF6E4}
+
+.countdown{display:flex;gap:10px;flex-wrap:wrap;margin-top:14px}
+.cd{min-width:86px;padding:12px 8px;border-radius:16px;background:var(--zellige);border:2px solid var(--or);text-align:center;color:#FFF3DF}
+.cd .n{font-family:var(--f-titre);font-size:2.2rem;font-weight:800;color:var(--or-clair);line-height:1;font-variant-numeric:tabular-nums}
+.cd .l{font-size:.72rem;text-transform:uppercase;letter-spacing:1.4px;font-weight:800;margin-top:4px;opacity:.9}
+
+.hero-img{justify-self:center;width:min(100%,370px);position:relative}
+.arche{border-radius:999px 999px 18px 18px;overflow:hidden;border:5px solid var(--or);box-shadow:0 0 0 7px var(--carte),0 0 0 8px var(--filet),0 24px 50px rgba(90,50,20,.28);aspect-ratio:3/4;max-width:100%;background:var(--creme-2)}
+.arche img{width:100%;height:100%;object-fit:cover;object-position:center 8%;display:block}
+.lanterne{position:absolute;top:-18px;width:34px;height:64px;transform-origin:50% 0;animation:balance 4s ease-in-out infinite alternate}
+.lanterne.g{left:-26px}.lanterne.d{right:-26px;animation-delay:-2s}
+@keyframes balance{from{transform:rotate(-5deg)}to{transform:rotate(5deg)}}
+.cachet{position:absolute;right:-12px;bottom:26px;width:96px;height:96px;display:grid;place-items:center;text-align:center;color:#FFF3DF;font-family:var(--f-titre);font-weight:900;line-height:.95;background:var(--fez);border:3px solid var(--or-clair);
+  clip-path:polygon(50% 0,63% 13%,82% 10%,84% 30%,100% 42%,90% 58%,96% 78%,76% 82%,67% 100%,50% 90%,33% 100%,24% 82%,4% 78%,10% 58%,0 42%,16% 30%,18% 10%,37% 13%);transform:rotate(-8deg)}
+.cachet b{display:block;font-size:2rem}.cachet span{font-size:.7rem;letter-spacing:.08em}
+
+@media(max-width:860px){
+  .hero .wrap{grid-template-columns:1fr;gap:34px;padding-block:30px 40px;text-align:left}
+  .hero-img{width:min(82%,320px);order:-1}
+}
+
+/* SECTIONS */
+section{padding:72px 0}
+section+section{padding-top:20px}
+.sec-head{text-align:center;margin-bottom:40px;display:flex;flex-direction:column;align-items:center;gap:8px}
+.sec-head .tag{font-family:var(--f-script);font-style:italic;font-weight:700;font-size:1.35rem;color:var(--or)}
+.sec-head h2{font-size:clamp(2rem,4.6vw,3.1rem);color:var(--zellige)}
+.sec-head p{color:var(--encre-douce);max-width:620px}
+.ornement{display:flex;align-items:center;gap:10px;width:200px;color:var(--or)}
+.ornement::before,.ornement::after{content:"";flex:1;height:1px;background:var(--or)}
+.ornement i{width:10px;height:10px;transform:rotate(45deg);border:2px solid var(--or)}
+
+/* Le film */
+.film{display:grid;grid-template-columns:minmax(0,320px) minmax(0,1fr);gap:36px;align-items:center}
+.video-cadre{border-radius:22px;overflow:hidden;border:4px solid var(--or);background:#000;box-shadow:0 18px 40px rgba(60,30,10,.25);max-width:100%}
+.video-cadre video{display:block;width:100%;aspect-ratio:9/16;max-width:100%}
+.film-txt{display:flex;flex-direction:column;gap:16px;min-width:0}
+.bandeau{align-self:flex-start;font-family:var(--f-titre);font-weight:800;letter-spacing:.05em;color:#FFF3DA;background:var(--fez);border:2px solid var(--or-clair);border-radius:8px;padding:8px 16px;font-size:clamp(.95rem,2.2vw,1.25rem)}
+.film-txt p{color:var(--encre-douce);font-size:1.08rem;max-width:56ch}
+.affiches{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
+.affiches button{padding:0;border:2px solid var(--filet);border-radius:14px;overflow:hidden;cursor:zoom-in;background:var(--creme-2);transition:transform .25s,border-color .2s}
+.affiches button:hover{transform:translateY(-4px) rotate(-1deg);border-color:var(--or)}
+.affiches img{display:block;width:100%;aspect-ratio:2/3;object-fit:cover;max-width:100%}
+@media(max-width:760px){.film{grid-template-columns:1fr}.video-cadre{width:min(100%,300px);justify-self:center}}
+
+/* Programme */
+.timeline{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:20px}
+@media(max-width:860px){.timeline{grid-template-columns:1fr}}
+.step{border-radius:var(--r);padding:28px;position:relative;overflow:hidden;background:var(--carte);border:1px solid var(--filet);transition:transform .3s}
+.step:hover{transform:translateY(-6px) rotate(-.5deg)}
+.step::before{content:"";position:absolute;inset:0 0 auto 0;height:7px;background:var(--c)}
+.step .num{position:absolute;right:18px;top:4px;font-family:var(--f-titre);font-size:5.5rem;font-weight:900;opacity:.08}
+.step .ico{width:64px;height:64px;border-radius:18px;display:grid;place-items:center;background:color-mix(in srgb,var(--c) 16%,transparent);margin-bottom:16px}
+.step .ico svg{width:38px;height:38px;stroke:var(--c);fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+.step .time{font-family:var(--f-titre);font-weight:800;color:var(--c);font-size:1.25rem}
+.step h3{font-size:1.5rem;margin:4px 0 10px}
+.step p{color:var(--encre-douce)}
+.s1{--c:var(--zellige)} .s2{--c:var(--menthe)} .s3{--c:var(--fez)}
+.avertissement{text-align:center;color:var(--encre-douce);font-size:.9rem;margin-top:16px}
+
+/* Infos */
+.infos{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:20px}
+@media(max-width:860px){.infos{grid-template-columns:1fr}}
+.info{padding:26px;border-radius:var(--r);background:rgba(255,250,241,.7);border:1px dashed var(--or)}
+.info h3{font-size:1.25rem;margin-bottom:8px;color:var(--fez)}
+.info p{color:var(--encre-douce)}
+.info .btn{margin-top:14px;padding:10px 18px;font-size:.9rem}
+
+/* INVITÉS */
+.stats{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px;margin-bottom:28px}
+@media(max-width:760px){.stats{grid-template-columns:repeat(2,minmax(0,1fr))}}
+.stat{padding:18px 10px;border-radius:18px;background:var(--zellige);border:2px solid var(--or);text-align:center;color:#FFF3DF}
+.stat .n{font-family:var(--f-titre);font-size:2.4rem;font-weight:800;color:var(--or-clair);line-height:1;font-variant-numeric:tabular-nums}
+.stat .l{font-size:.74rem;font-weight:800;text-transform:uppercase;letter-spacing:1.2px;margin-top:6px;opacity:.92}
+
+.heros{display:grid;grid-template-columns:minmax(0,380px) minmax(0,1fr);gap:26px;align-items:center;padding:22px;border-radius:26px;background:linear-gradient(135deg,#FCE7C8,#F7D3B4);border:2px solid var(--or);margin-bottom:30px}
+.duo{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.duo figure{margin:0;display:flex;flex-direction:column;gap:6px;align-items:center}
+.duo img{width:100%;aspect-ratio:4/5;object-fit:cover;object-position:center 10%;border-radius:999px 999px 16px 16px;border:4px solid var(--or);display:block;max-width:100%}
+.duo figcaption{font-family:var(--f-script);font-style:italic;font-weight:700;color:var(--fez);font-size:1.1rem}
+.heros h3{font-size:clamp(1.4rem,3vw,2rem);color:var(--zellige)}
+.heros p{color:var(--encre-douce);margin-top:8px;max-width:58ch}
+.heros .noms{display:flex;flex-wrap:wrap;gap:8px;margin-top:14px}
+.heros .noms button{font:inherit;font-weight:800;border:2px solid var(--fez);background:var(--carte);color:var(--fez);border-radius:999px;padding:7px 14px;cursor:pointer}
+.heros .noms button:hover{background:var(--fez);color:#FFF3DF}
+@media(max-width:760px){.heros{grid-template-columns:1fr;text-align:center}.duo{max-width:360px;margin:0 auto;width:100%}.heros .noms{justify-content:center}}
+
+.toolbar{display:flex;flex-wrap:wrap;gap:12px;align-items:center;justify-content:space-between;margin-bottom:22px}
+.search{flex:1 1 260px;max-width:380px;position:relative}
+.search input{width:100%;padding:13px 18px 13px 46px;border-radius:999px;border:1px solid var(--filet);background:var(--carte);color:var(--encre);font:inherit;font-weight:700;outline:none}
+.search input:focus{border-color:var(--fez)}
+.search svg{position:absolute;left:16px;top:50%;transform:translateY(-50%);width:18px;height:18px;stroke:var(--encre-douce);fill:none;stroke-width:2.5}
+.filters{display:flex;flex-wrap:wrap;gap:8px}
+.f{padding:8px 15px;border-radius:999px;border:1px solid var(--filet);background:var(--carte);color:var(--encre-douce);font:inherit;font-weight:800;font-size:.86rem;cursor:pointer}
+.f:hover{color:var(--encre)}
+.f.on{background:var(--fez);color:#FFF3DF;border-color:var(--fez)}
+.count{color:var(--encre-douce);font-weight:700;margin-bottom:16px}
+.count b{color:var(--encre)}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:18px}
+.card{border-radius:var(--r);background:var(--carte);border:1px solid var(--filet);overflow:hidden;display:flex;flex-direction:column;transition:transform .25s,box-shadow .25s;cursor:pointer;animation:entre .5s both}
+@keyframes entre{from{opacity:.001;transform:translateY(14px)}}
+.card:hover{transform:translateY(-6px);box-shadow:0 18px 36px rgba(80,40,10,.16)}
+.card-top{height:70px;background:var(--grad);position:relative;background-size:cover}
+.card-top::after{content:"";position:absolute;inset:0;background-image:var(--motif);background-size:28px 28px;opacity:.22}
+.av{width:72px;height:72px;display:grid;place-items:center;font-family:var(--f-titre);font-weight:800;font-size:1.4rem;color:#FFF3DF;margin:-38px 0 0 18px;position:relative;z-index:1;background:var(--grad);
+  clip-path:polygon(50% 0,64% 15%,85% 15%,85% 36%,100% 50%,85% 64%,85% 85%,64% 85%,50% 100%,36% 85%,15% 85%,15% 64%,0 50%,15% 36%,15% 15%,36% 15%)}
+.av.photo{background-size:cover;background-position:center 12%}
+.card-body{padding:10px 18px 18px;display:flex;flex-direction:column;flex:1}
+.card h3{font-size:1.2rem}
+.role{font-family:var(--f-script);font-style:italic;font-weight:700;color:var(--fez);font-size:1.1rem}
+.badge{position:absolute;left:12px;top:10px;z-index:1;font-size:.72rem;font-weight:800;padding:4px 10px;border-radius:999px}
+.b-oui{background:#FFF3DF;color:var(--menthe)} .b-peut-etre{background:var(--safran);color:#3A2408} .b-non{background:rgba(0,0,0,.35);color:#fff}
+.b-hote{left:auto;right:12px;background:var(--or-clair);color:#3A2408}
+.mom{display:flex;flex-wrap:wrap;gap:6px;margin:6px 0 10px}
+.mom span{font-size:.74rem;font-weight:800;padding:4px 9px;border-radius:999px;background:var(--creme-2);color:var(--encre)}
+.card p{color:var(--encre-douce);font-size:.93rem;flex:1}
+.card .plus{font-weight:800;color:var(--fez)}
+.card .tenue{color:var(--zellige);font-size:.88rem;font-weight:700;margin-top:4px}
+.card .open{margin-top:12px;font-weight:800;color:var(--zellige);font-size:.9rem}
+.empty{text-align:center;color:var(--encre-douce);padding:36px;display:none}
+
+/* Fenêtre invitation */
+.overlay{position:fixed;inset:0;background:rgba(20,30,30,.62);backdrop-filter:blur(5px);z-index:50;display:none;align-items:center;justify-content:center;padding:16px}
+.overlay.show{display:flex}
+.invite{width:100%;max-width:560px;max-height:92vh;overflow:auto;border-radius:28px;background:var(--carte);border:2px solid var(--or);position:relative;animation:pop .35s cubic-bezier(.2,1.4,.4,1)}
+@keyframes pop{from{transform:scale(.88);opacity:0}}
+.inv-head{padding:32px 30px 28px;background:var(--grad);position:relative;overflow:hidden;color:#FFF6E6}
+.inv-head::after{content:"";position:absolute;inset:0;background-image:var(--motif);background-size:34px 34px;opacity:.18}
+.inv-head>*{position:relative;z-index:1}
+.inv-head small{font-weight:800;letter-spacing:2px;text-transform:uppercase;font-size:.74rem}
+.inv-head h2{font-size:2.1rem;margin-top:6px}
+.inv-head .when{margin-top:10px;font-weight:800}
+.close{position:absolute;top:14px;right:14px;z-index:2;width:40px;height:40px;border-radius:50%;border:0;background:rgba(0,0,0,.28);color:#fff;font-size:1.4rem;cursor:pointer}
+.arc{height:22px;background:radial-gradient(circle at 11px 0,var(--carte) 10px,transparent 11px) 0 0/22px 22px repeat-x;margin-top:-1px}
+.inv-body{padding:8px 30px 30px}
+.inv-body .quote{font-family:var(--f-script);font-style:italic;font-weight:700;font-size:1.5rem;color:var(--fez);margin-bottom:12px;line-height:1.2}
+.inv-body p{color:var(--encre-douce);margin-bottom:14px}
+.mission{border-radius:18px;padding:16px 18px;background:#FCEBD0;border:1px solid var(--or);margin:16px 0;color:var(--encre)}
+.mission b{display:block;color:var(--fez);font-size:.74rem;letter-spacing:1.5px;text-transform:uppercase;margin-bottom:4px}
+.mini{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;margin:16px 0}
+.mini div{text-align:center;padding:12px 6px;border-radius:14px;background:var(--creme-2)}
+.mini strong{display:block;font-family:var(--f-titre);font-size:1.1rem;color:var(--zellige)}
+.mini span{font-size:.8rem;color:var(--encre-douce)}
+.rsvp{display:flex;gap:10px;flex-wrap:wrap;margin-top:8px}
+.rsvp .btn{flex:1;padding:13px 16px;font-size:.95rem}
+.btn-yes{background:var(--zellige);color:#FFF6E4}
+.tools{display:flex;gap:10px;flex-wrap:wrap;margin-top:12px}
+.tools .btn{padding:10px 16px;font-size:.85rem}
+.toast{position:fixed;bottom:calc(24px + env(safe-area-inset-bottom,0px));left:50%;transform:translate(-50%,140px);background:var(--zellige);color:#FFF3DF;border:2px solid var(--or-clair);padding:12px 22px;border-radius:999px;font-weight:800;z-index:60;transition:transform .3s;max-width:calc(100% - 32px)}
+.toast.show{transform:translate(-50%,0)}
+
+/* JE RÉPONDS */
+.rsvp-box{display:grid;grid-template-columns:minmax(0,1.2fr) minmax(0,1fr);gap:40px;align-items:center;padding:44px;border-radius:32px;background:linear-gradient(135deg,#FBE3C4,#F5CDB5 55%,#E9E1C8);border:2px solid var(--or);position:relative;overflow:hidden}
+@media(max-width:860px){.rsvp-box{grid-template-columns:1fr;padding:26px}}
+.rsvp-box h2{font-size:clamp(2rem,4.5vw,3rem);color:var(--zellige)}
+.rsvp-box p{color:var(--encre-douce);margin:14px 0 0}
+.rsvp-box ul{list-style:none;margin:18px 0 26px;display:grid;gap:9px;font-weight:700}
+.rsvp-box li::before{content:"";display:inline-block;width:10px;height:10px;border-radius:2px;background:var(--fez);margin-right:10px;transform:rotate(45deg)}
+.qr-card{justify-self:center;width:min(100%,320px);padding:20px 20px 18px;border-radius:28px;background:#FFFAF1;color:var(--encre);text-align:center;box-shadow:0 22px 50px rgba(80,40,10,.25);border:3px solid var(--or);transform:rotate(2deg);transition:transform .3s}
+.qr-card:hover{transform:rotate(0) scale(1.02)}
+.qr-card canvas{width:100%;height:auto;display:block;border-radius:14px}
+.qr-card .qr-label{font-family:var(--f-titre);font-weight:800;font-size:1.25rem;margin-top:12px;color:var(--zellige)}
+.qr-card .qr-sub{font-size:.85rem;color:var(--encre-douce);font-weight:700}
+.qr-card .qr-dl{margin-top:12px;padding:9px 16px;font-size:.85rem;background:var(--zellige);color:#FFF6E4}
+.qr-empty{aspect-ratio:1;display:grid;place-items:center;border-radius:14px;border:3px dashed var(--filet);color:var(--encre-douce);font-weight:800;padding:20px}
+.etapes{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px;margin-top:26px}
+@media(max-width:760px){.etapes{grid-template-columns:1fr}}
+.etape{padding:20px;border-radius:18px;background:var(--carte);border:1px solid var(--filet)}
+.etape b{font-family:var(--f-titre);color:var(--fez);font-size:1.1rem;display:block;margin-bottom:4px}
+.etape p{color:var(--encre-douce);font-size:.95rem}
+
+/* PHOTOS & VIDÉOS */
+.gal-bar{display:flex;flex-wrap:wrap;gap:12px;justify-content:center;margin-bottom:28px}
+.gal-bar .btn{padding:12px 20px;font-size:.95rem}
+.gallery{columns:4 230px;column-gap:14px}
+.ph{display:inline-block;width:100%;break-inside:avoid;margin:0 0 14px;border-radius:18px;overflow:hidden;position:relative;cursor:zoom-in;background:var(--creme-2);border:2px solid var(--filet);animation:entre .5s both}
+.ph img,.ph video{width:100%;display:block;transition:transform .4s;max-width:100%}
+.ph:hover img{transform:scale(1.05)}
+.ph.vid{cursor:default}
+.ph .dl{position:absolute;right:10px;bottom:10px;width:40px;height:40px;border-radius:50%;border:0;background:rgba(18,57,63,.8);color:#fff;cursor:pointer;display:grid;place-items:center;opacity:0;transition:opacity .2s}
+.ph.vid .dl{bottom:auto;top:10px}
+.ph:hover .dl,.ph .dl:focus{opacity:1}
+@media(hover:none){.ph .dl{opacity:1}}
+.dl svg,.lb-btn svg{width:20px;height:20px;stroke:currentColor;fill:none;stroke-width:2.4;stroke-linecap:round;stroke-linejoin:round}
+.albums{display:grid;gap:40px}
+.album-tete{display:flex;align-items:center;gap:14px;margin-bottom:16px;flex-wrap:wrap}
+.album-tete .num{width:46px;height:46px;flex:none;display:grid;place-items:center;font-family:var(--f-titre);font-weight:900;color:#FFF3DF;background:var(--zellige);clip-path:polygon(50% 0,64% 15%,85% 15%,85% 36%,100% 50%,85% 64%,85% 85%,64% 85%,50% 100%,36% 85%,15% 85%,15% 64%,0 50%,15% 36%,15% 15%,36% 15%)}
+.album-tete h3{font-size:clamp(1.3rem,2.6vw,1.7rem);color:var(--zellige)}
+.album-tete p{color:var(--encre-douce);font-size:.95rem;width:100%;margin-left:60px;margin-top:-8px}
+.album .gal-empty{padding:30px 20px}
+.gal-empty{text-align:center;padding:52px 24px;border-radius:28px;border:2px dashed var(--or);color:var(--encre-douce);background:rgba(255,250,241,.6)}
+.gal-empty h3{font-size:1.6rem;color:var(--zellige);margin-bottom:8px}
+.depot-info{max-width:720px;margin:30px auto 0;padding:22px;border-radius:20px;background:var(--carte);border:1px solid var(--filet);display:grid;gap:8px}
+.depot-info b{color:var(--fez)}
+.lightbox{position:fixed;inset:0;background:rgba(10,24,27,.94);z-index:70;display:none;align-items:center;justify-content:center}
+.lightbox.show{display:flex}
+.lightbox img{max-width:92vw;max-height:84vh;border-radius:14px;border:3px solid var(--or-clair)}
+.lb-btn{position:absolute;width:50px;height:50px;border-radius:50%;border:0;background:rgba(255,255,255,.12);color:#fff;cursor:pointer;display:grid;place-items:center;font-size:1.5rem}
+.lb-btn:hover{background:var(--fez)}
+.lb-prev{left:16px;top:50%;transform:translateY(-50%)} .lb-next{right:16px;top:50%;transform:translateY(-50%)}
+.lb-close{top:calc(16px + env(safe-area-inset-top,0px));right:16px} .lb-dl{top:calc(16px + env(safe-area-inset-top,0px));right:76px}
+.lb-count{position:absolute;bottom:20px;left:50%;transform:translateX(-50%);font-weight:800;color:#E8DCC4}
+
+footer{text-align:center;color:var(--encre-douce)}
+footer .wrap{padding-block:40px 50px}
+footer .script{font-size:1.9rem;color:var(--fez);margin-bottom:6px;display:block}
+
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+</style>
+</head>
+<body>
+
+<canvas id="confetti" aria-hidden="true"></canvas>
+
+<header class="site">
+  <div class="wrap">
+    <a class="logo" href="#invitation">15<span>.</span>05</a>
+    <nav class="onglets" aria-label="Onglets">
+      <a href="#invitation" data-tab="invitation">L'invitation</a>
+      <a href="#invites" data-tab="invites">Les invités</a>
+      <a href="#reponse" data-tab="reponse">Je réponds</a>
+      <a href="#photos" data-tab="photos">Photos<span class="long"> & vidéos</span></a>
+    </nav>
+    <span class="jours" id="jours" title="Jours avant la fête">J-…</span>
+  </div>
+</header>
+
+<main>
+<!-- ================= ONGLET 1 : L'INVITATION ================= -->
+<div class="vue" id="vue-invitation" data-vue="invitation">
+  <div class="hero">
+    <div class="wrap">
+      <div class="hero-txt">
+        <span class="kicker">Save the date</span>
+        <div class="hotes">Patrick Messonnier & Henri Perez</div>
+        <div class="date-big" aria-label="15 mai">15.05</div>
+        <h1>De Casablanca <em>au cochonnet !</em></h1>
+        <p class="devise">60 ans chacun… et toujours le goût du challenge !</p>
+        <p class="confirmes"><b id="nb-confirmes">4</b> participants déjà confirmés · <a href="#invites">voir qui vient</a></p>
+        <div class="chips">
+          <span class="chip"><b>Samedi</b> 15 mai 2027</span>
+          <span class="chip"><b>Bistro Bull</b> · Valence</span>
+          <span class="chip">Tournoi · Babouches · <b>Pétanque party</b></span>
+        </div>
+        <div class="cta">
+          <a href="#reponse" class="btn btn-main">Je réponds</a>
+          <a href="#invites" class="btn btn-ghost">Voir qui vient</a>
+        </div>
+        <div class="countdown" id="countdown" aria-label="Compte à rebours">
+          <div class="cd"><div class="n" id="cd-d">--</div><div class="l">jours</div></div>
+          <div class="cd"><div class="n" id="cd-h">--</div><div class="l">heures</div></div>
+          <div class="cd"><div class="n" id="cd-m">--</div><div class="l">minutes</div></div>
+          <div class="cd"><div class="n" id="cd-s">--</div><div class="l">secondes</div></div>
+        </div>
+      </div>
+      <div class="hero-img">
+        <svg class="lanterne g" viewBox="0 0 34 64" aria-hidden="true"><line x1="17" y1="0" x2="17" y2="12" stroke="#8A5A16" stroke-width="2"/><path d="M10 14h14l4 8v22l-5 8H11l-5-8V22z" fill="#C08A2D"/><path d="M11 22h12v20H11z" fill="#FFD27A"/><path d="M17 22v20M11 32h12" stroke="#8A5A16" stroke-width="1.5"/><path d="M12 52h10l-5 8z" fill="#8A5A16"/></svg>
+        <svg class="lanterne d" viewBox="0 0 34 64" aria-hidden="true"><line x1="17" y1="0" x2="17" y2="12" stroke="#8A5A16" stroke-width="2"/><path d="M10 14h14l4 8v22l-5 8H11l-5-8V22z" fill="#C08A2D"/><path d="M11 22h12v20H11z" fill="#FFD27A"/><path d="M17 22v20M11 32h12" stroke="#8A5A16" stroke-width="1.5"/><path d="M12 52h10l-5 8z" fill="#8A5A16"/></svg>
+        <div class="arche"><img src="media/figurines-duo.jpg" alt="Les figurines de Patrick et Henri en djellaba et fez, une boule de pétanque à la main"></div>
+        <div class="cachet" aria-hidden="true"><div><b>60</b><span>ANS<br>CHACUN</span></div></div>
+      </div>
+    </div>
+  </div>
+  <div class="zellige" aria-hidden="true"></div>
+
+  <section id="film">
+    <div class="wrap">
+      <div class="sec-head">
+        <span class="tag">Le petit film</span>
+        <h2>De Casablanca à Valence</h2>
+        <div class="ornement" aria-hidden="true"><i></i></div>
+      </div>
+      <div class="film">
+        <div class="video-cadre"><video src="media/invitation.mp4" poster="media/invitation-poster.jpg" controls playsinline preload="metadata"></video></div>
+        <div class="film-txt">
+          <span class="bandeau">Tournoi · Babouches · Pétanque party</span>
+          <p>Deux amis du Maroc, passionnés de pétanque et amoureux de la vie, fêtent leurs 60 ans. Nos familles, nos amis et la Soirée des Dames réunis pour faire la fête. Ambiance marocaine… et pourquoi pas un couscous géant ?</p>
+          <div class="affiches" id="affiches">
+            <button type="button" data-src="media/affiche-casablanca.jpg"><img src="media/affiche-casablanca.jpg" alt="Affiche « De Casablanca au cochonnet »" loading="lazy"></button>
+            <button type="button" data-src="media/affiche-60ans.jpg"><img src="media/affiche-60ans.jpg" alt="Affiche « 60 ans, deux amis, deux cœurs »" loading="lazy"></button>
+            <button type="button" data-src="media/affiche-tournoi.jpg"><img src="media/affiche-tournoi.jpg" alt="Affiche « Tournoi, babouches, pétanque party »" loading="lazy"></button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="programme">
+    <div class="wrap">
+      <div class="sec-head">
+        <span class="tag">Le programme</span>
+        <h2>Une journée en trois temps</h2>
+        <p>On commence sur le terrain, on trinque au thé à la menthe, et on finit autour d'un grand couscous.</p>
+      </div>
+      <div class="timeline">
+        <article class="step s1">
+          <span class="num">1</span>
+          <div class="ico"><svg viewBox="0 0 40 40"><circle cx="13" cy="24" r="8"/><path d="M5.5 22c4 2 11 2 15 0M13 16c-2 3-2 13 0 16"/><circle cx="28" cy="20" r="8"/><path d="M20.5 18c4 2 11 2 15 0M28 12c-2 3-2 13 0 16"/><circle cx="21" cy="34" r="2.2"/></svg></div>
+          <div class="time" id="t1">14h00</div>
+          <h3>Le tournoi des babouches</h3>
+          <p>Doublettes tirées au sort, babouches aux pieds pour les plus courageux. Que le meilleur pointeur gagne !</p>
+        </article>
+        <article class="step s2">
+          <span class="num">2</span>
+          <div class="ico"><svg viewBox="0 0 40 40"><path d="M11 18h18l-2 13a4 4 0 0 1-4 3h-6a4 4 0 0 1-4-3z"/><path d="M29 21h3a3 3 0 0 1 0 6h-3.6"/><path d="M15 18c0-4 2-7 5-8 3 1 5 4 5 8"/><path d="M20 10V7"/><path d="M10 37h20"/></svg></div>
+          <div class="time" id="t2">19h00</div>
+          <h3>L'apéro marocain</h3>
+          <p>Thé à la menthe, pâtisseries et remise des trophées. Le temps de retrouver tout le monde, familles et Soirée des Dames.</p>
+        </article>
+        <article class="step s3">
+          <span class="num">3</span>
+          <div class="ico"><svg viewBox="0 0 40 40"><path d="M6 27h28"/><path d="M8 27a12 12 0 0 1 24 0"/><path d="M14 15l6-9 6 9"/><circle cx="20" cy="5" r="1.6"/><path d="M4 31h32l-3 4H7z"/></svg></div>
+          <div class="time" id="t3">20h30</div>
+          <h3>Le couscous géant</h3>
+          <p>Tous à table pour le grand couscous, les discours (courts, promis), le gâteau des 120 ans réunis, et la fête jusqu'au bout de la nuit.</p>
+        </article>
+      </div>
+      <p class="avertissement" id="horaires-note">Horaires indicatifs, confirmés prochainement.</p>
+    </div>
+  </section>
+
+  <section id="infos">
+    <div class="wrap">
+      <div class="sec-head">
+        <span class="tag">Infos pratiques</span>
+        <h2>Tout ce qu'il faut savoir</h2>
+      </div>
+      <div class="infos">
+        <div class="info">
+          <h3>Le lieu</h3>
+          <p id="venue-text">Bistro Bull, à Valence (Drôme).</p>
+          <a class="btn btn-ghost" id="map-link" target="_blank" rel="noopener" hidden>Ouvrir dans Maps</a>
+        </div>
+        <div class="info">
+          <h3>La tenue</h3>
+          <p>Ambiance marocaine : djellaba, fez et babouches vivement encouragés. Prévoyez des chaussures pour jouer, le terrain ne pardonne pas.</p>
+        </div>
+        <div class="info">
+          <h3>Venir et dormir</h3>
+          <p>Valence se rejoint en TGV depuis Paris (gare de Valence TGV) ou par l'A7. Pensez au covoiturage : une liste d'hébergements suivra.</p>
+          <button class="btn btn-ghost" id="ics-main">Ajouter à mon agenda</button>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>
+
+<!-- ================= ONGLET 2 : LES INVITÉS ================= -->
+<div class="vue" id="vue-invites" data-vue="invites" hidden>
+  <section>
+    <div class="wrap">
+      <div class="sec-head">
+        <span class="tag">La liste</span>
+        <h2>Ils seront de la fête</h2>
+        <p>La liste se remplit au fil des réponses au formulaire. Tu n'y es pas encore ? <a href="#reponse" style="color:var(--fez);font-weight:800">Réponds ici</a>.</p>
+      </div>
+      <div class="stats" id="stats"></div>
+      <div class="heros">
+        <div class="duo">
+          <figure><img src="media/figurines-duo.jpg" alt="Patrick et Henri en figurines marocaines"><figcaption>En figurines…</figcaption></figure>
+          <figure><img src="media/photo-terrain.jpg" alt="Patrick et Henri sur un terrain de pétanque"><figcaption>… et en vrai !</figcaption></figure>
+        </div>
+        <div>
+          <span class="role">Les héros du jour</span>
+          <h3>Patrick Messonnier & Henri Perez</h3>
+          <p>Soixante ans chacun, cent vingt à eux deux, et des décennies de parties de pétanque. Leurs compagnes seront bien sûr à leurs côtés. Ouvrez leur carte pour lire leur mot d'accueil.</p>
+          <div class="noms" id="noms-heros"></div>
+        </div>
+      </div>
+      <div class="toolbar">
+        <label class="search">
+          <svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="m20 20-4-4"/></svg>
+          <input id="q" type="search" placeholder="Cherche ton prénom…" autocomplete="off" aria-label="Chercher un invité">
+        </label>
+        <div class="filters" id="filters"></div>
+      </div>
+      <div class="count" id="count"></div>
+      <div class="grid" id="grid"></div>
+      <div class="empty" id="empty">Personne pour l'instant avec ce nom ou ce filtre.</div>
+    </div>
+  </section>
+</div>
+
+<!-- ================= ONGLET 3 : JE RÉPONDS ================= -->
+<div class="vue" id="vue-reponse" data-vue="reponse" hidden>
+  <section>
+    <div class="wrap">
+      <div class="rsvp-box">
+        <div>
+          <span class="kicker">Réponse avant le <span class="js-deadline">15 avril 2027</span></span>
+          <h2 style="margin-top:16px">Tu viens ? Dis-le nous !</h2>
+          <p>Deux minutes suffisent pour nous aider à organiser le tournoi, les tables et le couscous.</p>
+          <ul>
+            <li>Ta présence : oui, peut-être ou non</li>
+            <li>Ton invitation : pour toi seul·e, ou pour toi et ton conjoint·e (c'est indiqué sur ta carte)</li>
+            <li>Les moments où tu seras là : tournoi, apéro, couscous</li>
+            <li>Ta tenue : djellaba prête ou pas encore ?</li>
+            <li>Ta plus belle photo, à envoyer à <b>perez.henri.contact@gmail.com</b></li>
+          </ul>
+          <a class="btn btn-main js-form-link" href="#reponse" target="_blank" rel="noopener">Répondre au formulaire</a>
+        </div>
+        <div class="qr-card">
+          <div id="qr-wrap"><div class="qr-empty">QR code bientôt disponible</div></div>
+          <div class="qr-label">Scanne et réponds</div>
+          <div class="qr-sub">Formulaire de réponse · 15.05</div>
+          <button class="btn qr-dl" id="qr-dl" hidden>Télécharger le QR code</button>
+        </div>
+      </div>
+      <div class="etapes">
+        <div class="etape"><b>1. Scanne le QR code</b><p>Ouvre l'appareil photo de ton téléphone et vise le QR code : le formulaire s'ouvre. Sur ordinateur, clique sur « Répondre au formulaire ».</p></div>
+        <div class="etape"><b>2. Réponds à tout</b><p>Présence, moments, tenue. Ton type d'invitation est déjà coché d'après ta carte : si elle est pour deux, dis-nous si ton conjoint ou ta conjointe vient.</p></div>
+        <div class="etape"><b>3. Envoie ta photo</b><p>Par mail à perez.henri.contact@gmail.com, objet « PHOTO 60 ANS » avec ton prénom. Elle illustrera ta carte dans « Les invités ».</p></div>
+      </div>
+    </div>
+  </section>
+</div>
+
+<!-- ================= ONGLET 4 : PHOTOS & VIDÉOS ================= -->
+<div class="vue" id="vue-photos" data-vue="photos" hidden>
+  <section>
+    <div class="wrap">
+      <div class="sec-head">
+        <span class="tag">Souvenirs</span>
+        <h2>Photos & vidéos</h2>
+        <p>Quatre albums, un par grand moment de la fête. Ils se rempliront après le 15 mai : retrouve-toi, regarde les films et télécharge tes photos une par une ou tout d'un coup.</p>
+      </div>
+      <div class="gal-bar">
+        <button class="btn btn-main" id="dl-all" hidden>Tout télécharger (.zip)</button>
+        <a class="btn btn-ghost" id="upload-link" target="_blank" rel="noopener" hidden>Envoyer mes photos et vidéos</a>
+      </div>
+      <div class="albums" id="albums"></div>
+      <div class="depot-info">
+        <b>Tu as des souvenirs à partager ?</b>
+        <span>Envoie tes photos et petits films par mail à <b>perez.henri.contact@gmail.com</b>, en indiquant l'album dans l'objet (par exemple « SOUVENIRS 60 ANS — Pétanque »). Patrick et Henri les trient avant de les publier ici.</span>
+        <span id="depot-attente">Pour les vidéos lourdes, un lien de dépôt sera ajouté ici.</span>
+      </div>
+    </div>
+  </section>
+</div>
+</main>
+
+<div class="zellige" aria-hidden="true"></div>
+<footer>
+  <div class="wrap">
+    <span class="script">Deux amis, deux cœurs, une même joie de vivre !</span>
+    <p>Samedi 15 mai 2027 · Bistro Bull · Valence</p>
+  </div>
+</footer>
+
+<div class="lightbox" id="lightbox" role="dialog" aria-modal="true" aria-label="Photo agrandie">
+  <img id="lb-img" alt="">
+  <button class="lb-btn lb-prev" id="lb-prev" aria-label="Photo précédente">‹</button>
+  <button class="lb-btn lb-next" id="lb-next" aria-label="Photo suivante">›</button>
+  <button class="lb-btn lb-dl" id="lb-dl" aria-label="Télécharger"><svg viewBox="0 0 24 24"><path d="M12 3v12M7 10l5 5 5-5M5 21h14"/></svg></button>
+  <button class="lb-btn lb-close" id="lb-close" aria-label="Fermer">×</button>
+  <div class="lb-count" id="lb-count"></div>
+</div>
+
+<div class="overlay" id="overlay" role="dialog" aria-modal="true" aria-label="Invitation personnelle">
+  <div class="invite" id="invite"></div>
+</div>
+<div class="toast" id="toast" role="status"></div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcode-generator/1.4.4/qrcode.min.js"></script>
+<script>
+/* ===== CONFIGURATION — à modifier ===== */
+const CONFIG = {
+  host: "Patrick et Henri",
+  venue: "Bistro Bull",
+  city: "Valence",
+  address: "",                 // ex : "12 rue …, 26000 Valence" (affiche le bouton Maps ; l'adresse devient publique)
+  start: "2027-05-15T14:00:00+02:00",
+  startUTC: "20270515T120000Z",
+  endUTC: "20270515T230000Z",
+  dateTexte: "samedi 15 mai 2027",
+  horaires: ["14h00", "19h00", "20h30"],   // tournoi, apéro, couscous
+  horairesProvisoires: true,                 // false quand les horaires sont confirmés
+
+  /* --- Formulaire de réponse (liens affichés par le script Apps Script) --- */
+  deadline: "15 avril 2027",
+  formUrl: "https://docs.google.com/forms/d/e/1FAIpQLSe8FPssBQTnPlVSV5xzJ2NOKEL3VBMaSE-dO3y3qUtQZjEs0Q/viewform",   // lien du formulaire → génère le QR code
+  formPrefill: "",             // lien pré-rempli contenant PRENOM et NOM → pré-remplit chaque carte invité
+
+  /* --- Liste des invités en direct --- */
+  // Lien CSV de l'onglet « Liste publique » publié sur le Web (Fichier > Partager > Publier sur le Web).
+  // Vide : la page utilise la liste REPONSES ci-dessous.
+  guestsCsv: "",
+
+  /* --- Photos & vidéos --- */
+  // Dépôt GitHub qui héberge le site : les fichiers déposés dans le dossier "photos" s'affichent seuls.
+  github: { owner: "perezhenricontact-a11y", repo: "60ANSSIXTIESPMHP", branch: "main", folder: "photos" },
+  uploadUrl: ""                // lien d'un album partagé (Google Photos / Drive) où les invités déposent leurs fichiers
+};
+
+/* Couleurs des cartes : zellige, fez, safran, menthe, bougainvillée, nuit */
+const GRADS = [
+  "linear-gradient(135deg,#126169,#1E8A86)","linear-gradient(135deg,#BE3A24,#E0662F)",
+  "linear-gradient(135deg,#C08A2D,#EFA23A)","linear-gradient(135deg,#2E8B62,#126169)",
+  "linear-gradient(135deg,#D9487A,#BE3A24)","linear-gradient(135deg,#0C4349,#2E8B62)",
+  "linear-gradient(135deg,#EFA23A,#D9487A)"
+];
+
+/* ===== HÔTES — toujours en tête de liste ===== */
+const HOTES = [
+  { first:"Henri", ini:"P", full:"Henri Perez", mot:"Bienvenue à tous ! Soixante ans, ça se fête sur un terrain, une boule à la main et entourés de ceux qu'on aime. Merci d'être là." },
+  { first:"Patrick", ini:"M", full:"Patrick Messonnier", mot:"De Casablanca à Valence, on a fait du chemin ensemble. Ce 15 mai, on le célèbre avec vous : venez jouer, rire et partager le couscous !" }
+];
+
+/* ===== PHOTOS DES INVITÉS (reçues par le formulaire, recadrées en carré, déposées dans le dossier invites/) =====
+   Exemple : "jean-d": "invites/jean-d.jpg"  (la clé = prénom-initiale en minuscules, sans accents) */
+const PORTRAITS = {
+};
+
+/* ===== RÉPONSES AU FORMULAIRE (mise à jour : 30/10/2026) =====
+   Seules ces informations sont publiques : prénom, initiale du nom, réponse, moments, nombre d'accompagnants, tenue.
+   Ne jamais ajouter ici d'e-mail, d'allergie, de nom complet ni de message personnel.
+   [prénom, initiale, réponse "oui" | "peut-etre" | "non", moments "Tournoi, Apéro, Couscous", nb d'accompagnants, tenue] */
+const REPONSES = [
+ ["Henri","P.","oui","Tournoi, Apéro, Couscous",1,"Djellaba prête"],      // + sa compagne
+ ["Patrick","M.","oui","Tournoi, Apéro, Couscous",1,"Djellaba prête"]     // + sa compagne
+];
+
+const slug = s => String(s).normalize("NFD").replace(/[̀-ͯ]/g,"").toLowerCase().replace(/[^a-z0-9]+/g,"-").replace(/^-|-$/g,"");
+const esc = s => String(s ?? "").replace(/[&<>"']/g, c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+const cap = s => s.trim().toLowerCase().replace(/(^|[\s-])\p{L}/gu, m=>m.toUpperCase());
+function statut(v){ v = slug(v); return v.startsWith("oui") ? "oui" : v.startsWith("peut") ? "peut-etre" : v.startsWith("non") ? "non" : ""; }
+function moments(v){
+  const t = slug(v), m = [];
+  if (t.includes("tournoi") || t.includes("petanque")) m.push("Tournoi");
+  if (t.includes("apero") || t.includes("the")) m.push("Apéro");
+  if (t.includes("couscous") || t.includes("diner") || t.includes("soiree")) m.push("Couscous");
+  return m;
+}
+function tenue(v){
+  const t = slug(v);
+  if (!t) return "";
+  if (t.includes("prete") || t.includes("deja")) return "Djellaba prête";
+  if (t.includes("cherche")) return "Cherche sa djellaba";
+  if (t.includes("civil")) return "En civil";
+  return String(v).trim();
+}
+let GUESTS = [];
+function buildGuests(rows){
+  const byId = new Map();
+  rows.forEach(r=>{
+    const first = cap(String(r[0]||"")), ini = String(r[1]||"").trim().charAt(0).toUpperCase();
+    if (!first) return;
+    const st = statut(r[2]);
+    const id = slug(first + " " + ini);
+    const hote = HOTES.find(h => slug(h.first + " " + h.ini) === id);
+    const g = { first, ini, name: first + (ini ? " " + ini + "." : ""), status: st,
+      moments: st==="non" ? [] : moments(r[3]), plus: st==="oui" || st==="peut-etre" ? (parseInt(r[4],10) || 0) : 0,
+      tenue: tenue(r[5]), avec: String(r[6]||"").trim(), id, hote };
+    byId.set(id, g);                        // une personne qui répond deux fois : on garde la dernière réponse
+  });
+  HOTES.forEach(h=>{                        // les hôtes figurent toujours dans la liste
+    const id = slug(h.first + " " + h.ini);
+    if (!byId.has(id)) byId.set(id, { first:h.first, ini:h.ini, name:h.first+" "+h.ini+".", status:"oui", moments:["Tournoi","Apéro","Couscous"], plus:1, tenue:"Djellaba prête", id, hote:h });
+  });
+  GUESTS = [...byId.values()]
+    .sort((a,b)=> (b.hote?1:0)-(a.hote?1:0) || a.first.localeCompare(b.first,"fr"))
+    .map((g,i)=>({ ...g, grad: GRADS[(i*3) % GRADS.length] }));
+}
+buildGuests(REPONSES);
+
+/* ===== Horaires ===== */
+["t1","t2","t3"].forEach((id,i)=>{ const el = document.getElementById(id); if (el && CONFIG.horaires[i]) el.textContent = CONFIG.horaires[i]; });
+document.getElementById("horaires-note").hidden = !CONFIG.horairesProvisoires;
+
+/* ===== Onglets ===== */
+const TABS = ["invitation","invites","reponse","photos"];
+function showTab(name, scroll){
+  if (!TABS.includes(name)) name = "invitation";
+  document.querySelectorAll(".vue").forEach(v => v.hidden = v.dataset.vue !== name);
+  document.querySelectorAll(".onglets a").forEach(a => { if (a.dataset.tab === name) a.setAttribute("aria-current","page"); else a.removeAttribute("aria-current"); });
+  if (scroll) window.scrollTo({ top: 0, behavior: "smooth" });
+}
+function route(scroll){
+  const h = decodeURIComponent(location.hash.slice(1));
+  if (!h || TABS.includes(h)){ closeInvite(true); showTab(h || "invitation", scroll); return; }
+  if (GUESTS.some(g=>g.id===h)){ showTab("invites", false); openInvite(h); return; }
+  showTab("invitation", scroll);
+}
+
+/* ===== Liens vers le formulaire ===== */
+function formLink(g){
+  if (g && CONFIG.formPrefill)
+    return CONFIG.formPrefill.replace("PRENOM", encodeURIComponent(g.first)).replace("NOM", encodeURIComponent(g.ini));
+  return CONFIG.formUrl || (CONFIG.formPrefill ? CONFIG.formPrefill.split("?")[0] : "");
+}
+document.querySelectorAll(".js-deadline").forEach(el=> el.textContent = CONFIG.deadline);
+document.querySelectorAll(".js-form-link").forEach(a=>{
+  const url = formLink();
+  if (url) a.href = url;
+  else { a.removeAttribute("target"); a.onclick = e=>{ e.preventDefault(); toast("Le formulaire arrive très bientôt."); }; }
+});
+
+/* ===== Lieu ===== */
+if (CONFIG.address){
+  document.getElementById("venue-text").textContent = CONFIG.venue + ", " + CONFIG.address + ".";
+  const m = document.getElementById("map-link");
+  m.href = "https://www.google.com/maps/search/?api=1&query=" + encodeURIComponent(CONFIG.venue + " " + CONFIG.address);
+  m.hidden = false;
+}
+
+/* ===== Compte à rebours ===== */
+const target = new Date(CONFIG.start).getTime();
+function tick(){
+  const d = Math.max(0, target - Date.now());
+  const pad = n => String(n).padStart(2,"0");
+  const j = Math.floor(d/864e5);
+  document.getElementById("cd-d").textContent = j;
+  document.getElementById("cd-h").textContent = pad(Math.floor(d/36e5)%24);
+  document.getElementById("cd-m").textContent = pad(Math.floor(d/6e4)%60);
+  document.getElementById("cd-s").textContent = pad(Math.floor(d/1e3)%60);
+  document.getElementById("jours").textContent = d > 0 ? "J-" + (j + (d % 864e5 ? 1 : 0)) : "C'est le jour J !";
+}
+tick(); setInterval(tick,1000);
+
+/* ===== Liste ===== */
+const FILTERS = [["tous","Tous"],["oui","Présents"],["peut-etre","Peut-être"],["non","Absents"]];
+let activeGroup = "tous";
+const fWrap = document.getElementById("filters");
+FILTERS.forEach(([k,label])=>{
+  const b = document.createElement("button");
+  b.className = "f" + (k==="tous" ? " on" : "");
+  b.textContent = label;
+  b.onclick = ()=>{ activeGroup = k; [...fWrap.children].forEach(c=>c.classList.toggle("on", c===b)); render(); };
+  fWrap.appendChild(b);
+});
+document.getElementById("q").addEventListener("input", render);
+
+const LABEL = { "oui":"Présent·e", "peut-etre":"Peut-être", "non":"Absent·e" };
+let MOTIF = "";
+function renderStats(){
+  const oui = GUESTS.filter(g=>g.status==="oui"), plus = oui.reduce((a,g)=>a+g.plus,0);
+  const stats = [[GUESTS.length,"Réponses"],[oui.length,"Présents confirmés"],[plus,"Accompagnants"],[oui.length+plus,"Personnes attendues"]];
+  const nb = oui.length + plus;
+  document.getElementById("nb-confirmes").textContent = nb;
+  document.getElementById("stats").innerHTML = stats.map(([n,l])=>`<div class="stat"><div class="n">${n}</div><div class="l">${l}</div></div>`).join("");
+}
+function renderHeros(){
+  document.getElementById("noms-heros").innerHTML = GUESTS.filter(g=>g.hote)
+    .map(g=>`<button type="button" data-id="${g.id}">Le mot de ${esc(g.first)}</button>`).join("");
+  document.querySelectorAll("#noms-heros button").forEach(b=> b.onclick = ()=> location.hash = b.dataset.id);
+}
+function render(){
+  renderStats(); renderHeros();
+  const q = slug(document.getElementById("q").value);
+  const list = GUESTS.filter(g => (activeGroup==="tous" || g.status===activeGroup) && (!q || g.id.includes(q)));
+  const grid = document.getElementById("grid");
+  grid.innerHTML = list.map((g,i)=>`
+    <article class="card" style="--grad:${g.grad};--motif:${MOTIF};animation-delay:${Math.min(i,20)*30}ms" data-id="${g.id}" tabindex="0" aria-label="Ouvrir la carte de ${esc(g.name)}">
+      <div class="card-top">${g.status ? `<span class="badge b-${g.status}">${LABEL[g.status]}</span>` : ""}${g.hote ? `<span class="badge b-hote">60 ans</span>` : ""}</div>
+      ${PORTRAITS[g.id] ? `<div class="av photo" role="img" aria-label="Photo de ${esc(g.name)}" style="background-image:url('${esc(PORTRAITS[g.id])}')"></div>` : `<div class="av">${esc(g.first[0] + (g.ini || ""))}</div>`}
+      <div class="card-body">
+        <h3>${esc(g.name)}</h3>
+        ${g.hote ? `<span class="role">Héros du jour</span>` : ""}
+        <div class="mom">${g.moments.map(m=>`<span>${m}</span>`).join("")}</div>
+        <p>${g.hote && g.plus===1 ? `<span class="plus">Avec sa compagne</span>` : g.plus===1 && g.avec ? `<span class="plus">Avec ${esc(cap(g.avec))}</span>` : g.plus ? `<span class="plus">+${g.plus} accompagnant${g.plus>1?"s":""}</span>` : g.status==="non" ? "Ne pourra pas venir" : g.hote ? "Organisateur" : "Vient seul·e"}</p>
+        ${g.tenue && g.status!=="non" ? `<div class="tenue">${esc(g.tenue)}</div>` : ""}
+        <span class="open">${g.hote ? "Lire son mot →" : "Voir ma réponse →"}</span>
+      </div>
+    </article>`).join("");
+  document.getElementById("count").innerHTML = `<b>${list.length}</b> invité${list.length>1?"s":""} affiché${list.length>1?"s":""} sur ${GUESTS.length}`;
+  const empty = document.getElementById("empty");
+  empty.textContent = GUESTS.length ? "Personne pour l'instant avec ce nom ou ce filtre." : "Les premières réponses arrivent bientôt.";
+  empty.style.display = list.length ? "none" : "block";
+  grid.querySelectorAll(".card").forEach(c=>{
+    c.onclick = ()=> location.hash = c.dataset.id;
+    c.onkeydown = e=>{ if(e.key==="Enter") location.hash = c.dataset.id; };
+  });
+}
+
+/* Liste en direct depuis l'onglet « Liste publique » (si CONFIG.guestsCsv est renseigné) */
+function parseCSV(t){
+  const rows = []; let row = [], f = "", q = false;
+  for (let i=0;i<t.length;i++){
+    const c = t[i];
+    if (q){ if (c==='"'){ if (t[i+1]==='"'){ f+='"'; i++; } else q = false; } else f += c; }
+    else if (c==='"') q = true;
+    else if (c===","){ row.push(f); f = ""; }
+    else if (c==="\n" || c==="\r"){ if (c==="\r" && t[i+1]==="\n") i++; row.push(f); rows.push(row); row = []; f = ""; }
+    else f += c;
+  }
+  if (f || row.length){ row.push(f); rows.push(row); }
+  return rows;
+}
+if (CONFIG.guestsCsv){
+  fetch(CONFIG.guestsCsv + (CONFIG.guestsCsv.includes("?") ? "&" : "?") + "t=" + Date.now())
+    .then(r=> r.ok ? r.text() : Promise.reject())
+    .then(t=>{ const rows = parseCSV(t).slice(1).filter(r=>r[0]); buildGuests(rows); render(); route(false); })
+    .catch(()=>{});
+}
+
+/* ===== Invitation personnelle ===== */
+const overlay = document.getElementById("overlay");
+const H = CONFIG.horaires;
+function openInvite(id){
+  const g = GUESTS.find(x=>x.id===id);
+  if(!g) return;
+  const box = document.getElementById("invite");
+  box.style.setProperty("--grad", g.grad);
+  box.style.setProperty("--motif", MOTIF);
+  const lieu = CONFIG.venue + " · " + CONFIG.city;
+  let tete, citation, corps;
+  if (g.hote){
+    tete = `<small>Héros du jour · 60 ans</small><h2>${esc(g.hote.full)}</h2>`;
+    citation = esc(g.hote.mot);
+    corps = `<p>Rendez-vous le ${CONFIG.dateTexte} au ${lieu} pour fêter nos 60 ans : tournoi des babouches, apéro marocain et couscous géant.</p>`;
+  } else {
+    tete = `<small>Ta réponse · ${LABEL[g.status] || "Invitation"}</small><h2>${g.status==="non" ? "Dommage, " + esc(g.first) + " !" : "Merci " + esc(g.first) + " !"}</h2>`;
+    citation = g.status==="non" ? "On pensera à toi le 15 mai." : g.status==="peut-etre" ? "On croise les doigts pour que tu puisses venir !" : "Ta place est réservée, on a hâte de te voir sur le terrain.";
+    corps = `<p>Pour nos 60 ans, on se retrouve au ${lieu} : une journée de pétanque, d'amitié et d'ambiance marocaine.</p>` +
+      (g.status!=="non" ? `<div class="mission"><b>Ce que tu nous as dit</b>${g.moments.length ? "Présent·e : " + g.moments.join(", ") + ". " : ""}${g.plus ? "Tu viens avec " + g.plus + " accompagnant" + (g.plus>1?"s":"") + "." : "Tu viens seul·e."}${g.tenue ? " Ta tenue : " + esc(g.tenue).toLowerCase() + "." : ""}</div>` : "");
+  }
+  box.innerHTML = `
+    <button class="close" aria-label="Fermer">×</button>
+    <div class="inv-head">${tete}<div class="when">${CONFIG.dateTexte.replace(/^./,c=>c.toUpperCase())} · ${lieu}</div></div>
+    <div class="arc" aria-hidden="true"></div>
+    <div class="inv-body">
+      <div class="quote">${citation}</div>
+      ${corps}
+      <div class="mini">
+        <div><strong>${H[0]}</strong><span>Tournoi</span></div>
+        <div><strong>${H[1]}</strong><span>Apéro</span></div>
+        <div><strong>${H[2]}</strong><span>Couscous</span></div>
+      </div>
+      ${g.hote ? "" : `<p style="margin-bottom:8px"><b style="color:var(--encre)">Un changement ? Renvoie le formulaire : seule ta dernière réponse compte.</b></p>`}
+      <div class="rsvp">
+        <a class="btn btn-yes" data-r="form" href="${formLink(g.hote ? null : g) || "#reponse"}" target="_blank" rel="noopener">${g.hote ? "Répondre à l'invitation" : "Modifier ma réponse"}</a>
+      </div>
+      <div class="tools">
+        <button class="btn btn-ghost" data-t="copy">Copier ${g.hote ? "ce" : "mon"} lien</button>
+        <button class="btn btn-ghost" data-t="ics">Ajouter à mon agenda</button>
+      </div>
+      <p style="margin-top:18px;font-size:.88rem">À très vite, ${CONFIG.host}</p>
+    </div>`;
+  overlay.classList.add("show");
+  document.body.style.overflow = "hidden";
+  box.querySelector(".close").onclick = ()=>closeInvite();
+  box.querySelector('[data-r="form"]').onclick = e=>{
+    if (!formLink()){ e.preventDefault(); toast("Le formulaire arrive très bientôt."); return; }
+    burst();
+  };
+  box.querySelector('[data-t="copy"]').onclick = ()=>{
+    const url = location.href.split("#")[0] + "#" + id;
+    (navigator.clipboard ? navigator.clipboard.writeText(url) : Promise.reject())
+      .then(()=>toast("Lien copié"))
+      .catch(()=>toast("Ton lien : " + url));
+  };
+  box.querySelector('[data-t="ics"]').onclick = downloadICS;
+  box.querySelector(".close").focus();
+}
+function closeInvite(silent){
+  if (!overlay.classList.contains("show")) return;
+  overlay.classList.remove("show");
+  document.body.style.overflow = "";
+  if (!silent) history.replaceState(null,"",location.pathname + location.search + "#invites");
+}
+overlay.addEventListener("click", e=>{ if(e.target===overlay) closeInvite(); });
+document.addEventListener("keydown", e=>{ if(e.key==="Escape" && overlay.classList.contains("show")) closeInvite(); });
+window.addEventListener("hashchange", ()=> route(true));
+
+/* ===== Fichier agenda ===== */
+function downloadICS(){
+  const loc = CONFIG.venue + ", " + (CONFIG.address || CONFIG.city);
+  const ics = ["BEGIN:VCALENDAR","VERSION:2.0","PRODID:-//anniv-60-ans//FR","BEGIN:VEVENT",
+    "UID:anniv-60-ans-20270515@bistro-bull","DTSTAMP:20261030T120000Z",
+    "DTSTART:"+CONFIG.startUTC,"DTEND:"+CONFIG.endUTC,
+    "SUMMARY:60 ans de Patrick et Henri – De Casablanca au cochonnet",
+    "LOCATION:"+loc.replace(/,/g,"\\,"),
+    "DESCRIPTION:"+H[0]+" tournoi des babouches – "+H[1]+" apéro marocain – "+H[2]+" couscous géant",
+    "END:VEVENT","END:VCALENDAR"].join("\r\n");
+  const a = document.createElement("a");
+  a.href = URL.createObjectURL(new Blob([ics],{type:"text/calendar"}));
+  a.download = "60-ans-patrick-henri.ics";
+  a.click();
+}
+document.getElementById("ics-main").onclick = downloadICS;
+
+/* ===== Toast ===== */
+let tT;
+function toast(msg){
+  const t = document.getElementById("toast");
+  t.textContent = msg; t.classList.add("show");
+  clearTimeout(tT); tT = setTimeout(()=>t.classList.remove("show"), 2600);
+}
+
+/* ===== Zellige (étoile à 8 branches dessinée une fois) ===== */
+function etoile(g,cx,cy,R,r,col){ g.beginPath(); for(let i=0;i<16;i++){ const a=Math.PI/8*i-Math.PI/2, rr=i%2?r:R; g.lineTo(cx+Math.cos(a)*rr, cy+Math.sin(a)*rr); } g.closePath(); g.fillStyle=col; g.fill(); }
+(function(){
+  const c = document.createElement("canvas"), n = 60; c.width = c.height = n; const g = c.getContext("2d");
+  g.fillStyle = "#126169"; g.fillRect(0,0,n,n);
+  etoile(g,n/2,n/2,27,19,"#EBC46E"); etoile(g,n/2,n/2,20,14,"#BE3A24"); etoile(g,n/2,n/2,8,5.5,"#FBF3E4");
+  [[0,0],[n,0],[0,n],[n,n]].forEach(([x,y])=>etoile(g,x,y,12,7,"#FBF3E4"));
+  const url = c.toDataURL();
+  document.querySelectorAll(".zellige").forEach(e=> e.style.backgroundImage = "url("+url+")");
+  const m = document.createElement("canvas"); m.width = m.height = 40; const h = m.getContext("2d");
+  etoile(h,20,20,17,11,"#FFFFFF"); MOTIF = "url(" + m.toDataURL() + ")";
+})();
+
+/* ===== Affiches en grand ===== */
+document.getElementById("affiches").addEventListener("click", e=>{
+  const b = e.target.closest("button[data-src]"); if (!b) return;
+  PHOTOS_TMP = [...document.querySelectorAll("#affiches button")].map(x=>({ src:x.dataset.src, name:x.dataset.src.split("/").pop() }));
+  openLB([...document.querySelectorAll("#affiches button")].indexOf(b), PHOTOS_TMP);
+});
+let PHOTOS_TMP = [];
+
+/* ===== Confettis : étoiles, pétales et rubans aux couleurs du Maroc ===== */
+const cv = document.getElementById("confetti"), ctx = cv.getContext("2d");
+const COLORS = ["#C08A2D","#EBC46E","#BE3A24","#126169","#2E8B62","#D9487A","#EFA23A"];
+const reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
+let W, Hh, parts = [];
+function size(){ W = cv.width = innerWidth; Hh = cv.height = innerHeight; }
+size(); addEventListener("resize", size);
+function make(x, y, burstMode){
+  const a = Math.random()*Math.PI*2, sp = burstMode ? 4+Math.random()*8 : 0;
+  return { x: x ?? Math.random()*W, y: y ?? -20 - Math.random()*Hh,
+    vx: burstMode ? Math.cos(a)*sp : (Math.random()-.5)*.5,
+    vy: burstMode ? Math.sin(a)*sp - 4 : .5+Math.random()*1,
+    s: 5+Math.random()*6, r: Math.random()*6, vr: (Math.random()-.5)*.06,
+    k: Math.random() < .45 ? "etoile" : Math.random() < .6 ? "petale" : "ruban",
+    c: COLORS[Math.floor(Math.random()*COLORS.length)], life: burstMode ? 160 : Infinity };
+}
+function dessine(p){
+  ctx.fillStyle = p.c;
+  if (p.k === "etoile"){ ctx.beginPath(); for(let i=0;i<16;i++){ const a=Math.PI/8*i, rr=i%2?p.s*.45:p.s; ctx.lineTo(Math.cos(a)*rr, Math.sin(a)*rr); } ctx.closePath(); ctx.fill(); }
+  else if (p.k === "petale"){ ctx.beginPath(); ctx.ellipse(0,0,p.s*.55,p.s,0,0,Math.PI*2); ctx.fill(); }
+  else ctx.fillRect(-p.s*.4,-p.s*.9,p.s*.8,p.s*1.8);
+}
+if (!reduce){
+  for (let i=0;i<46;i++) parts.push(make());
+  (function loop(){
+    ctx.clearRect(0,0,W,Hh);
+    parts.forEach(p=>{
+      p.x += p.vx; p.y += p.vy; p.r += p.vr;
+      if (p.life !== Infinity){ p.vy += .18; p.vx *= .985; p.life--; }
+      if (p.life === Infinity && p.y > Hh+20){ p.y = -20; p.x = Math.random()*W; }
+      ctx.save(); ctx.translate(p.x,p.y); ctx.rotate(p.r);
+      ctx.globalAlpha = p.life === Infinity ? .5 : Math.min(1, p.life/60);
+      dessine(p); ctx.restore();
+    });
+    parts = parts.filter(p=>p.life>0);
+    requestAnimationFrame(loop);
+  })();
+}
+function burst(){
+  if (reduce) return;
+  for (let i=0;i<150;i++) parts.push(make(W/2, Hh/2, true));
+}
+
+/* ===== QR code stylisé (généré automatiquement depuis CONFIG.formUrl) ===== */
+function rr(c,x,y,w,h,r){ c.beginPath(); c.moveTo(x+r,y); c.arcTo(x+w,y,x+w,y+h,r); c.arcTo(x+w,y+h,x,y+h,r); c.arcTo(x,y+h,x,y,r); c.arcTo(x,y,x+w,y,r); c.closePath(); }
+function drawQR(url){
+  if (!url || typeof qrcode !== "function") return false;
+  const qr = qrcode(0, "H"); qr.addData(url); qr.make();
+  const n = qr.getModuleCount(), cell = 16, pad = cell*2, size = n*cell + pad*2;
+  const cv = document.createElement("canvas"); cv.width = cv.height = size;
+  const c = cv.getContext("2d");
+  c.fillStyle = "#FFFAF1"; c.fillRect(0,0,size,size);
+  const g = c.createLinearGradient(0,0,size,size);
+  g.addColorStop(0,"#126169"); g.addColorStop(.55,"#0C4349"); g.addColorStop(1,"#BE3A24");
+  const inFinder = (r,k)=> (r<7&&k<7)||(r<7&&k>=n-7)||(r>=n-7&&k<7);
+  const logo = Math.ceil(n*0.22), l0 = Math.floor((n-logo)/2);
+  const inLogo = (r,k)=> r>=l0 && r<l0+logo && k>=l0 && k<l0+logo;
+  c.fillStyle = g;
+  for (let r=0;r<n;r++) for (let k=0;k<n;k++){
+    if (!qr.isDark(r,k) || inFinder(r,k) || inLogo(r,k)) continue;
+    c.beginPath(); c.arc(pad+k*cell+cell/2, pad+r*cell+cell/2, cell*0.44, 0, Math.PI*2); c.fill();
+  }
+  [[0,0],[0,n-7],[n-7,0]].forEach(([r,k])=>{
+    const x = pad+k*cell, y = pad+r*cell;
+    c.fillStyle = g; rr(c,x,y,7*cell,7*cell,cell*2.2); c.fill();
+    c.fillStyle = "#FFFAF1"; rr(c,x+cell,y+cell,5*cell,5*cell,cell*1.6); c.fill();
+    c.fillStyle = "#BE3A24"; rr(c,x+2*cell,y+2*cell,3*cell,3*cell,cell); c.fill();
+  });
+  const lx = pad+l0*cell, ls = logo*cell;
+  c.fillStyle = "#126169"; rr(c,lx+cell*.3,lx+cell*.3,ls-cell*.6,ls-cell*.6,cell*1.6); c.fill();
+  c.fillStyle = "#EBC46E"; c.textAlign = "center"; c.textBaseline = "middle";
+  c.font = `800 ${Math.round(ls*0.28)}px Cinzel, Georgia, serif`;
+  c.fillText("15.05", lx+ls/2, lx+ls/2+2);
+  return cv;
+}
+function initQR(){
+  const cv = drawQR(formLink());
+  if (!cv) return;
+  cv.setAttribute("role","img");
+  cv.setAttribute("aria-label","QR code vers le formulaire de réponse");
+  const wrap = document.getElementById("qr-wrap"); wrap.innerHTML = ""; wrap.appendChild(cv);
+  const b = document.getElementById("qr-dl"); b.hidden = false;
+  b.onclick = ()=>{ const a = document.createElement("a"); a.href = cv.toDataURL("image/png"); a.download = "qr-code-reponse-15-05.png"; a.click(); };
+}
+(document.fonts ? document.fonts.ready : Promise.resolve()).then(initQR);
+
+/* ===== Photos & vidéos ===== */
+const IMG_RE = /\.(jpe?g|png|webp|gif|avif)$/i, VID_RE = /\.(mp4|webm|mov|m4v)$/i;
+let PHOTOS = [], LB_LIST = [], lbIndex = 0;
+
+async function loadPhotos(){
+  const gh = CONFIG.github;
+  const keep = n => IMG_RE.test(n) || VID_RE.test(n);
+  const item = n => ({ src: gh.folder + "/" + n, name: n, video: VID_RE.test(n) });
+  if (gh.owner && gh.repo){
+    try{
+      const r = await fetch(`https://api.github.com/repos/${gh.owner}/${gh.repo}/contents/${gh.folder}?ref=${gh.branch}`);
+      if (r.ok){
+        const items = await r.json();
+        return items.filter(i=>i.type==="file" && keep(i.name))
+          .sort((a,b)=>a.name.localeCompare(b.name,"fr",{numeric:true})).map(i=>item(i.name));
+      }
+    }catch(e){}
+  }
+  try{
+    const r = await fetch(gh.folder + "/photos.json", {cache:"no-store"});
+    if (r.ok){ const list = await r.json(); return list.filter(keep).map(item); }
+  }catch(e){}
+  return [];
+}
+
+async function downloadFile(p){
+  try{
+    const blob = await (await fetch(p.src)).blob();
+    const a = document.createElement("a");
+    a.href = URL.createObjectURL(blob); a.download = p.name; a.click();
+    setTimeout(()=>URL.revokeObjectURL(a.href), 4000);
+  }catch(e){ toast("Téléchargement impossible pour ce fichier."); }
+}
+
+/* Albums : le préfixe du nom de fichier range chaque photo ou vidéo (ex. petanque-01.jpg, soiree-12.mp4) */
+const ALBUMS = [
+  ["petanque", "Événement pétanque", "Tournoi des babouches et pétanque party"],
+  ["visite", "Événement visite", "La balade et les découvertes de la journée"],
+  ["dejeuner", "Événement déjeuner", "Autour de la table, entre amis et en famille"],
+  ["soiree", "Événement soirée inoubliable", "Couscous géant, discours, gâteau et danse jusqu'au bout de la nuit"]
+];
+function albumDe(p){ const n = slug(p.name); const a = ALBUMS.find(([k])=> n.startsWith(k)); return a ? a[0] : "autres"; }
+function renderGallery(){
+  document.getElementById("dl-all").hidden = !PHOTOS.length;
+  const groupes = ALBUMS.map(a=>[...a]);
+  if (PHOTOS.some(p=>albumDe(p)==="autres")) groupes.push(["autres","Autres souvenirs",""]);
+  const box = document.getElementById("albums");
+  box.innerHTML = groupes.map(([k,titre,sous],gi)=>{
+    const liste = PHOTOS.map((p,i)=>({p,i})).filter(x=>albumDe(x.p)===k);
+    const images = liste.filter(x=>!x.p.video);
+    return `<div class="album" data-album="${k}">
+      <div class="album-tete"><span class="num">${gi+1}</span><h3>${titre}</h3>${sous ? `<p>${sous}</p>` : ""}</div>
+      ${liste.length ? `<div class="gallery">${liste.map(({p,i})=> p.video ? `
+        <figure class="ph vid">
+          <video src="${esc(p.src)}" controls playsinline preload="metadata"></video>
+          <button class="dl" data-dl="${i}" aria-label="Télécharger la vidéo"><svg viewBox="0 0 24 24"><path d="M12 3v12M7 10l5 5 5-5M5 21h14"/></svg></button>
+        </figure>` : `
+        <figure class="ph" data-img="${images.findIndex(x=>x.i===i)}">
+          <img src="${esc(p.src)}" alt="${esc(titre)}, photo ${images.findIndex(x=>x.i===i)+1}" loading="lazy">
+          <button class="dl" data-dl="${i}" aria-label="Télécharger la photo"><svg viewBox="0 0 24 24"><path d="M12 3v12M7 10l5 5 5-5M5 21h14"/></svg></button>
+        </figure>`).join("")}</div>`
+      : `<div class="gal-empty"><p>Les photos et vidéos de ce moment seront ajoutées après la fête.</p></div>`}
+    </div>`;
+  }).join("");
+  box.querySelectorAll(".album").forEach(sec=>{
+    const k = sec.dataset.album;
+    const images = PHOTOS.filter(p=>!p.video && albumDe(p)===k);
+    sec.querySelectorAll(".ph").forEach(f=> f.onclick = e=>{
+      const d = e.target.closest("[data-dl]");
+      if (d){ e.stopPropagation(); downloadFile(PHOTOS[+d.dataset.dl]); return; }
+      if (f.dataset.img !== undefined) openLB(+f.dataset.img, images);
+    });
+  });
+}
+
+const lb = document.getElementById("lightbox");
+function openLB(i, list){
+  if (list) LB_LIST = list;
+  if (!LB_LIST.length) return;
+  lbIndex = (i + LB_LIST.length) % LB_LIST.length;
+  document.getElementById("lb-img").src = LB_LIST[lbIndex].src;
+  document.getElementById("lb-count").textContent = `${lbIndex+1} / ${LB_LIST.length}`;
+  lb.classList.add("show"); document.body.style.overflow = "hidden";
+}
+function closeLB(){ lb.classList.remove("show"); document.body.style.overflow = ""; }
+document.getElementById("lb-prev").onclick = ()=>openLB(lbIndex-1);
+document.getElementById("lb-next").onclick = ()=>openLB(lbIndex+1);
+document.getElementById("lb-close").onclick = closeLB;
+document.getElementById("lb-dl").onclick = ()=>downloadFile(LB_LIST[lbIndex]);
+lb.addEventListener("click", e=>{ if(e.target===lb) closeLB(); });
+document.addEventListener("keydown", e=>{
+  if (!lb.classList.contains("show")) return;
+  if (e.key==="Escape") closeLB();
+  if (e.key==="ArrowLeft") openLB(lbIndex-1);
+  if (e.key==="ArrowRight") openLB(lbIndex+1);
+});
+let tx0 = null;
+lb.addEventListener("touchstart", e=> tx0 = e.touches[0].clientX, {passive:true});
+lb.addEventListener("touchend", e=>{
+  if (tx0===null) return; const dx = e.changedTouches[0].clientX - tx0; tx0 = null;
+  if (Math.abs(dx) > 50) openLB(lbIndex + (dx<0 ? 1 : -1));
+});
+
+function loadScript(src){ return new Promise((ok,ko)=>{ const s=document.createElement("script"); s.src=src; s.onload=ok; s.onerror=ko; document.head.appendChild(s); }); }
+document.getElementById("dl-all").onclick = async (ev)=>{
+  const btn = ev.currentTarget, label = btn.textContent;
+  btn.disabled = true;
+  try{
+    if (typeof JSZip === "undefined") await loadScript("https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js");
+    const zip = new JSZip();
+    for (let i=0;i<PHOTOS.length;i++){
+      btn.textContent = `Préparation… ${i+1}/${PHOTOS.length}`;
+      zip.file(PHOTOS[i].name, await (await fetch(PHOTOS[i].src)).blob());
+    }
+    btn.textContent = "Compression…";
+    const blob = await zip.generateAsync({type:"blob"});
+    const a = document.createElement("a"); a.href = URL.createObjectURL(blob); a.download = "photos-60-ans-patrick-henri.zip"; a.click();
+  }catch(e){ toast("Téléchargement impossible, réessaie fichier par fichier."); }
+  btn.textContent = label; btn.disabled = false;
+};
+
+if (CONFIG.uploadUrl){
+  const u = document.getElementById("upload-link"); u.href = CONFIG.uploadUrl; u.hidden = false;
+  document.getElementById("depot-attente").hidden = true;
+}
+
+/* ===== Démarrage ===== */
+render();
+route(false);
+loadPhotos().then(list=>{ PHOTOS = list; renderGallery(); });
+</script>
+</body>
+</html>
