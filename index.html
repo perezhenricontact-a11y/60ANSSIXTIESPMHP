@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>De Casablanca au cochonnet</title>
-<meta name="description" content="Patrick Messonnier et Henri Perez fêtent leurs 60 ans : samedi 15 mai 2027 au Bistro Bull, à Valence. Tournoi, babouches et pétanque party.">
+<meta name="description" content="Patrick Messonnier et Henri Perez fêtent leurs 60 ans : samedi 15 mai 2027 au BistrÔboul', à Saint-Marcel-lès-Valence (Drôme). Tournoi, babouches et pétanque party.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700;800;900&family=Cormorant+Garamond:ital,wght@1,600;1,700&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
@@ -332,7 +332,7 @@ footer .script{font-size:1.9rem;color:var(--fez);margin-bottom:6px;display:block
         <p class="confirmes"><b id="nb-confirmes">4</b> participants déjà confirmés · <a href="#invites">voir qui vient</a></p>
         <div class="chips">
           <span class="chip"><b>Samedi</b> 15 mai 2027</span>
-          <span class="chip"><b>Bistro Bull</b> · Valence</span>
+          <span class="chip"><b>BistrÔboul'</b> · Valence (Drôme)</span>
           <span class="chip">Tournoi · Babouches · <b>Pétanque party</b></span>
         </div>
         <div class="cta">
@@ -433,7 +433,7 @@ footer .script{font-size:1.9rem;color:var(--fez);margin-bottom:6px;display:block
       <div class="infos">
         <div class="info">
           <h3>Le lieu</h3>
-          <p id="venue-text">Bistro Bull, à Valence (Drôme).</p>
+          <p id="venue-text">Ô2b BistrÔboul', 130 allée de Ponsoyes, 26320 Saint-Marcel-lès-Valence.</p>
           <a class="btn btn-ghost" id="map-link" target="_blank" rel="noopener" hidden>Ouvrir dans Maps</a>
         </div>
         <div class="info">
@@ -552,7 +552,7 @@ footer .script{font-size:1.9rem;color:var(--fez);margin-bottom:6px;display:block
 <footer>
   <div class="wrap">
     <span class="script">Deux amis, deux cœurs, une même joie de vivre !</span>
-    <p>Samedi 15 mai 2027 · Bistro Bull · Valence</p>
+    <p>Samedi 15 mai 2027 · Ô2b BistrÔboul' · Saint-Marcel-lès-Valence (Drôme)</p>
     <p style="margin-top:6px">Pour toute information : Henri Perez <a href="tel:+33631042042" style="color:var(--fez);font-weight:800">06 31 04 20 42</a> · Patrick Messonnier (numéro à venir)</p>
   </div>
 </footer>
@@ -576,9 +576,9 @@ footer .script{font-size:1.9rem;color:var(--fez);margin-bottom:6px;display:block
 /* ===== CONFIGURATION — à modifier ===== */
 const CONFIG = {
   host: "Patrick et Henri",
-  venue: "Bistro Bull",
-  city: "Valence",
-  address: "",                 // ex : "12 rue …, 26000 Valence" (affiche le bouton Maps ; l'adresse devient publique)
+  venue: "Ô2b BistrÔboul'",
+  city: "Saint-Marcel-lès-Valence",
+  address: "130 allée de Ponsoyes, 26320 Saint-Marcel-lès-Valence",   // affiche le bouton Maps
   start: "2027-05-15T10:00:00+02:00",
   startUTC: "20270515T080000Z",
   endUTC: "20270515T230000Z",
@@ -713,7 +713,7 @@ document.querySelectorAll(".js-form-link").forEach(a=>{
 
 /* ===== Lieu ===== */
 if (CONFIG.address){
-  document.getElementById("venue-text").textContent = CONFIG.venue + ", " + CONFIG.address + ".";
+  document.getElementById("venue-text").innerHTML = esc(CONFIG.venue) + ", " + esc(CONFIG.address) + ".<br>Établissement de pétanque, juste à côté de Valence (Drôme). Tél. 07 56 43 33 25.";
   const m = document.getElementById("map-link");
   m.href = "https://www.google.com/maps/search/?api=1&query=" + encodeURIComponent(CONFIG.venue + " " + CONFIG.address);
   m.hidden = false;
@@ -826,7 +826,7 @@ function openInvite(id){
   if (g.hote){
     tete = `<small>Héros du jour · 60 ans</small><h2>${esc(g.hote.full)}</h2>`;
     citation = esc(g.hote.mot);
-    corps = `<p>Rendez-vous le ${CONFIG.dateTexte} au ${lieu} pour fêter nos 60 ans : tournoi des babouches, apéro marocain et couscous géant.</p>`;
+    corps = `<p>Rendez-vous le ${CONFIG.dateTexte} au ${lieu} pour fêter nos 60 ans : pétanque ou visite le matin, déjeuner, puis soirée inoubliable.</p>`;
   } else {
     tete = `<small>Ta réponse · ${LABEL[g.status] || "Invitation"}</small><h2>${g.status==="non" ? "Dommage, " + esc(g.first) + " !" : "Merci " + esc(g.first) + " !"}</h2>`;
     citation = g.status==="non" ? "On pensera à toi le 15 mai." : g.status==="peut-etre" ? "On croise les doigts pour que tu puisses venir !" : "Ta place est réservée, on a hâte de te voir sur le terrain.";
