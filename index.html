@@ -299,6 +299,23 @@ footer .wrap{padding-block:40px 50px}
 footer .script{font-size:1.9rem;color:var(--fez);margin-bottom:6px;display:block}
 
 @media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+
+/* ===== Musique de fond ===== */
+.musique{position:fixed;left:16px;bottom:16px;z-index:60;display:inline-flex;align-items:center;gap:8px;
+  padding:10px 16px 10px 12px;border-radius:999px;border:2px solid var(--or);background:var(--zellige);color:var(--creme);
+  font:800 .95rem var(--f-corps);cursor:pointer;box-shadow:0 6px 18px rgba(12,67,73,.35)}
+.musique:hover{background:var(--zellige-fonce)}
+.musique .notes{display:inline-flex;align-items:flex-end;gap:2px;height:16px}
+.musique .notes i{width:3px;height:5px;background:var(--or-clair);border-radius:2px}
+.musique[aria-pressed="true"] .notes i{animation:danse .9s ease-in-out infinite}
+.musique[aria-pressed="true"] .notes i:nth-child(2){animation-delay:.2s}
+.musique[aria-pressed="true"] .notes i:nth-child(3){animation-delay:.4s}
+.musique[aria-pressed="true"] .notes i:nth-child(4){animation-delay:.1s}
+@keyframes danse{0%,100%{height:4px}50%{height:16px}}
+.musique.invite{animation:appel 1.6s ease-in-out infinite}
+@keyframes appel{0%,100%{box-shadow:0 6px 18px rgba(12,67,73,.35)}50%{box-shadow:0 0 0 8px rgba(239,162,58,.35)}}
+@media (prefers-reduced-motion:reduce){.musique .notes i,.musique.invite{animation:none!important}}
+@media print{.musique{display:none}}
 </style>
 </head>
 <body>
@@ -318,6 +335,11 @@ footer .script{font-size:1.9rem;color:var(--fez);margin-bottom:6px;display:block
     <span class="jours" id="jours" title="Jours avant la fête">J-…</span>
   </div>
 </header>
+
+<audio id="musique-fond" src="media/musique-orientale.mp3" loop preload="auto"></audio>
+<button class="musique" id="musique-btn" type="button" aria-pressed="false" title="Musique de fond">
+  <span class="notes" aria-hidden="true"><i></i><i></i><i></i><i></i></span><span id="musique-txt">Musique</span>
+</button>
 
 <div class="arcades" aria-hidden="true"></div>
 <main>
@@ -1161,6 +1183,29 @@ if (CONFIG.uploadUrl){
 render();
 route(false);
 loadPhotos().then(list=>{ PHOTOS = list; renderGallery(); });
+
+/* ===== Musique de fond (démarre dès que le navigateur l'autorise, coupable à tout moment) ===== */
+(function(){
+  const audio = document.getElementById("musique-fond"), btn = document.getElementById("musique-btn"), txt = document.getElementById("musique-txt");
+  const VOLUME = 0.4; let voulue = true, pauseVideo = false;
+  try { voulue = localStorage.getItem("musique") !== "off"; } catch(e) {}
+  function afficher(){ const on = !audio.paused; btn.setAttribute("aria-pressed", on); txt.textContent = on ? "Couper la musique" : "Musique"; btn.classList.toggle("invite", !on && voulue); }
+  function fondu(cible, fin){ const pas = (cible - audio.volume) / 20; let k = 0;
+    const id = setInterval(()=>{ k++; audio.volume = Math.min(1, Math.max(0, audio.volume + pas)); if (k >= 20){ clearInterval(id); fin && fin(); } }, 40); }
+  function jouer(){ audio.volume = 0; return audio.play().then(()=>{ fondu(VOLUME); afficher(); }); }
+  function arreter(){ fondu(0, ()=>{ audio.pause(); afficher(); }); }
+  function memoriser(v){ voulue = v; try { localStorage.setItem("musique", v ? "on" : "off"); } catch(e) {} }
+  btn.addEventListener("click", e=>{ e.stopPropagation(); if (audio.paused){ memoriser(true); jouer().catch(()=>{}); } else { memoriser(false); arreter(); } });
+  /* Les navigateurs bloquent le son automatique : on démarre au premier geste du visiteur */
+  function premierGeste(){ ["pointerdown","keydown","touchend"].forEach(t=>document.removeEventListener(t, premierGeste, true));
+    if (voulue && audio.paused && !pauseVideo) jouer().catch(()=>{}); }
+  if (voulue) jouer().catch(()=>{ ["pointerdown","keydown","touchend"].forEach(t=>document.addEventListener(t, premierGeste, true)); });
+  /* Pendant une vidéo, la musique se tait, puis reprend */
+  document.addEventListener("play", e=>{ if (e.target.tagName === "VIDEO" && !audio.paused){ pauseVideo = true; arreter(); } }, true);
+  ["pause","ended"].forEach(t=>document.addEventListener(t, e=>{ if (e.target.tagName === "VIDEO" && pauseVideo){ pauseVideo = false; if (voulue) jouer().catch(()=>{}); } }, true));
+  document.addEventListener("visibilitychange", ()=>{ if (document.hidden && !audio.paused){ audio.pause(); audio.dataset.repr = "1"; } else if (!document.hidden && audio.dataset.repr){ delete audio.dataset.repr; if (voulue && !pauseVideo) jouer().catch(()=>{}); } });
+  afficher();
+})();
 </script>
 </body>
 </html>
