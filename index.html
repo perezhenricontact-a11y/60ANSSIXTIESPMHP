@@ -36,6 +36,7 @@ a{color:inherit}
 
 /* Zellige */
 .zellige{height:30px;background-color:var(--zellige);background-size:30px 30px;border-block:3px solid var(--or)}
+.arcades{position:relative;z-index:1;height:66px;background-color:var(--zellige);background-repeat:repeat-x;background-size:92px 66px;border-bottom:4px solid var(--or);box-shadow:0 6px 14px rgba(80,40,10,.18)}
 
 /* Navigation à onglets */
 header.site{position:sticky;top:env(safe-area-inset-top,0px);z-index:20;background:rgba(251,243,228,.93);backdrop-filter:blur(10px);border-bottom:1px solid var(--filet)}
@@ -318,6 +319,7 @@ footer .script{font-size:1.9rem;color:var(--fez);margin-bottom:6px;display:block
   </div>
 </header>
 
+<div class="arcades" aria-hidden="true"></div>
 <main>
 <!-- ================= ONGLET 1 : L'INVITATION ================= -->
 <div class="vue" id="vue-invitation" data-vue="invitation">
@@ -383,7 +385,7 @@ footer .script{font-size:1.9rem;color:var(--fez);margin-bottom:6px;display:block
 
 <!-- ================= ONGLET : PROGRAMME ================= -->
 <div class="vue" id="vue-programme" data-vue="programme" hidden>
-  <section id="programme">
+  <section id="le-programme">
     <div class="wrap">
       <div class="sec-head">
         <span class="tag">Le programme</span>
@@ -915,6 +917,22 @@ function etoile(g,cx,cy,R,r,col){ g.beginPath(); for(let i=0;i<16;i++){ const a=
   [[0,0],[n,0],[0,n],[n,n]].forEach(([x,y])=>etoile(g,x,y,12,7,"#FBF3E4"));
   const url = c.toDataURL();
   document.querySelectorAll(".zellige").forEach(e=> e.style.backgroundImage = "url("+url+")");
+  /* Arcades mauresques avec lanternes */
+  const A = document.createElement("canvas"), aw = 184, ah = 132; A.width = aw; A.height = ah; const x = A.getContext("2d");
+  x.fillStyle = "#126169"; x.fillRect(0,0,aw,ah);
+  for (let k=0;k<5;k++) etoile(x, k*46, 12, 9, 6, k%2 ? "#EBC46E" : "#BE3A24");
+  const cx = aw/2, top = 40, R = 58, bas = ah;
+  const grad = x.createLinearGradient(0,top-R,0,bas); grad.addColorStop(0,"#F8D49F"); grad.addColorStop(.55,"#F6BE8E"); grad.addColorStop(1,"#FBF3E4");
+  x.beginPath(); x.moveTo(cx-R, bas); x.lineTo(cx-R, top+20);
+  x.arc(cx, top+20, R, Math.PI, 0); x.lineTo(cx+R, bas); x.closePath();
+  x.fillStyle = grad; x.fill(); x.lineWidth = 6; x.strokeStyle = "#C08A2D"; x.stroke();
+  for (let i=1;i<8;i++){ const ang = Math.PI + Math.PI*i/8; x.beginPath(); x.arc(cx+Math.cos(ang)*R, top+20+Math.sin(ang)*R, 9, 0, Math.PI*2); x.fillStyle = "#126169"; x.fill(); }
+  x.beginPath(); x.moveTo(cx, top-36); x.lineTo(cx, top+18); x.strokeStyle = "#8A5A16"; x.lineWidth = 3; x.stroke();
+  x.beginPath(); x.moveTo(cx-10,top+20); x.lineTo(cx+10,top+20); x.lineTo(cx+16,top+32); x.lineTo(cx+16,top+56); x.lineTo(cx+9,top+66); x.lineTo(cx-9,top+66); x.lineTo(cx-16,top+56); x.lineTo(cx-16,top+32); x.closePath();
+  x.fillStyle = "#C08A2D"; x.fill(); x.fillStyle = "#FFD27A"; x.fillRect(cx-9, top+32, 18, 24);
+  x.fillStyle = "#8A5A16"; x.fillRect(cx-1, top+32, 2, 24); x.fillRect(cx-9, top+43, 18, 2);
+  const arcs = A.toDataURL();
+  document.querySelectorAll(".arcades").forEach(e=> e.style.backgroundImage = "url("+arcs+")");
   const m = document.createElement("canvas"); m.width = m.height = 40; const h = m.getContext("2d");
   etoile(h,20,20,17,11,"#FFFFFF"); MOTIF = "url(" + m.toDataURL() + ")";
 })();
