@@ -132,7 +132,8 @@ section+section{padding-top:20px}
 @media(max-width:760px){.film{grid-template-columns:1fr}.video-cadre{width:min(100%,300px);justify-self:center}}
 
 /* Programme */
-.timeline{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:20px}
+.timeline{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:18px}
+@media(max-width:1060px){.timeline{grid-template-columns:repeat(2,minmax(0,1fr))}}
 @media(max-width:860px){.timeline{grid-template-columns:1fr}}
 .step{border-radius:var(--r);padding:28px;position:relative;overflow:hidden;background:var(--carte);border:1px solid var(--filet);transition:transform .3s}
 .step:hover{transform:translateY(-6px) rotate(-.5deg)}
@@ -143,11 +144,11 @@ section+section{padding-top:20px}
 .step .time{font-family:var(--f-titre);font-weight:800;color:var(--c);font-size:1.25rem}
 .step h3{font-size:1.5rem;margin:4px 0 10px}
 .step p{color:var(--encre-douce)}
-.s1{--c:var(--zellige)} .s2{--c:var(--menthe)} .s3{--c:var(--fez)}
+.s1{--c:var(--zellige)} .s2{--c:var(--menthe)} .s3{--c:var(--fez)} .s4{--c:var(--or)}
 .avertissement{text-align:center;color:var(--encre-douce);font-size:.9rem;margin-top:16px}
 
 /* Infos */
-.infos{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:20px}
+.infos{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:20px}
 @media(max-width:860px){.infos{grid-template-columns:1fr}}
 .info{padding:26px;border-radius:var(--r);background:rgba(255,250,241,.7);border:1px dashed var(--or)}
 .info h3{font-size:1.25rem;margin-bottom:8px;color:var(--fez)}
@@ -386,30 +387,37 @@ footer .script{font-size:1.9rem;color:var(--fez);margin-bottom:6px;display:block
     <div class="wrap">
       <div class="sec-head">
         <span class="tag">Le programme</span>
-        <h2>Une journée en trois temps</h2>
-        <p>On commence sur le terrain, on trinque au thé à la menthe, et on finit autour d'un grand couscous.</p>
+        <h2>Une journée, du matin au bout de la nuit</h2>
+        <p>Le samedi 15 mai, on commence le matin, on se retrouve à table à midi, et on finit par une soirée inoubliable. Le lendemain, chacun vaque à ses occupations.</p>
       </div>
       <div class="timeline">
         <article class="step s1">
           <span class="num">1</span>
           <div class="ico"><svg viewBox="0 0 40 40"><circle cx="13" cy="24" r="8"/><path d="M5.5 22c4 2 11 2 15 0M13 16c-2 3-2 13 0 16"/><circle cx="28" cy="20" r="8"/><path d="M20.5 18c4 2 11 2 15 0M28 12c-2 3-2 13 0 16"/><circle cx="21" cy="34" r="2.2"/></svg></div>
-          <div class="time" id="t1">14h00</div>
-          <h3>Le tournoi des babouches</h3>
-          <p>Doublettes tirées au sort, babouches aux pieds pour les plus courageux. Que le meilleur pointeur gagne !</p>
+          <div class="time" id="t1">Le matin</div>
+          <h3>Pétanque ou visite</h3>
+          <p>Au choix : le tournoi des babouches, doublettes tirées au sort, ou la visite en bus pour ceux qui préfèrent découvrir les environs.</p>
         </article>
         <article class="step s2">
           <span class="num">2</span>
           <div class="ico"><svg viewBox="0 0 40 40"><path d="M11 18h18l-2 13a4 4 0 0 1-4 3h-6a4 4 0 0 1-4-3z"/><path d="M29 21h3a3 3 0 0 1 0 6h-3.6"/><path d="M15 18c0-4 2-7 5-8 3 1 5 4 5 8"/><path d="M20 10V7"/><path d="M10 37h20"/></svg></div>
-          <div class="time" id="t2">19h00</div>
-          <h3>L'apéro marocain</h3>
-          <p>Thé à la menthe, pâtisseries et remise des trophées. Le temps de retrouver tout le monde, familles et Soirée des Dames.</p>
+          <div class="time" id="t2">Le midi</div>
+          <h3>Le déjeuner</h3>
+          <p>Tout le monde se retrouve à table : joueurs, visiteurs, familles et Soirée des Dames, avec le thé à la menthe.</p>
         </article>
         <article class="step s3">
           <span class="num">3</span>
           <div class="ico"><svg viewBox="0 0 40 40"><path d="M6 27h28"/><path d="M8 27a12 12 0 0 1 24 0"/><path d="M14 15l6-9 6 9"/><circle cx="20" cy="5" r="1.6"/><path d="M4 31h32l-3 4H7z"/></svg></div>
-          <div class="time" id="t3">20h30</div>
-          <h3>Le couscous géant</h3>
-          <p>Tous à table pour le grand couscous, les discours (courts, promis), le gâteau des 120 ans réunis, et la fête jusqu'au bout de la nuit.</p>
+          <div class="time" id="t3">Le soir</div>
+          <h3>La soirée inoubliable</h3>
+          <p>Couscous géant, discours (courts, promis), le gâteau des 120 ans réunis et la fête jusqu'au bout de la nuit.</p>
+        </article>
+        <article class="step s4">
+          <span class="num">4</span>
+          <div class="ico"><svg viewBox="0 0 40 40"><path d="M8 30c4-10 20-10 24 0"/><circle cx="20" cy="14" r="6"/><path d="M4 34h32"/></svg></div>
+          <div class="time">Dimanche 16 mai</div>
+          <h3>Quartier libre</h3>
+          <p>Chacun vaque à ses occupations. Indiquez vos dates d'arrivée et de départ dans le formulaire.</p>
         </article>
       </div>
       <p class="avertissement" id="horaires-note">Horaires indicatifs, confirmés prochainement.</p>
@@ -427,6 +435,10 @@ footer .script{font-size:1.9rem;color:var(--fez);margin-bottom:6px;display:block
           <h3>Le lieu</h3>
           <p id="venue-text">Bistro Bull, à Valence (Drôme).</p>
           <a class="btn btn-ghost" id="map-link" target="_blank" rel="noopener" hidden>Ouvrir dans Maps</a>
+        </div>
+        <div class="info">
+          <h3>Contact</h3>
+          <p>Une question ? Henri Perez : <a href="tel:+33631042042" style="color:var(--fez);font-weight:800">06 31 04 20 42</a><br>Patrick Messonnier : numéro à venir.</p>
         </div>
         <div class="info">
           <h3>La tenue</h3>
@@ -490,9 +502,9 @@ footer .script{font-size:1.9rem;color:var(--fez);margin-bottom:6px;display:block
           <ul>
             <li>Ta présence : oui, peut-être ou non</li>
             <li>Ton invitation : pour toi seul·e, ou pour toi et ton conjoint·e (c'est indiqué sur ta carte)</li>
-            <li>Les moments où tu seras là : tournoi, apéro, couscous</li>
-            <li>Ta tenue : djellaba prête ou pas encore ?</li>
-            <li>Ta plus belle photo, à envoyer à <b>perez.henri.contact@gmail.com</b></li>
+            <li>Le matin : pétanque ou visite en bus ; déjeuner et soirée ; tes dates d'arrivée et de départ</li>
+            <li>Ta tenue et ta taille de t-shirt (et celles de ton conjoint ou ami·e)</li>
+            <li>Ton adresse e-mail et ta plus belle photo</li>
           </ul>
           <a class="btn btn-main js-form-link" href="#reponse" target="_blank" rel="noopener">Répondre au formulaire</a>
         </div>
@@ -541,6 +553,7 @@ footer .script{font-size:1.9rem;color:var(--fez);margin-bottom:6px;display:block
   <div class="wrap">
     <span class="script">Deux amis, deux cœurs, une même joie de vivre !</span>
     <p>Samedi 15 mai 2027 · Bistro Bull · Valence</p>
+    <p style="margin-top:6px">Pour toute information : Henri Perez <a href="tel:+33631042042" style="color:var(--fez);font-weight:800">06 31 04 20 42</a> · Patrick Messonnier (numéro à venir)</p>
   </div>
 </footer>
 
@@ -566,11 +579,11 @@ const CONFIG = {
   venue: "Bistro Bull",
   city: "Valence",
   address: "",                 // ex : "12 rue …, 26000 Valence" (affiche le bouton Maps ; l'adresse devient publique)
-  start: "2027-05-15T14:00:00+02:00",
-  startUTC: "20270515T120000Z",
+  start: "2027-05-15T10:00:00+02:00",
+  startUTC: "20270515T080000Z",
   endUTC: "20270515T230000Z",
   dateTexte: "samedi 15 mai 2027",
-  horaires: ["14h00", "19h00", "20h30"],   // tournoi, apéro, couscous
+  horaires: ["Le matin", "Le midi", "Le soir"],   // pétanque ou visite, déjeuner, soirée (heures précises à venir)
   horairesProvisoires: true,                 // false quand les horaires sont confirmés
 
   /* --- Formulaire de réponse (liens affichés par le script Apps Script) --- */
@@ -613,8 +626,8 @@ const PORTRAITS = {
    Ne jamais ajouter ici d'e-mail, d'allergie, de nom complet ni de message personnel.
    [prénom, initiale, réponse "oui" | "peut-etre" | "non", moments "Tournoi, Apéro, Couscous", nb d'accompagnants, tenue] */
 const REPONSES = [
- ["Henri","P.","oui","Tournoi, Apéro, Couscous",1,"Djellaba prête"],      // + sa compagne
- ["Patrick","M.","oui","Tournoi, Apéro, Couscous",1,"Djellaba prête"]     // + sa compagne
+ ["Henri","P.","oui","Pétanque, Déjeuner, Soirée",1,"Djellaba prête"],      // + sa compagne
+ ["Patrick","M.","oui","Pétanque, Déjeuner, Soirée",1,"Djellaba prête"]     // + sa compagne
 ];
 
 const slug = s => String(s).normalize("NFD").replace(/[̀-ͯ]/g,"").toLowerCase().replace(/[^a-z0-9]+/g,"-").replace(/^-|-$/g,"");
@@ -623,9 +636,10 @@ const cap = s => s.trim().toLowerCase().replace(/(^|[\s-])\p{L}/gu, m=>m.toUpper
 function statut(v){ v = slug(v); return v.startsWith("oui") ? "oui" : v.startsWith("peut") ? "peut-etre" : v.startsWith("non") ? "non" : ""; }
 function moments(v){
   const t = slug(v), m = [];
-  if (t.includes("tournoi") || t.includes("petanque")) m.push("Tournoi");
-  if (t.includes("apero") || t.includes("the")) m.push("Apéro");
-  if (t.includes("couscous") || t.includes("diner") || t.includes("soiree")) m.push("Couscous");
+  if (t.includes("tournoi") || t.includes("petanque")) m.push("Pétanque");
+  if (t.includes("visite")) m.push("Visite");
+  if (t.includes("dejeuner")) m.push("Déjeuner");
+  if (t.includes("couscous") || t.includes("soiree")) m.push("Soirée");
   return m;
 }
 function tenue(v){
@@ -657,7 +671,7 @@ function buildGuests(rows){
   });
   HOTES.forEach(h=>{                        // les hôtes figurent toujours dans la liste
     const id = slug(h.first + " " + h.ini);
-    if (!byId.has(id)) byId.set(id, { first:h.first, ini:h.ini, name:h.first+" "+h.ini+".", status:"oui", moments:["Tournoi","Apéro","Couscous"], plus:1, tenue:"Djellaba prête", id, hote:h });
+    if (!byId.has(id)) byId.set(id, { first:h.first, ini:h.ini, name:h.first+" "+h.ini+".", status:"oui", moments:["Pétanque","Déjeuner","Soirée"], plus:1, tenue:"Djellaba prête", id, hote:h });
   });
   GUESTS = [...byId.values()]
     .sort((a,b)=> (b.hote?1:0)-(a.hote?1:0) || a.first.localeCompare(b.first,"fr"))
@@ -827,9 +841,9 @@ function openInvite(id){
       <div class="quote">${citation}</div>
       ${corps}
       <div class="mini">
-        <div><strong>${H[0]}</strong><span>Tournoi</span></div>
-        <div><strong>${H[1]}</strong><span>Apéro</span></div>
-        <div><strong>${H[2]}</strong><span>Couscous</span></div>
+        <div><strong>${H[0]}</strong><span>Pétanque ou visite</span></div>
+        <div><strong>${H[1]}</strong><span>Déjeuner</span></div>
+        <div><strong>${H[2]}</strong><span>Soirée inoubliable</span></div>
       </div>
       ${g.hote ? "" : `<p style="margin-bottom:8px"><b style="color:var(--encre)">Un changement ? Renvoie le formulaire : seule ta dernière réponse compte.</b></p>`}
       <div class="rsvp">
