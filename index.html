@@ -364,6 +364,9 @@ footer .script{font-size:1.9rem;color:var(--fez);margin-bottom:6px;display:block
 .defi-prompt b{color:var(--fez);font-size:.8rem;letter-spacing:1.4px;text-transform:uppercase}
 .defi-prompt p{font-family:var(--f-script);font-style:italic;font-weight:700;font-size:1.2rem;line-height:1.35;color:var(--encre)}
 .defi-prompt .btn{justify-self:start;padding:11px 20px;font-size:.92rem}
+.defi-envoi{grid-column:1/-1;display:flex;flex-wrap:wrap;gap:16px;align-items:center;padding-top:6px;border-top:1px dashed var(--or)}
+.defi-envoi p{flex:1 1 320px;font-size:.95rem}
+.lien-mail{color:var(--fez);font-weight:800}
 /* Prénoms et noms : jamais en capitales */
 .hotes,.heros h3,.card h3,.fiche h3,.inv-head h2,.surprise-carte h3{font-family:var(--f-script);font-style:italic;font-weight:700;text-transform:none;letter-spacing:0}
 
@@ -655,13 +658,18 @@ footer .script{font-size:1.9rem;color:var(--fez);margin-bottom:6px;display:block
           <ol>
             <li>Ouvre l'IA de ton choix et envoie-lui une photo de toi (de face, bien éclairée).</li>
             <li>Colle le texte ci-dessous et laisse-la travailler. Pas satisfait·e ? Demande-lui une autre version.</li>
-            <li>Envoie ta plus belle création avec ta réponse : elle illustrera ta carte parmi les guest stars.</li>
+            <li>Dépose ta plus belle création : elle illustrera ta carte parmi les guest stars.</li>
           </ol>
         </div>
         <div class="defi-prompt">
           <b>Le texte à donner à l'IA</b>
           <p id="prompt-ia">Transforme cette photo de moi en portrait de fête marocaine pour l'anniversaire « De Casablanca au cochonnet ». Habille-moi d'une djellaba (ou d'un caftan) de la couleur de ton choix, avec un tarbouche rouge, ou pour une femme un joli foulard. Ajoute des babouches, une boule de pétanque à la main et un décor de Casablanca ou de terrain de pétanque. Fais preuve d'imagination et d'humour, mais garde mon visage bien reconnaissable.</p>
           <button class="btn btn-main" id="copier-prompt" type="button">Copier le texte</button>
+        </div>
+        <div class="defi-envoi">
+          <a class="btn btn-main" href="https://docs.google.com/forms/d/e/1FAIpQLSeseBrP0pXsgrOveUep1u4lpHYQMpIqEOV70zHX5kyyk8zOZA/viewform" target="_blank" rel="noopener">Déposer ma photo</a>
+          <p>Le dépôt passe par un petit formulaire Google : Google demande d'être connecté à un compte Google (Gmail…).<br>
+          <b>Pas de compte Google ?</b> Envoie ta photo par mail : <a class="lien-mail" href="mailto:perez.henri.contact@gmail.com?subject=PHOTO%2060%20ANS%20%E2%80%93%20&amp;body=Bonjour%20Patrick%20et%20Henri%2C%0A%0AVoici%20ma%20photo%20d%C3%A9guis%C3%A9e%20pour%20le%2015%20mai%20(pr%C3%A9nom%20et%20nom%20%3A%20...).%0A">perez.henri.contact@gmail.com</a>, objet « PHOTO 60 ANS » et ton prénom.</p>
         </div>
       </div>
 
@@ -680,7 +688,7 @@ footer .script{font-size:1.9rem;color:var(--fez);margin-bottom:6px;display:block
       <div class="etapes">
         <div class="etape"><b>1. Retrouve ton nom</b><p>Ton invitation s'affiche : seul·e ou à deux. Le bouton « Répondre » ouvre le formulaire déjà rempli avec ton prénom et ta formule.</p></div>
         <div class="etape"><b>2. Réponds à tout</b><p>Présence, pétanque ou visite, déjeuner et soirée, arrivée et départ, tenue et taille de t-shirt. Pour deux : dis-nous si ton conjoint·e ou ami·e vient.</p></div>
-        <div class="etape"><b>3. Envoie ta photo déguisée</b><p>Ta création « tenue marocaine par l'IA » (et celle de ton conjoint·e ou ami·e), par mail à perez.henri.contact@gmail.com, objet « PHOTO 60 ANS » avec ton prénom.</p></div>
+        <div class="etape"><b>3. Dépose ta photo déguisée</b><p>Ta création « tenue marocaine par l'IA » (et celle de ton conjoint·e ou ami·e) sur <a class="lien-mail" href="https://docs.google.com/forms/d/e/1FAIpQLSeseBrP0pXsgrOveUep1u4lpHYQMpIqEOV70zHX5kyyk8zOZA/viewform" target="_blank" rel="noopener">le formulaire photo</a> (compte Google). Sinon par mail à <a class="lien-mail" href="mailto:perez.henri.contact@gmail.com?subject=PHOTO%2060%20ANS%20%E2%80%93%20&amp;body=Bonjour%20Patrick%20et%20Henri%2C%0A%0AVoici%20ma%20photo%20d%C3%A9guis%C3%A9e%20pour%20le%2015%20mai%20(pr%C3%A9nom%20et%20nom%20%3A%20...).%0A">perez.henri.contact@gmail.com</a>, objet « PHOTO 60 ANS ».</p></div>
       </div>
     </div>
   </section>
