@@ -51,11 +51,14 @@ header.site .wrap{display:flex;align-items:center;justify-content:space-between;
 @media(max-width:720px){
   header.site .wrap{flex-wrap:wrap;row-gap:0;padding-block:8px}
   .onglets{order:3;width:100%;padding-bottom:4px}
-  .onglets a{padding:7px 10px;font-size:.84rem}
+  .onglets{gap:1px;justify-content:space-between}
+  .onglets a{padding:6px 7px;font-size:.76rem;letter-spacing:-.01em}
   .onglets .long{display:none}
+  .onglets a .court{display:inline}
 }
 
 [hidden]{display:none!important}
+.onglets .court{display:none}
 
 /* HÉROS */
 .hero{background:var(--coucher);position:relative;overflow:hidden}
@@ -186,6 +189,9 @@ section+section{padding-top:20px}
 @keyframes entre{from{opacity:.001;transform:translateY(14px)}}
 .card:hover{transform:translateY(-6px);box-shadow:0 18px 36px rgba(80,40,10,.16)}
 .card-top{height:70px;background:var(--grad);position:relative;background-size:cover}
+.card-top.portrait{height:220px;background-size:cover;background-position:center 20%;border-bottom:4px solid var(--or)}
+.card-top.portrait::after{display:none}
+.card-top.portrait + .card-body{padding-top:14px}
 .card-top::after{content:"";position:absolute;inset:0;background-image:var(--motif);background-size:28px 28px;opacity:.22}
 .av{width:72px;height:72px;display:grid;place-items:center;font-family:var(--f-titre);font-weight:800;font-size:1.4rem;color:#FFF3DF;margin:-38px 0 0 18px;position:relative;z-index:1;background:var(--grad);
   clip-path:polygon(50% 0,64% 15%,85% 15%,85% 36%,100% 50%,85% 64%,85% 85%,64% 85%,50% 100%,36% 85%,15% 85%,15% 64%,0 50%,15% 36%,15% 15%,36% 15%)}
@@ -301,9 +307,10 @@ footer .script{font-size:1.9rem;color:var(--fez);margin-bottom:6px;display:block
   <div class="wrap">
     <a class="logo" href="#invitation">15<span>.</span>05</a>
     <nav class="onglets" aria-label="Onglets">
-      <a href="#invitation" data-tab="invitation">L'invitation</a>
-      <a href="#invites" data-tab="invites">Les invités</a>
-      <a href="#reponse" data-tab="reponse">Je réponds</a>
+      <a href="#invitation" data-tab="invitation">Invitation</a>
+      <a href="#programme" data-tab="programme">Programme</a>
+      <a href="#invites" data-tab="invites">Invités</a>
+      <a href="#reponse" data-tab="reponse"><span class="long">Je réponds</span><span class="court">Répondre</span></a>
       <a href="#photos" data-tab="photos">Photos<span class="long"> & vidéos</span></a>
     </nav>
     <span class="jours" id="jours" title="Jours avant la fête">J-…</span>
@@ -329,6 +336,7 @@ footer .script{font-size:1.9rem;color:var(--fez);margin-bottom:6px;display:block
         </div>
         <div class="cta">
           <a href="#reponse" class="btn btn-main">Je réponds</a>
+          <a href="#programme" class="btn btn-ghost">Le programme</a>
           <a href="#invites" class="btn btn-ghost">Voir qui vient</a>
         </div>
         <div class="countdown" id="countdown" aria-label="Compte à rebours">
@@ -370,6 +378,10 @@ footer .script{font-size:1.9rem;color:var(--fez);margin-bottom:6px;display:block
     </div>
   </section>
 
+</div>
+
+<!-- ================= ONGLET : PROGRAMME ================= -->
+<div class="vue" id="vue-programme" data-vue="programme" hidden>
   <section id="programme">
     <div class="wrap">
       <div class="sec-head">
@@ -435,9 +447,9 @@ footer .script{font-size:1.9rem;color:var(--fez);margin-bottom:6px;display:block
   <section>
     <div class="wrap">
       <div class="sec-head">
-        <span class="tag">La liste</span>
-        <h2>Ils seront de la fête</h2>
-        <p>La liste se remplit au fil des réponses au formulaire. Tu n'y es pas encore ? <a href="#reponse" style="color:var(--fez);font-weight:800">Réponds ici</a>.</p>
+        <span class="tag">Ils seront de la fête</span>
+        <h2>Les guest stars du jour</h2>
+        <p>Chaque réponse au formulaire ajoute une star, avec sa photo. Tu n'y es pas encore ? <a href="#reponse" style="color:var(--fez);font-weight:800">Réponds ici</a>.</p>
       </div>
       <div class="stats" id="stats"></div>
       <div class="heros">
@@ -635,8 +647,13 @@ function buildGuests(rows){
     const hote = HOTES.find(h => slug(h.first + " " + h.ini) === id);
     const g = { first, ini, name: first + (ini ? " " + ini + "." : ""), status: st,
       moments: st==="non" ? [] : moments(r[3]), plus: st==="oui" || st==="peut-etre" ? (parseInt(r[4],10) || 0) : 0,
-      tenue: tenue(r[5]), avec: String(r[6]||"").trim(), id, hote };
+      tenue: tenue(r[5]), avec: String(r[6]||"").trim(), photo: String(r[7]||"").trim(), id, hote };
     byId.set(id, g);                        // une personne qui répond deux fois : on garde la dernière réponse
+    if (g.plus === 1 && g.avec){            // l'accompagnant·e a sa propre carte de guest star
+      const pid = slug(g.avec + " avec " + first);
+      byId.set(pid, { first: cap(g.avec), ini: "", name: cap(g.avec), status: st, moments: g.moments, plus: 0, tenue: "",
+        avec: "", photo: String(r[8]||"").trim(), id: pid, partenaireDe: g.name, guestId: id });
+    }
   });
   HOTES.forEach(h=>{                        // les hôtes figurent toujours dans la liste
     const id = slug(h.first + " " + h.ini);
@@ -653,7 +670,7 @@ buildGuests(REPONSES);
 document.getElementById("horaires-note").hidden = !CONFIG.horairesProvisoires;
 
 /* ===== Onglets ===== */
-const TABS = ["invitation","invites","reponse","photos"];
+const TABS = ["invitation","programme","invites","reponse","photos"];
 function showTab(name, scroll){
   if (!TABS.includes(name)) name = "invitation";
   document.querySelectorAll(".vue").forEach(v => v.hidden = v.dataset.vue !== name);
@@ -717,9 +734,11 @@ document.getElementById("q").addEventListener("input", render);
 
 const LABEL = { "oui":"Présent·e", "peut-etre":"Peut-être", "non":"Absent·e" };
 let MOTIF = "";
+const photoDe = g => g.photo || PORTRAITS[g.id] || "";
 function renderStats(){
-  const oui = GUESTS.filter(g=>g.status==="oui"), plus = oui.reduce((a,g)=>a+g.plus,0);
-  const stats = [[GUESTS.length,"Réponses"],[oui.length,"Présents confirmés"],[plus,"Accompagnants"],[oui.length+plus,"Personnes attendues"]];
+  const rep = GUESTS.filter(g=>!g.partenaireDe);
+  const oui = rep.filter(g=>g.status==="oui"), plus = oui.reduce((a,g)=>a+g.plus,0);
+  const stats = [[rep.length,"Réponses"],[oui.length,"Présents confirmés"],[plus,"Accompagnants"],[oui.length+plus,"Personnes attendues"]];
   const nb = oui.length + plus;
   document.getElementById("nb-confirmes").textContent = nb;
   document.getElementById("stats").innerHTML = stats.map(([n,l])=>`<div class="stat"><div class="n">${n}</div><div class="l">${l}</div></div>`).join("");
@@ -735,19 +754,20 @@ function render(){
   const list = GUESTS.filter(g => (activeGroup==="tous" || g.status===activeGroup) && (!q || g.id.includes(q)));
   const grid = document.getElementById("grid");
   grid.innerHTML = list.map((g,i)=>`
-    <article class="card" style="--grad:${g.grad};--motif:${MOTIF};animation-delay:${Math.min(i,20)*30}ms" data-id="${g.id}" tabindex="0" aria-label="Ouvrir la carte de ${esc(g.name)}">
-      <div class="card-top">${g.status ? `<span class="badge b-${g.status}">${LABEL[g.status]}</span>` : ""}${g.hote ? `<span class="badge b-hote">60 ans</span>` : ""}</div>
-      ${PORTRAITS[g.id] ? `<div class="av photo" role="img" aria-label="Photo de ${esc(g.name)}" style="background-image:url('${esc(PORTRAITS[g.id])}')"></div>` : `<div class="av">${esc(g.first[0] + (g.ini || ""))}</div>`}
+    <article class="card" style="--grad:${g.grad};--motif:${MOTIF};animation-delay:${Math.min(i,20)*30}ms" data-id="${g.guestId || g.id}" tabindex="0" aria-label="Ouvrir la carte de ${esc(g.name)}">
+      ${photoDe(g) ? `<div class="card-top portrait" role="img" aria-label="Photo de ${esc(g.name)}" style="background-image:url('${esc(photoDe(g))}')">${g.status ? `<span class="badge b-${g.status}">${LABEL[g.status]}</span>` : ""}${g.hote ? `<span class="badge b-hote">60 ans</span>` : ""}</div>`
+      : `<div class="card-top">${g.status ? `<span class="badge b-${g.status}">${LABEL[g.status]}</span>` : ""}${g.hote ? `<span class="badge b-hote">60 ans</span>` : ""}</div>
+      <div class="av">${esc(g.first[0] + (g.ini || ""))}</div>`}
       <div class="card-body">
         <h3>${esc(g.name)}</h3>
-        ${g.hote ? `<span class="role">Héros du jour</span>` : ""}
+        ${g.hote ? `<span class="role">Héros du jour</span>` : g.partenaireDe ? `<span class="role">Accompagne ${esc(g.partenaireDe)}</span>` : `<span class="role">Guest star</span>`}
         <div class="mom">${g.moments.map(m=>`<span>${m}</span>`).join("")}</div>
-        <p>${g.hote && g.plus===1 ? `<span class="plus">Avec sa compagne</span>` : g.plus===1 && g.avec ? `<span class="plus">Avec ${esc(cap(g.avec))}</span>` : g.plus ? `<span class="plus">+${g.plus} accompagnant${g.plus>1?"s":""}</span>` : g.status==="non" ? "Ne pourra pas venir" : g.hote ? "Organisateur" : "Vient seul·e"}</p>
+        <p>${g.partenaireDe ? `<span class="plus">Avec ${esc(g.partenaireDe)}</span>` : g.hote && g.plus===1 ? `<span class="plus">Avec sa compagne</span>` : g.plus===1 && g.avec ? `<span class="plus">Avec ${esc(cap(g.avec))}</span>` : g.plus ? `<span class="plus">+${g.plus} accompagnant${g.plus>1?"s":""}</span>` : g.status==="non" ? "Ne pourra pas venir" : g.hote ? "Organisateur" : "Vient seul·e"}</p>
         ${g.tenue && g.status!=="non" ? `<div class="tenue">${esc(g.tenue)}</div>` : ""}
-        <span class="open">${g.hote ? "Lire son mot →" : "Voir ma réponse →"}</span>
+        <span class="open">${g.hote ? "Lire son mot →" : g.partenaireDe ? "Voir l'invitation →" : "Voir ma réponse →"}</span>
       </div>
     </article>`).join("");
-  document.getElementById("count").innerHTML = `<b>${list.length}</b> invité${list.length>1?"s":""} affiché${list.length>1?"s":""} sur ${GUESTS.length}`;
+  document.getElementById("count").innerHTML = `<b>${list.length}</b> guest star${list.length>1?"s":""} affichée${list.length>1?"s":""} sur ${GUESTS.length}`;
   const empty = document.getElementById("empty");
   empty.textContent = GUESTS.length ? "Personne pour l'instant avec ce nom ou ce filtre." : "Les premières réponses arrivent bientôt.";
   empty.style.display = list.length ? "none" : "block";
