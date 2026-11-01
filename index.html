@@ -66,7 +66,7 @@ header.site .wrap{display:flex;align-items:center;justify-content:space-between;
 @media(max-width:720px){
   header.site .wrap{flex-wrap:wrap;row-gap:0;padding-block:8px}
   .onglets{order:3;width:100%;padding-bottom:4px}
-  .onglets{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:4px}
+  .onglets{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:4px}
   .onglets a{padding:6px 4px;font-size:.8rem;text-align:center}
   .onglets .long{display:none}
   .onglets a .court{display:inline}
@@ -367,6 +367,28 @@ footer .script{font-size:1.9rem;color:var(--fez);margin-bottom:6px;display:block
 .defi-envoi{grid-column:1/-1;display:flex;flex-wrap:wrap;gap:16px;align-items:center;padding-top:6px;border-top:1px dashed var(--or)}
 .defi-envoi p{flex:1 1 320px;font-size:.95rem}
 .lien-mail{color:var(--fez);font-weight:800}
+
+/* Hôtels */
+.hotels{display:grid;gap:30px}
+.hotel-groupe h3{font-family:var(--f-titre);font-size:1.3rem;color:var(--zellige);display:flex;align-items:center;gap:10px;margin-bottom:14px}
+.hotel-liste{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:16px}
+.hotel{padding:18px;border-radius:18px;background:var(--carte);border:1px solid var(--filet);display:flex;flex-direction:column;gap:6px}
+.hotel h4{font-family:var(--f-script);font-style:italic;font-weight:700;font-size:1.4rem;color:var(--zellige);line-height:1.1}
+.hotel .hd{font-weight:800;color:var(--fez);font-size:.88rem}
+.hotel p{color:var(--encre-douce);font-size:.93rem}
+.hotel p a{color:var(--zellige);font-weight:800}
+.hotel .btn{margin-top:auto;align-self:flex-start;padding:9px 16px;font-size:.88rem}
+
+/* Trombinoscope : une carte par invitation, deux carrés pour un couple */
+.card .bulles{display:grid;grid-template-columns:1fr;gap:10px;padding:14px 14px 0;position:relative}
+.card.duo .bulles{grid-template-columns:1fr 1fr}
+.bulle{margin:0;display:flex;flex-direction:column;align-items:center;gap:6px}
+.carre{width:100%;aspect-ratio:1;border-radius:16px;border:3px solid var(--or);background:var(--grad);background-size:cover;background-position:center 20%;display:grid;place-items:center;color:#FFF3DF;font-family:var(--f-titre);font-weight:800;font-size:2rem}
+.bulle figcaption{font-family:var(--f-script);font-style:italic;font-weight:700;font-size:1.25rem;color:var(--zellige);text-align:center;line-height:1.1}
+.card .bulles .badge{left:22px;top:22px}
+.card.duo{grid-column:span 2}
+.card.duo .lien-duo{position:absolute;left:50%;top:calc(14px + 25%);transform:translate(-50%,-50%);width:34px;height:34px;border-radius:50%;background:var(--fez);color:#FFF3DF;display:grid;place-items:center;font-weight:900;border:3px solid var(--carte)}
+@media(max-width:600px){.card.duo{grid-column:auto}}
 /* Prénoms et noms : jamais en capitales */
 .hotes,.heros h3,.card h3,.fiche h3,.inv-head h2,.surprise-carte h3{font-family:var(--f-script);font-style:italic;font-weight:700;text-transform:none;letter-spacing:0}
 
@@ -430,6 +452,7 @@ footer .script{font-size:1.9rem;color:var(--fez);margin-bottom:6px;display:block
       <a href="#reponse" data-tab="reponse"><span class="long">Je réponds</span><span class="court">Répondre</span></a>
       <a href="#photos" data-tab="photos">Photos<span class="long"> & vidéos</span></a>
       <a href="#surprise" data-tab="surprise">Surprise</a>
+      <a href="#hotels" data-tab="hotels">Hôtels</a>
     </nav>
     <span class="jours" id="jours" title="Jours avant la fête">J-…</span>
   </div>
@@ -569,7 +592,7 @@ footer .script{font-size:1.9rem;color:var(--fez);margin-bottom:6px;display:block
         </div>
         <div class="info">
           <h3>Venir et dormir</h3>
-          <p>Valence se rejoint en TGV depuis Paris (gare de Valence TGV) ou par l'A7. Pensez au covoiturage : une liste d'hébergements suivra.</p>
+          <p>Valence se rejoint en TGV depuis Paris (gare de Valence TGV) ou par l'A7. Pensez au covoiturage. Pour dormir sur place : <a href="#hotels" style="color:var(--fez);font-weight:800">notre sélection d'hôtels</a>.</p>
           <button class="btn btn-ghost" id="ics-main">Ajouter à mon agenda</button>
         </div>
       </div>
@@ -620,7 +643,7 @@ footer .script{font-size:1.9rem;color:var(--fez);margin-bottom:6px;display:block
       <div class="sec-head">
         <span class="tag">Réponse avant le <span class="js-deadline">15 avril 2027</span></span>
         <h2>Tu viens ? Dis-le nous !</h2>
-        <p>Deux minutes suffisent. Commence par retrouver ton nom : ton invitation est prévue <b>pour toi seul·e</b> ou <b>pour toi et ton conjoint·e ou ami·e</b>, merci de la respecter.</p>
+        <p>Deux minutes suffisent. Commence par retrouver ton nom : ton invitation est prévue <b>pour toi seul·e</b> ou <b>pour toi et ton conjoint·e ou ami·e</b>, merci de la respecter.<br><b>Ce formulaire est réservé aux personnes figurant sur la liste des invités</b> : une réponse d'une personne non invitée ne sera pas prise en compte.</p>
       </div>
 
       <div class="trouve">
@@ -705,6 +728,21 @@ footer .script{font-size:1.9rem;color:var(--fez);margin-bottom:6px;display:block
       </div>
       <div class="mystere" id="mystere"></div>
       <div class="surprises" id="surprises"></div>
+    </div>
+  </section>
+</div>
+
+<!-- ================= ONGLET : HÔTELS ================= -->
+<div class="vue" id="vue-hotels" data-vue="hotels" hidden>
+  <section>
+    <div class="wrap">
+      <div class="sec-head">
+        <span class="tag">Dormir sur place</span>
+        <h2>Les hôtels autour de la fête</h2>
+        <p>Une sélection d'hôtels proches du BistrÔboul' (Saint-Marcel-lès-Valence), de la gare Valence TGV et du centre de Valence. Mai est une belle saison dans la Drôme : réservez tôt !</p>
+      </div>
+      <div class="hotels" id="hotels"></div>
+      <p class="avertissement">Informations relevées le 1<sup>er</sup> novembre 2026 : tarifs et disponibilités à vérifier directement auprès de chaque hôtel. Liste complète : <a href="https://www.valence-romans-tourisme.com/en/be-organised/accommodation/all-accommodation/" target="_blank" rel="noopener" style="color:var(--fez);font-weight:800">office de tourisme Valence Romans</a>.</p>
     </div>
   </section>
 </div>
@@ -879,6 +917,23 @@ const SURPRISES = [
   { date:"2027-04-15", titre:"Le souvenir des 60 ans", indice:"Chaque invité repartira avec quelque chose…", texte:"", image:"" }
 ];
 
+/* ===== HÔTELS (relevé du 01/11/2026) ===== [groupe, nom, détail, adresse, téléphone, lien] */
+const HOTELS = [
+  ["Au plus près de la fête","ibis budget Valence Nord Plateau des Couleures","Économique · sur la commune de la fête","60 rue du Pas du Buis, 26320 Saint-Marcel-lès-Valence","04 75 84 01 80","https://all.accor.com/hotel/C4X8/index.fr.shtml"],
+  ["Au plus près de la fête","B&B Hotel Valence Nord","Économique · Valence Nord","","","https://www.hotel-bb.com/fr/hotel/valence-nord"],
+  ["Près de la gare Valence TGV","ibis Styles Romans Valence Gare TGV","Pratique pour ceux qui arrivent en TGV","","","https://all.accor.com/hotel/8717/index.fr.shtml"],
+  ["Près de la gare Valence TGV","B&B Hotel Valence TGV Romans","Économique · à côté de la gare TGV","","","https://www.hotel-bb.com/fr/hotel/valence-tgv-romans"],
+  ["Centre-ville de Valence","Logis Hôtel Saint-Jacques","2 étoiles · centre-ville","9 faubourg Saint-Jacques, 26000 Valence","","https://ladrometourisme.com/en/fiches/hotel-saint-jacques"],
+  ["Centre-ville de Valence","Best Western Hôtel Atrium","Centre-ville","20 rue Jean-Louis Barrault, 26000 Valence","","https://auvergnerhonealpes-tourisme.com/en/fiches/best-western-hotel-atrium"],
+  ["Centre-ville de Valence","Hôtel de France","Centre-ville","","","https://www.valence-romans-tourisme.com/en/catalog/detail/valence-2971053/hotel-de-france-151974/"],
+  ["Centre-ville de Valence","Victoria Hotel","Centre-ville","","","https://www.valence-romans-tourisme.com/en/catalog/detail/valence-2971053/hotel-victoria-5321147/"],
+  ["Valence Sud","Novotel Valence Sud","Hôtel-restaurant","","","https://www.valence-romans-tourisme.com/en/catalog/detail/valence-2971053/hotel-restaurant-novotel-valence-sud-169904/"],
+  ["Valence Sud","ibis Valence Sud","Milieu de gamme","","","https://all.accor.com/hotel/0644/index.fr.shtml"],
+  ["Valence Sud","ibis budget Valence Sud","Économique","","","https://all.accor.com/hotel/9134/index.fr.shtml"],
+  ["Pour se faire plaisir","Best Western Plus Clos Syrah","Hôtel-restaurant à 5 minutes du centre","","","https://www.valence-romans-tourisme.com/en/catalog/detail/valence-2971053/hotel-restaurant-best-western-plus-clos-syrah-205845/"],
+  ["Pour se faire plaisir","Hôtel Pic – Relais & Châteaux","5 étoiles · la maison d'Anne-Sophie Pic","285 avenue Victor-Hugo, 26000 Valence","04 75 44 15 32","https://anne-sophie-pic.com/en/hotel-pic"]
+];
+
 const slug = s => String(s).normalize("NFD").replace(/[̀-ͯ]/g,"").toLowerCase().replace(/[^a-z0-9]+/g,"-").replace(/^-|-$/g,"");
 const esc = s => String(s ?? "").replace(/[&<>"']/g, c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
 const cap = s => s.trim().toLowerCase().replace(/(^|[\s-])\p{L}/gu, m=>m.toUpperCase());
@@ -908,6 +963,7 @@ function buildGuests(rows){
     const st = statut(r[2]);
     const id = slug(first + " " + ini);
     const hote = HOTES.find(h => slug(h.first + " " + h.ini) === id);
+    if (!hote && !INVITATIONS.some(i => slug(i[0] + " " + i[1]) === id)) return;   // garde-fou : personne hors liste des invités
     const g = { first, ini, name: first + (ini ? " " + ini + "." : ""), status: st,
       moments: st==="non" ? [] : moments(r[3]), plus: st==="oui" || st==="peut-etre" ? (parseInt(r[4],10) || 0) : 0,
       tenue: tenue(r[5]), avec: String(r[6]||"").trim(), photo: String(r[7]||"").trim(), id, hote };
@@ -933,7 +989,7 @@ buildGuests(REPONSES);
 document.getElementById("horaires-note").hidden = !CONFIG.horairesProvisoires;
 
 /* ===== Onglets ===== */
-const TABS = ["invitation","programme","invites","reponse","photos","surprise"];
+const TABS = ["invitation","programme","invites","reponse","photos","surprise","hotels"];
 function showTab(name, scroll){
   if (!TABS.includes(name)) name = "invitation";
   document.querySelectorAll(".vue").forEach(v => v.hidden = v.dataset.vue !== name);
@@ -1018,20 +1074,23 @@ function render(){
   const STARS = GUESTS.filter(g=>!g.hote && !(g.partenaireDe && GUESTS.some(h=>h.hote && h.id===g.guestId)));
   const list = STARS.filter(g => (activeGroup==="tous" || g.status===activeGroup) && (!q || g.id.includes(q)));
   const grid = document.getElementById("grid");
-  grid.innerHTML = list.map((g,i)=>`
-    <article class="card" style="--grad:${g.grad};--motif:${MOTIF};animation-delay:${Math.min(i,20)*30}ms" data-id="${g.guestId || g.id}" tabindex="0" aria-label="Ouvrir la carte de ${esc(g.name)}">
-      ${photoDe(g) ? `<div class="card-top portrait" role="img" aria-label="Photo de ${esc(g.name)}" style="background-image:url('${esc(photoDe(g))}')">${g.status ? `<span class="badge b-${g.status}">${LABEL[g.status]}</span>` : ""}${g.hote ? `<span class="badge b-hote">60 ans</span>` : ""}</div>`
-      : `<div class="card-top">${g.status ? `<span class="badge b-${g.status}">${LABEL[g.status]}</span>` : ""}${g.hote ? `<span class="badge b-hote">60 ans</span>` : ""}</div>
-      <div class="av">${esc(g.first[0] + (g.ini || ""))}</div>`}
+  const groupes = [];
+  list.forEach(g=>{ if (g.partenaireDe) return; const p = list.find(x=>x.partenaireDe && x.guestId===g.id); groupes.push(p ? [g,p] : [g]); });
+  list.filter(x=>x.partenaireDe && !groupes.some(gr=>gr.includes(x))).forEach(x=>groupes.push([x]));
+  const carre = g => photoDe(g) ? `<div class="carre" role="img" aria-label="Photo de ${esc(g.name)}" style="background-image:url('${esc(photoDe(g))}')"></div>`
+                                : `<div class="carre" style="--grad:${g.grad}">${esc(g.first[0] + (g.ini || ""))}</div>`;
+  grid.innerHTML = groupes.map((gr,i)=>{ const g = gr[0], duo = gr.length > 1;
+    return `<article class="card${duo ? " duo" : ""}" style="--grad:${g.grad};animation-delay:${Math.min(i,20)*30}ms" data-id="${g.guestId || g.id}" tabindex="0" aria-label="Ouvrir la carte de ${esc(gr.map(x=>x.name).join(" et "))}">
+      <div class="bulles">${gr.map(x=>`<figure class="bulle">${carre(x)}<figcaption>${esc(x.name)}</figcaption></figure>`).join("")}
+        ${duo ? `<span class="lien-duo" aria-hidden="true">&amp;</span>` : ""}${g.status ? `<span class="badge b-${g.status}">${LABEL[g.status]}</span>` : ""}</div>
       <div class="card-body">
-        <h3>${esc(g.name)}</h3>
-        ${g.hote ? `<span class="role">Héros du jour</span>` : g.partenaireDe ? `<span class="role">Accompagne ${esc(g.partenaireDe)}</span>` : `<span class="role">Guest star</span>`}
+        <span class="role">${duo ? "Guest stars en duo" : g.partenaireDe ? "Accompagne " + esc(g.partenaireDe) : "Guest star"}</span>
         <div class="mom">${g.moments.map(m=>`<span>${m}</span>`).join("")}</div>
-        <p>${g.partenaireDe ? `<span class="plus">Avec ${esc(g.partenaireDe)}</span>` : g.hote && g.plus===1 ? `<span class="plus">Avec sa compagne</span>` : g.plus===1 && g.avec ? `<span class="plus">Avec ${esc(cap(g.avec))}</span>` : g.plus ? `<span class="plus">+${g.plus} accompagnant${g.plus>1?"s":""}</span>` : g.status==="non" ? "Ne pourra pas venir" : g.hote ? "Organisateur" : "Vient seul·e"}</p>
+        <p>${g.status==="non" ? "Ne pourra pas venir" : duo ? "Viennent ensemble" : g.plus ? `<span class="plus">+${g.plus} accompagnant${g.plus>1?"s":""}</span>` : "Vient seul·e"}</p>
         ${g.tenue && g.status!=="non" ? `<div class="tenue">${esc(g.tenue)}</div>` : ""}
-        <span class="open">${g.hote ? "Lire son mot →" : g.partenaireDe ? "Voir l'invitation →" : "Voir ma réponse →"}</span>
+        <span class="open">Voir l'invitation →</span>
       </div>
-    </article>`).join("");
+    </article>`; }).join("");
   document.getElementById("count").innerHTML = `<b>${list.length}</b> guest star${list.length>1?"s":""} affichée${list.length>1?"s":""} sur ${STARS.length}`;
   const empty = document.getElementById("empty");
   empty.textContent = STARS.length ? "Personne pour l'instant avec ce nom ou ce filtre." : "Les premières guest stars arrivent bientôt : réponds au formulaire pour ouvrir le bal !";
@@ -1490,6 +1549,16 @@ function renderSurprises(){
     </article>`; }).join("");
 }
 renderSurprises();
+
+/* ===== Onglet Hôtels ===== */
+(function(){
+  const groupes = [...new Set(HOTELS.map(h=>h[0]))];
+  document.getElementById("hotels").innerHTML = groupes.map((g,k)=>`<div class="hotel-groupe"><h3><span class="pastille" style="background:${["var(--fez)","var(--zellige)","var(--or)","var(--menthe)","var(--rose)"][k%5]}"></span>${esc(g)}</h3><div class="hotel-liste">`+
+    HOTELS.filter(h=>h[0]===g).map(h=>`<article class="hotel"><h4>${esc(h[1])}</h4><p class="hd">${esc(h[2])}</p>
+      ${h[3] ? `<p>${esc(h[3])} · <a href="https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(h[1]+" "+h[3])}" target="_blank" rel="noopener">plan</a></p>` : ""}
+      ${h[4] ? `<p><a href="tel:+33${h[4].replace(/\s/g,"").slice(1)}">${esc(h[4])}</a></p>` : ""}
+      <a class="btn btn-ghost" href="${esc(h[5])}" target="_blank" rel="noopener">Voir l'hôtel</a></article>`).join("")+`</div></div>`).join("");
+})();
 
 /* ===== Démarrage ===== */
 render();
