@@ -389,6 +389,15 @@ footer .script{font-size:1.9rem;color:var(--fez);margin-bottom:6px;display:block
 .card.duo{grid-column:span 2}
 .card.duo .lien-duo{position:absolute;left:50%;top:calc(14px + 25%);transform:translate(-50%,-50%);width:34px;height:34px;border-radius:50%;background:var(--fez);color:#FFF3DF;display:grid;place-items:center;font-weight:900;border:3px solid var(--carte)}
 @media(max-width:600px){.card.duo{grid-column:auto}}
+
+/* Trombinoscope simple : carré = une personne, rectangle à deux carrés = un couple ou deux amis */
+.trombi{display:flex;flex-wrap:wrap;gap:22px;justify-content:center}
+.t-cadre{display:flex;gap:10px;padding:10px;background:var(--carte);border:3px solid var(--or);border-radius:18px;box-shadow:0 10px 24px rgba(80,40,10,.12)}
+.t-pers{margin:0;width:150px;display:flex;flex-direction:column;gap:6px;align-items:center}
+.t-photo{width:150px;height:150px;border-radius:12px;background:var(--grad);background-size:cover;background-position:center 20%;display:grid;place-items:center;color:#FFF3DF;font-family:var(--f-titre);font-weight:800;font-size:2.4rem}
+.t-pers figcaption{font-family:var(--f-script);font-style:italic;font-weight:700;font-size:1.2rem;color:var(--zellige);text-align:center;line-height:1.1}
+.trombi-vide{text-align:center;color:var(--encre-douce);padding:40px;border:2px dashed var(--or);border-radius:24px;max-width:560px;margin:0 auto}
+@media(max-width:420px){.t-pers{width:130px}.t-photo{width:130px;height:130px}.t-cadre{gap:8px;padding:8px}}
 /* Prénoms et noms : jamais en capitales */
 .hotes,.heros h3,.card h3,.fiche h3,.inv-head h2,.surprise-carte h3{font-family:var(--f-script);font-style:italic;font-weight:700;text-transform:none;letter-spacing:0}
 
@@ -449,6 +458,7 @@ footer .script{font-size:1.9rem;color:var(--fez);margin-bottom:6px;display:block
       <a href="#invitation" data-tab="invitation">Invitation</a>
       <a href="#programme" data-tab="programme">Programme</a>
       <a href="#invites" data-tab="invites">Invités</a>
+      <a href="#trombi" data-tab="trombi"><span class="long">Trombinoscope</span><span class="court">Trombi</span></a>
       <a href="#reponse" data-tab="reponse"><span class="long">Je réponds</span><span class="court">Répondre</span></a>
       <a href="#photos" data-tab="photos">Photos<span class="long"> & vidéos</span></a>
       <a href="#surprise" data-tab="surprise">Surprise</a>
@@ -732,6 +742,20 @@ footer .script{font-size:1.9rem;color:var(--fez);margin-bottom:6px;display:block
   </section>
 </div>
 
+<!-- ================= ONGLET : TROMBINOSCOPE ================= -->
+<div class="vue" id="vue-trombi" data-vue="trombi" hidden>
+  <section>
+    <div class="wrap">
+      <div class="sec-head">
+        <span class="tag">Ils ont dit oui !</span>
+        <h2>Le trombinoscope</h2>
+        <p id="trombi-intro">Tous les invités qui ont confirmé leur venue, avec leur photo déguisée.</p>
+      </div>
+      <div class="trombi" id="trombi"></div>
+    </div>
+  </section>
+</div>
+
 <!-- ================= ONGLET : HÔTELS ================= -->
 <div class="vue" id="vue-hotels" data-vue="hotels" hidden>
   <section>
@@ -989,7 +1013,7 @@ buildGuests(REPONSES);
 document.getElementById("horaires-note").hidden = !CONFIG.horairesProvisoires;
 
 /* ===== Onglets ===== */
-const TABS = ["invitation","programme","invites","reponse","photos","surprise","hotels"];
+const TABS = ["invitation","programme","invites","trombi","reponse","photos","surprise","hotels"];
 function showTab(name, scroll){
   if (!TABS.includes(name)) name = "invitation";
   document.querySelectorAll(".vue").forEach(v => v.hidden = v.dataset.vue !== name);
@@ -1068,8 +1092,18 @@ function renderHeros(){
     .map(g=>`<button type="button" data-id="${g.id}">Le mot de ${esc(g.first)}</button>`).join("");
   document.querySelectorAll("#noms-heros button").forEach(b=> b.onclick = ()=> location.hash = b.dataset.id);
 }
+function renderTrombi(){
+  const box = document.getElementById("trombi"); if (!box) return;
+  const ok = GUESTS.filter(g=>g.status==="oui" && !g.partenaireDe && !g.hote);
+  const pers = g => `<figure class="t-pers"><div class="t-photo" style="--grad:${g.grad};${photoDe(g) ? `background-image:url('${esc(photoDe(g))}')` : ""}" ${photoDe(g) ? `role="img" aria-label="Photo de ${esc(g.name)}">` : `>${esc(g.first[0] + (g.ini || ""))}`}</div><figcaption>${esc(g.name)}</figcaption></figure>`;
+  const nbPers = ok.reduce((a,g)=> a + 1 + (GUESTS.some(x=>x.partenaireDe && x.guestId===g.id) ? 1 : 0), 0);
+  document.getElementById("trombi-intro").textContent = ok.length ? `${nbPers} personne${nbPers>1?"s":""} confirmée${nbPers>1?"s":""} à ce jour, avec leur photo déguisée.` : "Tous les invités qui ont confirmé leur venue, avec leur photo déguisée.";
+  box.innerHTML = ok.length ? ok.map(g=>{ const p = GUESTS.find(x=>x.partenaireDe && x.guestId===g.id);
+      return `<div class="t-cadre${p ? " t-duo" : ""}">${pers(g)}${p ? pers(p) : ""}</div>`; }).join("")
+    : '<p class="trombi-vide">Le trombinoscope se remplira au fil des confirmations. <a href="#reponse" style="color:var(--fez);font-weight:800">Réponds vite</a> pour être le premier !</p>';
+}
 function render(){
-  renderStats(); renderHeros();
+  renderStats(); renderHeros(); renderTrombi();
   const q = slug(document.getElementById("q").value);
   const STARS = GUESTS.filter(g=>!g.hote && !(g.partenaireDe && GUESTS.some(h=>h.hote && h.id===g.guestId)));
   const list = STARS.filter(g => (activeGroup==="tous" || g.status===activeGroup) && (!q || g.id.includes(q)));
