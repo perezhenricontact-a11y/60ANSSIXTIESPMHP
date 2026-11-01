@@ -59,7 +59,7 @@ header.site .wrap{display:flex;align-items:center;justify-content:space-between;
 .logo{font-family:var(--f-titre);font-weight:800;font-size:1.25rem;color:var(--zellige);text-decoration:none;white-space:nowrap}
 .logo span{color:var(--fez)}
 .onglets{display:flex;gap:4px;overflow-x:auto;scrollbar-width:none;min-width:0}
-.onglets a{flex:none;text-decoration:none;font-weight:800;font-size:.95rem;color:var(--encre-douce);padding:9px 15px;border-radius:999px;border:1px solid transparent;transition:background .2s,color .2s}
+.onglets a{flex:none;text-decoration:none;font-weight:800;font-size:.9rem;color:var(--encre-douce);padding:8px 10px;border-radius:999px;border:1px solid transparent;transition:background .2s,color .2s}
 .onglets a:hover{color:var(--fez)}
 .onglets a[aria-current="page"]{background:var(--zellige);color:#FFF6E4;border-color:var(--or)}
 .jours{flex:none;font-family:var(--f-titre);font-weight:800;color:var(--fez);background:var(--carte);border:1px solid var(--or);border-radius:999px;padding:5px 12px;font-size:.9rem}
@@ -415,12 +415,17 @@ footer .script{font-size:1.9rem;color:var(--fez);margin-bottom:6px;display:block
 .t-grille{display:flex;flex-wrap:wrap;gap:20px;justify-content:center}
 .t-cadre{margin:0;padding:10px;background:var(--carte);border:3px solid var(--or);border-radius:18px;box-shadow:0 10px 24px rgba(80,40,10,.12);display:flex;flex-direction:column;align-items:center;gap:8px;text-decoration:none}
 .t-cadre figcaption{font-family:var(--f-script);font-style:italic;font-weight:700;font-size:1.2rem;color:var(--zellige);text-align:center;line-height:1.1}
-.t-photo{width:160px;height:160px;border-radius:12px;background:var(--grad);background-size:cover;background-position:center 20%;display:grid;place-items:center;color:#FFF3DF;font-family:var(--f-titre);font-weight:800;font-size:2.4rem}
-.t-photo-duo{width:330px;height:220px;border-radius:12px;overflow:hidden;background:var(--grad);display:grid;place-items:center;color:#FFF3DF;font-family:var(--f-titre);font-weight:800;font-size:2.2rem}
+.t-photo{width:var(--t,160px);height:var(--t,160px);border-radius:12px;background:var(--grad);background-size:cover;background-position:center 20%;display:grid;place-items:center;color:#FFF3DF;font-family:var(--f-titre);font-weight:800;font-size:2.4rem}
+.t-photo-duo{width:calc(var(--t,160px) * 2 + 10px);height:calc(var(--t,160px) * 1.35);border-radius:12px;overflow:hidden;background:var(--grad);display:grid;place-items:center;color:#FFF3DF;font-family:var(--f-titre);font-weight:800;font-size:2.2rem}
 .t-photo-duo img{width:100%;height:100%;object-fit:cover;object-position:center 30%;display:block}
 .t-place{border-style:dashed;opacity:.75}
 .t-place .t-photo{background:repeating-linear-gradient(45deg,#F4E6CC 0 12px,#FBF3E4 12px 24px);color:var(--or)}
-@media(max-width:420px){.t-photo{width:130px;height:130px}.t-photo-duo{width:276px;height:184px}}
+.t-cadre figcaption{font-size:calc(var(--t,160px) / 8 + .2rem)}
+.trombi.t-compact .t-hotes{max-width:620px;gap:18px;margin-bottom:26px}
+.trombi.t-compact .t-orient figcaption{font-size:1.05rem}
+.trombi.t-compact .t-grille{gap:12px}
+.trombi.t-compact .t-cadre{padding:6px;border-width:2px;border-radius:12px}
+@media(max-width:420px){.trombi{--t:min(var(--t,160px),130px)}.t-photo{width:min(var(--t,160px),130px);height:min(var(--t,160px),130px)}.t-photo-duo{width:min(calc(var(--t,160px) * 2 + 10px),276px);height:min(calc(var(--t,160px) * 1.35),184px)}}
 /* Prénoms et noms : jamais en capitales */
 .hotes,.heros h3,.card h3,.fiche h3,.inv-head h2,.surprise-carte h3{font-family:var(--f-script);font-style:italic;font-weight:700;text-transform:none;letter-spacing:0}
 
@@ -480,7 +485,7 @@ footer .script{font-size:1.9rem;color:var(--fez);margin-bottom:6px;display:block
     <nav class="onglets" aria-label="Onglets">
       <a href="#invitation" data-tab="invitation">Invitation</a>
       <a href="#programme" data-tab="programme">Programme</a>
-      <a href="#invites" data-tab="invites">Invités</a>
+      <a href="#invites" data-tab="invites"><span class="long">Statistiques invités</span><span class="court">Stats</span></a>
       <a href="#trombi" data-tab="trombi"><span class="long">Trombinoscope</span><span class="court">Trombi</span></a>
       <a href="#reponse" data-tab="reponse"><span class="long">Je réponds</span><span class="court">Répondre</span></a>
       <a href="#photos" data-tab="photos">Photos<span class="long"> & vidéos</span></a>
@@ -638,7 +643,7 @@ footer .script{font-size:1.9rem;color:var(--fez);margin-bottom:6px;display:block
   <section>
     <div class="wrap">
       <div class="sec-head">
-        <span class="tag">Ils seront de la fête</span>
+        <span class="tag">Statistiques invités</span>
         <h2>Les guest stars du jour</h2>
         <p>Chaque réponse au formulaire ajoute une star, avec sa photo déguisée en tenue marocaine par l'IA (<a href="#reponse" style="color:var(--fez);font-weight:800">le défi photo</a>). Tu n'y es pas encore ? <a href="#reponse" style="color:var(--fez);font-weight:800">Réponds ici</a>.</p>
       </div>
@@ -649,7 +654,7 @@ footer .script{font-size:1.9rem;color:var(--fez);margin-bottom:6px;display:block
           <figure><img src="media/photo-terrain.jpg" alt="Patrick et Henri sur un terrain de pétanque"><figcaption>… et en vrai !</figcaption></figure>
         </div>
         <div>
-          <span class="role">Les héros du jour</span>
+          <span class="role">Les hôtes du jour</span>
           <h3>Patrick Messonnier & Henri Perez</h3>
           <p>Soixante ans chacun, cent vingt à eux deux, et des décennies de parties de pétanque. Leurs compagnes seront bien sûr à leurs côtés. Ouvrez leur carte pour lire leur mot d'accueil.</p>
           <div class="noms" id="noms-heros"></div>
@@ -1144,7 +1149,13 @@ function renderTrombi(){
     return `<figure class="t-cadre"><div class="t-photo" style="--grad:${g.grad};${photoDe(g) ? `background-image:url('${esc(photoDe(g))}')` : ""}">${photoDe(g) ? "" : esc(g.first[0] + (g.ini || ""))}</div>
       <figcaption>${esc(g.name)}</figcaption></figure>`; }).join("");
   const places = Array.from({length: 3}, ()=> `<a class="t-cadre t-place" href="#reponse"><div class="t-photo">?</div><figcaption>Ta photo ici !</figcaption></a>`).join("");
-  box.innerHTML = `<h3 class="t-titre">Les héros du jour</h3>${hotes}<h3 class="t-titre">Les invités</h3><div class="t-grille">${cartes}${places}</div>`;
+  /* Taille automatique : plus il y a de photos, plus elles rétrécissent pour que tout tienne */
+  const unites = ok.reduce((a,g)=> a + (partenaire(g) ? 2 : 1), 0);
+  const t = unites <= 10 ? 160 : unites <= 20 ? 130 : unites <= 36 ? 105 : unites <= 60 ? 88 : 74;
+  const nPlaces = unites < 12 ? 3 : 0;
+  box.style.setProperty("--t", t + "px");
+  box.classList.toggle("t-compact", unites > 20);
+  box.innerHTML = `<h3 class="t-titre">Les hôtes du jour</h3>${hotes}<h3 class="t-titre">Les invités</h3><div class="t-grille">${cartes}${places.split("</a>").slice(0,nPlaces).map(x=>x+"</a>").join("")}</div>`;
 }
 function render(){
   renderStats(); renderHeros(); renderTrombi();
@@ -1212,7 +1223,7 @@ function openInvite(id){
   const lieu = CONFIG.venue + " · " + CONFIG.city;
   let tete, citation, corps;
   if (g.hote){
-    tete = `<small>Héros du jour · 60 ans</small><h2>${esc(g.hote.full)}</h2>`;
+    tete = `<small>Hôte du jour · 60 ans</small><h2>${esc(g.hote.full)}</h2>`;
     citation = esc(g.hote.mot);
     corps = `<p>Rendez-vous le ${CONFIG.dateTexte} au ${lieu} pour fêter nos 60 ans : pétanque ou visite le matin, déjeuner, puis soirée inoubliable.</p>`;
   } else {
