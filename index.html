@@ -382,6 +382,8 @@ footer .script{font-size:1.9rem;color:var(--fez);margin-bottom:6px;display:block
 /* Trombinoscope : une carte par invitation, deux carrés pour un couple */
 .card .bulles{display:grid;grid-template-columns:1fr;gap:10px;padding:14px 14px 0;position:relative}
 .card.duo .bulles{grid-template-columns:1fr 1fr}
+.card.duo .bulles.couple{grid-template-columns:1fr}
+.carre.rect{aspect-ratio:3/2;background-position:center 30%}
 .bulle{margin:0;display:flex;flex-direction:column;align-items:center;gap:6px}
 .carre{width:100%;aspect-ratio:1;border-radius:16px;border:3px solid var(--or);background:var(--grad);background-size:cover;background-position:center 20%;display:grid;place-items:center;color:#FFF3DF;font-family:var(--f-titre);font-weight:800;font-size:2rem}
 .bulle figcaption{font-family:var(--f-script);font-style:italic;font-weight:700;font-size:1.25rem;color:var(--zellige);text-align:center;line-height:1.1}
@@ -398,6 +400,27 @@ footer .script{font-size:1.9rem;color:var(--fez);margin-bottom:6px;display:block
 .t-pers figcaption{font-family:var(--f-script);font-style:italic;font-weight:700;font-size:1.2rem;color:var(--zellige);text-align:center;line-height:1.1}
 .trombi-vide{text-align:center;color:var(--encre-douce);padding:40px;border:2px dashed var(--or);border-radius:24px;max-width:560px;margin:0 auto}
 @media(max-width:420px){.t-pers{width:130px}.t-photo{width:130px;height:130px}.t-cadre{gap:8px;padding:8px}}
+
+/* Trombinoscope : hôtes en cadres orientaux, carré = une personne, rectangle = une photo de couple */
+.trombi{display:block}
+.t-titre{font-family:var(--f-titre);color:var(--zellige);text-align:center;font-size:1.4rem;margin:10px 0 18px}
+.t-hotes{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:26px;max-width:900px;margin:0 auto 40px}
+@media(max-width:640px){.t-hotes{grid-template-columns:1fr}}
+.t-orient{margin:0;padding:14px;border-radius:999px 999px 22px 22px;background:repeating-conic-gradient(from 45deg,#126169 0 25%,#C08A2D 0 50%) 0 0/22px 22px;border:4px solid var(--or);box-shadow:0 0 0 5px var(--carte),0 0 0 7px var(--or),0 18px 40px rgba(80,40,10,.22)}
+.t-orient-in{aspect-ratio:3/2;border-radius:999px 999px 14px 14px;overflow:hidden;border:4px solid var(--or-clair);background:var(--creme-2)}
+.t-orient-in img{width:100%;height:100%;object-fit:cover;display:block}
+.t-orient figcaption{margin:12px auto 0;width:max-content;max-width:100%;padding:6px 18px;border-radius:999px;background:var(--fez);color:#FFF3DF;border:2px solid var(--or-clair);font-family:var(--f-script);font-style:italic;font-weight:700;font-size:1.3rem}
+.t-vide{width:100%;height:100%;display:grid;place-items:center;background:repeating-linear-gradient(45deg,#F4E6CC 0 12px,#FBF3E4 12px 24px)}
+.t-vide span{font-weight:800;color:var(--encre-douce);background:var(--carte);padding:8px 14px;border-radius:999px;border:1px dashed var(--or)}
+.t-grille{display:flex;flex-wrap:wrap;gap:20px;justify-content:center}
+.t-cadre{margin:0;padding:10px;background:var(--carte);border:3px solid var(--or);border-radius:18px;box-shadow:0 10px 24px rgba(80,40,10,.12);display:flex;flex-direction:column;align-items:center;gap:8px;text-decoration:none}
+.t-cadre figcaption{font-family:var(--f-script);font-style:italic;font-weight:700;font-size:1.2rem;color:var(--zellige);text-align:center;line-height:1.1}
+.t-photo{width:160px;height:160px;border-radius:12px;background:var(--grad);background-size:cover;background-position:center 20%;display:grid;place-items:center;color:#FFF3DF;font-family:var(--f-titre);font-weight:800;font-size:2.4rem}
+.t-photo-duo{width:330px;height:220px;border-radius:12px;overflow:hidden;background:var(--grad);display:grid;place-items:center;color:#FFF3DF;font-family:var(--f-titre);font-weight:800;font-size:2.2rem}
+.t-photo-duo img{width:100%;height:100%;object-fit:cover;object-position:center 30%;display:block}
+.t-place{border-style:dashed;opacity:.75}
+.t-place .t-photo{background:repeating-linear-gradient(45deg,#F4E6CC 0 12px,#FBF3E4 12px 24px);color:var(--or)}
+@media(max-width:420px){.t-photo{width:130px;height:130px}.t-photo-duo{width:276px;height:184px}}
 /* Prénoms et noms : jamais en capitales */
 .hotes,.heros h3,.card h3,.fiche h3,.inv-head h2,.surprise-carte h3{font-family:var(--f-script);font-style:italic;font-weight:700;text-transform:none;letter-spacing:0}
 
@@ -691,7 +714,7 @@ footer .script{font-size:1.9rem;color:var(--fez);margin-bottom:6px;display:block
           <ol>
             <li>Ouvre l'IA de ton choix et envoie-lui une photo de toi (de face, bien éclairée).</li>
             <li>Colle le texte ci-dessous et laisse-la travailler. Pas satisfait·e ? Demande-lui une autre version.</li>
-            <li>Dépose ta plus belle création : elle illustrera ta carte parmi les guest stars.</li>
+            <li>Dépose ta plus belle création : elle illustrera ta carte parmi les guest stars. <b>En couple ou en duo d'amis : une seule photo à deux</b>, déguisés ensemble.</li>
           </ol>
         </div>
         <div class="defi-prompt">
@@ -721,7 +744,7 @@ footer .script{font-size:1.9rem;color:var(--fez);margin-bottom:6px;display:block
       <div class="etapes">
         <div class="etape"><b>1. Retrouve ton nom</b><p>Ton invitation s'affiche : seul·e ou à deux. Le bouton « Répondre » ouvre le formulaire déjà rempli avec ton prénom et ta formule.</p></div>
         <div class="etape"><b>2. Réponds à tout</b><p>Présence, pétanque ou visite, déjeuner et soirée, arrivée et départ, tenue et taille de t-shirt. Pour deux : dis-nous si ton conjoint·e ou ami·e vient.</p></div>
-        <div class="etape"><b>3. Dépose ta photo déguisée</b><p>Ta création « tenue marocaine par l'IA » (et celle de ton conjoint·e ou ami·e) sur <a class="lien-mail" href="https://docs.google.com/forms/d/e/1FAIpQLSeseBrP0pXsgrOveUep1u4lpHYQMpIqEOV70zHX5kyyk8zOZA/viewform" target="_blank" rel="noopener">le formulaire photo</a> (compte Google). Sinon par mail à <a class="lien-mail" href="mailto:perez.henri.contact@gmail.com?subject=PHOTO%2060%20ANS%20%E2%80%93%20&amp;body=Bonjour%20Patrick%20et%20Henri%2C%0A%0AVoici%20ma%20photo%20d%C3%A9guis%C3%A9e%20pour%20le%2015%20mai%20(pr%C3%A9nom%20et%20nom%20%3A%20...).%0A">perez.henri.contact@gmail.com</a>, objet « PHOTO 60 ANS ».</p></div>
+        <div class="etape"><b>3. Dépose ta photo déguisée</b><p>Ta création « tenue marocaine par l'IA » (en couple ou en duo : une seule photo à deux) sur <a class="lien-mail" href="https://docs.google.com/forms/d/e/1FAIpQLSeseBrP0pXsgrOveUep1u4lpHYQMpIqEOV70zHX5kyyk8zOZA/viewform" target="_blank" rel="noopener">le formulaire photo</a> (compte Google). Sinon par mail à <a class="lien-mail" href="mailto:perez.henri.contact@gmail.com?subject=PHOTO%2060%20ANS%20%E2%80%93%20&amp;body=Bonjour%20Patrick%20et%20Henri%2C%0A%0AVoici%20ma%20photo%20d%C3%A9guis%C3%A9e%20pour%20le%2015%20mai%20(pr%C3%A9nom%20et%20nom%20%3A%20...).%0A">perez.henri.contact@gmail.com</a>, objet « PHOTO 60 ANS ».</p></div>
       </div>
     </div>
   </section>
@@ -876,14 +899,25 @@ const PORTRAITS = {
    [prénom, initiale, réponse "oui" | "peut-etre" | "non", moments "Tournoi, Apéro, Couscous", nb d'accompagnants, tenue] */
 const REPONSES = [
  ["Henri","P.","oui","Pétanque, Déjeuner, Soirée",1,"Djellaba prête"],      // + sa compagne
- ["Patrick","M.","oui","Pétanque, Déjeuner, Soirée",1,"Djellaba prête"]     // + sa compagne
+ ["Patrick","M.","oui","Pétanque, Déjeuner, Soirée",1,"Djellaba prête"],    // + sa compagne
+ ["Franck","J.","oui","",1,"Djellaba prête","Véronique"]                     // photo de couple reçue le 01/11/2026
+];
+
+/* ===== PHOTOS DE COUPLE (une photo pour deux) — clé = prénom-initiale de l'invité ===== */
+const PHOTOS_COUPLES = {
+  "franck-j": "invites/franck-j-veronique.jpg"
+};
+/* ===== Les hôtes en tête du trombinoscope (gauche, droite) ===== */
+const HOTES_TROMBI = [
+  { noms: "Patrick & Corinne", photo: "" },
+  { noms: "Henri & Stéphanie", photo: "invites/hotes-henri-stephanie.jpg" }
 ];
 
 /* ===== INVITATIONS (d'après le classeur PILOTAGE_INVITATIONS_60ANS, onglet INVITÉS) =====
    [prénom, initiale du nom, "solo" | "couple" | "amis", prénom du conjoint·e ou ami·e (si connu), 1 si Madame] */
 const INVITATIONS = [
  ["Henri", "P", "couple", "Stéphanie", 0],
- ["Patrick", "M", "couple", "", 0],
+ ["Patrick", "M", "couple", "Corinne", 0],
  ["Christophe", "B", "couple", "", 0],
  ["Noura", "B", "solo", "", 1],
  ["Michel", "B", "couple", "", 0],
@@ -1095,12 +1129,22 @@ function renderHeros(){
 function renderTrombi(){
   const box = document.getElementById("trombi"); if (!box) return;
   const ok = GUESTS.filter(g=>g.status==="oui" && !g.partenaireDe && !g.hote);
-  const pers = g => `<figure class="t-pers"><div class="t-photo" style="--grad:${g.grad};${photoDe(g) ? `background-image:url('${esc(photoDe(g))}')` : ""}" ${photoDe(g) ? `role="img" aria-label="Photo de ${esc(g.name)}">` : `>${esc(g.first[0] + (g.ini || ""))}`}</div><figcaption>${esc(g.name)}</figcaption></figure>`;
-  const nbPers = ok.reduce((a,g)=> a + 1 + (GUESTS.some(x=>x.partenaireDe && x.guestId===g.id) ? 1 : 0), 0);
-  document.getElementById("trombi-intro").textContent = ok.length ? `${nbPers} personne${nbPers>1?"s":""} confirmée${nbPers>1?"s":""} à ce jour, avec leur photo déguisée.` : "Tous les invités qui ont confirmé leur venue, avec leur photo déguisée.";
-  box.innerHTML = ok.length ? ok.map(g=>{ const p = GUESTS.find(x=>x.partenaireDe && x.guestId===g.id);
-      return `<div class="t-cadre${p ? " t-duo" : ""}">${pers(g)}${p ? pers(p) : ""}</div>`; }).join("")
-    : '<p class="trombi-vide">Le trombinoscope se remplira au fil des confirmations. <a href="#reponse" style="color:var(--fez);font-weight:800">Réponds vite</a> pour être le premier !</p>';
+  const partenaire = g => GUESTS.find(x=>x.partenaireDe && x.guestId===g.id);
+  const nbPers = ok.reduce((a,g)=> a + 1 + (partenaire(g) ? 1 : 0), 0);
+  document.getElementById("trombi-intro").textContent = (nbPers ? `${nbPers} invité${nbPers>1?"s":""} confirmé${nbPers>1?"s":""} à ce jour. ` : "") +
+    "Une photo par personne, et une seule photo pour les couples ou les duos d'amis.";
+  const vide = t => `<div class="t-vide"><span>${t}</span></div>`;
+  const hotes = `<div class="t-hotes">${HOTES_TROMBI.map(h=>`<figure class="t-orient">
+      <div class="t-orient-in">${h.photo ? `<img src="${esc(h.photo)}" alt="${esc(h.noms)} en tenue marocaine">` : vide("Photo à venir")}</div>
+      <figcaption>${esc(h.noms)}</figcaption></figure>`).join("")}</div>`;
+  const cartes = ok.map(g=>{ const p = partenaire(g);
+    if (p){ const ph = PHOTOS_COUPLES[g.id];
+      return `<figure class="t-cadre t-duo"><div class="t-photo-duo" style="--grad:${g.grad}">${ph ? `<img src="${esc(ph)}" alt="${esc(g.name)} et ${esc(p.name)}">` : `<span>${esc(g.first[0])} & ${esc(p.first[0])}</span>`}</div>
+        <figcaption>${esc(g.name)} & ${esc(p.name)}</figcaption></figure>`; }
+    return `<figure class="t-cadre"><div class="t-photo" style="--grad:${g.grad};${photoDe(g) ? `background-image:url('${esc(photoDe(g))}')` : ""}">${photoDe(g) ? "" : esc(g.first[0] + (g.ini || ""))}</div>
+      <figcaption>${esc(g.name)}</figcaption></figure>`; }).join("");
+  const places = Array.from({length: 3}, ()=> `<a class="t-cadre t-place" href="#reponse"><div class="t-photo">?</div><figcaption>Ta photo ici !</figcaption></a>`).join("");
+  box.innerHTML = `<h3 class="t-titre">Les héros du jour</h3>${hotes}<h3 class="t-titre">Les invités</h3><div class="t-grille">${cartes}${places}</div>`;
 }
 function render(){
   renderStats(); renderHeros(); renderTrombi();
@@ -1113,10 +1157,10 @@ function render(){
   list.filter(x=>x.partenaireDe && !groupes.some(gr=>gr.includes(x))).forEach(x=>groupes.push([x]));
   const carre = g => photoDe(g) ? `<div class="carre" role="img" aria-label="Photo de ${esc(g.name)}" style="background-image:url('${esc(photoDe(g))}')"></div>`
                                 : `<div class="carre" style="--grad:${g.grad}">${esc(g.first[0] + (g.ini || ""))}</div>`;
-  grid.innerHTML = groupes.map((gr,i)=>{ const g = gr[0], duo = gr.length > 1;
+  grid.innerHTML = groupes.map((gr,i)=>{ const g = gr[0], duo = gr.length > 1, phc = duo && PHOTOS_COUPLES[g.id];
     return `<article class="card${duo ? " duo" : ""}" style="--grad:${g.grad};animation-delay:${Math.min(i,20)*30}ms" data-id="${g.guestId || g.id}" tabindex="0" aria-label="Ouvrir la carte de ${esc(gr.map(x=>x.name).join(" et "))}">
-      <div class="bulles">${gr.map(x=>`<figure class="bulle">${carre(x)}<figcaption>${esc(x.name)}</figcaption></figure>`).join("")}
-        ${duo ? `<span class="lien-duo" aria-hidden="true">&amp;</span>` : ""}${g.status ? `<span class="badge b-${g.status}">${LABEL[g.status]}</span>` : ""}</div>
+      <div class="bulles${phc ? " couple" : ""}">${phc ? `<figure class="bulle"><div class="carre rect" role="img" aria-label="Photo de ${esc(gr.map(x=>x.name).join(" et "))}" style="background-image:url('${esc(phc)}')"></div><figcaption>${esc(gr.map(x=>x.name).join(" & "))}</figcaption></figure>` :
+        gr.map(x=>`<figure class="bulle">${carre(x)}<figcaption>${esc(x.name)}</figcaption></figure>`).join("") + (duo ? `<span class="lien-duo" aria-hidden="true">&amp;</span>` : "")}${g.status ? `<span class="badge b-${g.status}">${LABEL[g.status]}</span>` : ""}</div>
       <div class="card-body">
         <span class="role">${duo ? "Guest stars en duo" : g.partenaireDe ? "Accompagne " + esc(g.partenaireDe) : "Guest star"}</span>
         <div class="mom">${g.moments.map(m=>`<span>${m}</span>`).join("")}</div>
