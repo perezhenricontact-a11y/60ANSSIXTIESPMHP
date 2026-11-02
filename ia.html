@@ -1,0 +1,108 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Assistant photo marocaine</title>
+<meta name="description" content="Transforme ta photo en tenue marocaine avec ChatGPT (gratuit) pour les 60 ans de Patrick & Henri.">
+<meta property="og:title" content="Assistant photo : déguise-toi en tenue marocaine">
+<meta property="og:image" content="https://perezhenricontact-a11y.github.io/60ANSSIXTIESPMHP/media/apercu-partage.jpg">
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@700;800&family=Cormorant+Garamond:ital,wght@1,700&family=Nunito:wght@600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{--creme:#FBF3E4;--carte:#FFFAF1;--filet:#E4D1AE;--encre:#18393F;--doux:#5E6F6B;--zel:#126169;--zelf:#0C4349;--fez:#BE3A24;--or:#C08A2D;--orc:#EBC46E}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:var(--creme);color:var(--encre);font-family:Nunito,system-ui,sans-serif;line-height:1.5}
+.bandeau{height:18px;background:repeating-conic-gradient(from 45deg,var(--zel) 0 25%,var(--or) 0 50%) 0 0/18px 18px;border-bottom:3px solid var(--or)}
+main{max-width:720px;margin:0 auto;padding:28px 16px 60px}
+h1{font-family:Cinzel,Georgia,serif;color:var(--zel);font-size:clamp(1.6rem,6vw,2.3rem);line-height:1.1;text-align:center}
+.sous{font-family:"Cormorant Garamond",Georgia,serif;font-style:italic;font-weight:700;color:var(--fez);text-align:center;font-size:1.3rem;margin:6px 0 22px}
+.carte{background:var(--carte);border:2px solid var(--or);border-radius:20px;padding:20px;margin-bottom:18px}
+.carte h2{font-family:Cinzel,Georgia,serif;font-size:1.1rem;color:var(--zel);margin-bottom:10px;display:flex;gap:10px;align-items:center}
+.num{flex:none;width:32px;height:32px;border-radius:50%;background:var(--fez);color:#FFF3DF;display:grid;place-items:center;font-size:1rem}
+.choix{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.choix label{border:2px solid var(--filet);border-radius:14px;padding:12px;text-align:center;font-weight:800;cursor:pointer}
+.choix input{display:none}
+.choix input:checked + span{color:var(--fez)}
+.choix label:has(input:checked){border-color:var(--fez);background:#FDEBDD}
+.btn{display:flex;align-items:center;justify-content:center;gap:8px;width:100%;padding:15px 18px;border-radius:999px;border:0;font:800 1.05rem Nunito,sans-serif;text-decoration:none;cursor:pointer;margin-top:10px}
+.btn-main{background:linear-gradient(135deg,var(--fez),#E0662F);color:#FFF6E8;box-shadow:0 10px 24px rgba(190,58,36,.3)}
+.btn-ghost{background:transparent;border:2px solid var(--zel);color:var(--zel)}
+p,li{color:var(--doux)}
+ol{margin:6px 0 0 20px;display:grid;gap:6px}
+li b,p b{color:var(--encre)}
+.prompt{font-family:"Cormorant Garamond",Georgia,serif;font-style:italic;font-weight:700;font-size:1.1rem;color:var(--encre);background:#F4E6CC;border-radius:12px;padding:12px 14px;margin-top:10px}
+.note{font-size:.9rem;margin-top:8px}
+.toast{position:fixed;left:50%;bottom:20px;transform:translate(-50%,120px);background:var(--zel);color:#FFF3DF;padding:10px 18px;border-radius:999px;font-weight:800;transition:transform .3s;visibility:hidden}
+.toast.on{transform:translate(-50%,0);visibility:visible}
+a.lien{color:var(--fez);font-weight:800}
+</style>
+</head>
+<body>
+<div class="bandeau"></div>
+<main>
+  <h1>L'assistant photo marocaine</h1>
+  <p class="sous">Déguise-toi en 2 minutes avec ChatGPT (gratuit)</p>
+
+  <div class="carte">
+    <h2><span class="num">1</span>Tu te déguises…</h2>
+    <div class="choix">
+      <label><input type="radio" name="qui" value="seul" checked><span>Seul·e</span></label>
+      <label><input type="radio" name="qui" value="duo"><span>À deux (couple ou amis)</span></label>
+    </div>
+    <p class="note">À deux : une seule photo de vous deux ensemble.</p>
+  </div>
+
+  <div class="carte">
+    <h2><span class="num">2</span>Ouvre ChatGPT avec le texte déjà prêt</h2>
+    <a class="btn btn-main" id="go-chatgpt" target="_blank" rel="noopener">Ouvrir ChatGPT</a>
+    <p class="note">Un compte ChatGPT gratuit est demandé pour créer des images (inscription avec ton adresse e-mail ou ton compte Google). La version gratuite permet quelques images par jour : largement assez !</p>
+    <div class="prompt" id="prompt"></div>
+    <button class="btn btn-ghost" id="copier" type="button">Copier le texte (pour Gemini ou une autre IA)</button>
+    <p class="note">Autre IA gratuite : <a class="lien" href="https://gemini.google.com/app" target="_blank" rel="noopener">Gemini</a> ou <a class="lien" href="https://copilot.microsoft.com/" target="_blank" rel="noopener">Copilot</a> : copie le texte, colle-le, puis ajoute ta photo.</p>
+  </div>
+
+  <div class="carte">
+    <h2><span class="num">3</span>Ajoute ta photo</h2>
+    <ol>
+      <li>Dans ChatGPT, appuie sur <b>+</b> (ou le trombone) à gauche de la zone de message.</li>
+      <li>Choisis une photo <b>de face, bien éclairée</b>{duo}.</li>
+      <li>Envoie : l'image se fabrique en une à deux minutes. Pas satisfait·e ? Écris « refais-la » ou « plus de couleurs ».</li>
+    </ol>
+  </div>
+
+  <div class="carte">
+    <h2><span class="num">4</span>Enregistre l'image et envoie-la nous</h2>
+    <ol>
+      <li>Sur téléphone : <b>appui long sur l'image</b> puis « Enregistrer ». Sur ordinateur : bouton de téléchargement sur l'image.</li>
+      <li>Dépose-la sur <a class="lien" href="https://docs.google.com/forms/d/e/1FAIpQLSeseBrP0pXsgrOveUep1u4lpHYQMpIqEOV70zHX5kyyk8zOZA/viewform" target="_blank" rel="noopener">le formulaire photo</a> (compte Google), ou envoie-la par mail à <a class="lien" href="mailto:perez.henri.contact@gmail.com?subject=PHOTO%2060%20ANS%20%E2%80%93%20">perez.henri.contact@gmail.com</a>, objet « PHOTO 60 ANS » et ton prénom.</li>
+    </ol>
+    <p class="note"><b>Vraiment pas à l'aise ?</b> Envoie une photo normale par mail en précisant « à transformer » : Patrick et Henri s'en chargent.</p>
+  </div>
+
+  <p style="text-align:center;margin-top:10px"><a class="lien" href="./#reponse">← Retour au site de la fête</a></p>
+</main>
+<div class="toast" id="toast"></div>
+<script>
+const TEXTES = {
+  seul: "Je vais t'envoyer une photo de moi. Transforme-la en portrait de fête marocaine pour l'anniversaire « De Casablanca au cochonnet ». Habille-moi d'une djellaba (ou d'un caftan) de la couleur de ton choix, avec un tarbouche rouge, ou pour une femme un joli foulard. Ajoute des babouches, une boule de pétanque à la main et un décor de Casablanca ou de terrain de pétanque. Fais preuve d'imagination et d'humour, mais garde mon visage bien reconnaissable. Si tu n'as pas encore la photo, demande-la-moi.",
+  duo: "Je vais t'envoyer une photo de nous deux. Transforme-la en un seul portrait de fête marocaine pour l'anniversaire « De Casablanca au cochonnet ». Habille chacun d'une djellaba ou d'un caftan de couleurs assorties, avec un tarbouche rouge pour un homme et un joli foulard pour une femme. Ajoute des babouches, des boules de pétanque à la main et un décor de Casablanca ou de terrain de pétanque. Fais preuve d'imagination et d'humour, mais garde nos deux visages bien reconnaissables. Si tu n'as pas encore la photo, demande-la-moi."
+};
+const qui = () => document.querySelector('input[name="qui"]:checked').value;
+const etape = document.querySelector('.carte:nth-of-type(3) li:nth-child(2)');
+const etapeHTML = etape.innerHTML;
+function maj(){
+  const t = TEXTES[qui()];
+  document.getElementById("prompt").textContent = "« " + t + " »";
+  document.getElementById("go-chatgpt").href = "https://chatgpt.com/?q=" + encodeURIComponent(t);
+  etape.innerHTML = etapeHTML.replace("{duo}", qui()==="duo" ? ", <b>où l'on vous voit tous les deux</b>" : "");
+}
+document.querySelectorAll('input[name="qui"]').forEach(r => r.onchange = maj);
+function toast(m){ const el = document.getElementById("toast"); el.textContent = m; el.classList.add("on"); setTimeout(()=>el.classList.remove("on"), 2500); }
+document.getElementById("copier").onclick = async ()=>{
+  try { await navigator.clipboard.writeText(TEXTES[qui()]); toast("Texte copié !"); }
+  catch(e){ const r = document.createRange(); r.selectNodeContents(document.getElementById("prompt")); const s = getSelection(); s.removeAllRanges(); s.addRange(r); toast("Texte sélectionné : copie-le."); }
+};
+maj();
+</script>
+</body>
+</html>
