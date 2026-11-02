@@ -58,7 +58,7 @@ a.lien{color:var(--fez);font-weight:800}
     <p class="note">Un compte ChatGPT gratuit est demandé pour créer des images (inscription avec ton adresse e-mail ou ton compte Google). La version gratuite permet quelques images par jour : largement assez !</p>
     <div class="prompt" id="prompt"></div>
     <button class="btn btn-ghost" id="copier" type="button">Copier le texte (pour Gemini ou une autre IA)</button>
-    <p class="note">Autre IA gratuite : <a class="lien" href="https://gemini.google.com/app" target="_blank" rel="noopener">Gemini</a> ou <a class="lien" href="https://copilot.microsoft.com/" target="_blank" rel="noopener">Copilot</a> : copie le texte, colle-le, puis ajoute ta photo.</p>
+    <p class="note">Autre IA gratuite : <a class="lien" href="https://gemini.google.com/app" target="_blank" rel="noopener">Gemini</a> ou <a class="lien" id="go-copilot" href="https://copilot.microsoft.com/" target="_blank" rel="noopener">Copilot (texte déjà prêt)</a>. Pour Gemini, copie le texte, colle-le, puis ajoute ta photo.</p>
   </div>
 
   <div class="carte">
@@ -94,6 +94,7 @@ function maj(){
   const t = TEXTES[qui()];
   document.getElementById("prompt").textContent = "« " + t + " »";
   document.getElementById("go-chatgpt").href = "https://chatgpt.com/?q=" + encodeURIComponent(t);
+  document.getElementById("go-copilot").href = "https://copilot.microsoft.com/?q=" + encodeURIComponent(t);
   etape.innerHTML = etapeHTML.replace("{duo}", qui()==="duo" ? ", <b>où l'on vous voit tous les deux</b>" : "");
 }
 document.querySelectorAll('input[name="qui"]').forEach(r => r.onchange = maj);

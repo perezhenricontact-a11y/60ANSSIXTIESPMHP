@@ -447,6 +447,24 @@ footer .script{font-size:1.9rem;color:var(--fez);margin-bottom:6px;display:block
 .choix-nom{display:grid;gap:6px;font-weight:800;color:var(--zellige)}
 .choix-nom select{font:inherit;font-weight:700;padding:13px 16px;border-radius:14px;border:2px solid var(--or);background:var(--carte);color:var(--encre)}
 .trouve .ou{text-align:center;color:var(--encre-douce);font-weight:700;margin:-6px 0}
+
+/* Je ne trouve pas mon nom */
+.manquant{max-width:760px;margin:-14px auto 34px;padding:20px;border-radius:22px;background:var(--carte);border:2px dashed var(--fez)}
+.manquant h3{font-family:var(--f-titre);color:var(--fez);font-size:1.2rem;margin-bottom:6px}
+.manquant p{color:var(--encre-douce);font-size:.95rem}
+.m-row{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:12px 0}
+@media(max-width:560px){.m-row{grid-template-columns:1fr}}
+.m-row label{display:grid;gap:4px;font-weight:800;font-size:.9rem;color:var(--zellige)}
+.m-row input{font:inherit;padding:10px 12px;border-radius:12px;border:1px solid var(--filet);background:var(--creme)}
+.m-apercu{white-space:pre-wrap;font:inherit;font-size:.9rem;background:var(--creme-2);border-radius:12px;padding:12px;color:var(--encre)}
+.m-actions{display:flex;flex-wrap:wrap;gap:10px;margin-top:12px}
+.m-actions .btn{padding:11px 18px;font-size:.92rem}
+.manquant.flash{animation:flashM 1.2s ease}
+@keyframes flashM{0%{box-shadow:0 0 0 0 rgba(190,58,36,.55)}100%{box-shadow:0 0 0 18px rgba(190,58,36,0)}}
+.fiche .note{font-size:.86rem;margin-top:8px}
+.t-stats{display:flex;flex-wrap:wrap;justify-content:center;gap:10px;margin:0 0 22px}
+.t-stats span{background:var(--zellige);color:#FFF3DF;border:2px solid var(--or);border-radius:14px;padding:8px 14px;font-weight:800;font-size:.85rem}
+.t-stats b{font-family:var(--f-titre);color:var(--or-clair);font-size:1.3rem;margin-right:6px}
 /* Prénoms et noms : jamais en capitales */
 .hotes,.heros h3,.card h3,.fiche h3,.inv-head h2,.surprise-carte h3{font-family:var(--f-script);font-style:italic;font-weight:700;text-transform:none;letter-spacing:0}
 
@@ -713,6 +731,17 @@ footer .script{font-size:1.9rem;color:var(--fez);margin-bottom:6px;display:block
         <div class="trouve-res" id="trouve-res" aria-live="polite">
           <p class="trouve-vide">Choisis ton nom ou tape ton prénom.</p>
         </div>
+      </div>
+
+      <div class="manquant" id="manquant">
+        <h3>Je ne trouve pas mon nom</h3>
+        <p>On t'a invité·e de vive voix et ton nom n'apparaît pas ? Pas de formulaire dans ce cas : envoie-nous ce message, nous vérifions la liste et nous te répondons.</p>
+        <div class="m-row">
+          <label>Prénom et nom <input id="m-nom" placeholder="Ton prénom et ton nom" autocomplete="name"></label>
+          <label>Téléphone <input id="m-tel" placeholder="06 …" autocomplete="tel"></label>
+        </div>
+        <pre class="m-apercu" id="m-apercu"></pre>
+        <div class="m-actions"><a class="btn btn-main" id="m-mail">Envoyer par mail</a><button class="btn btn-ghost" id="m-copier" type="button">Copier le message (WhatsApp, SMS)</button></div>
       </div>
 
       <div class="deux-qr">
@@ -1178,7 +1207,9 @@ function renderTrombi(){
   box.style.setProperty("--t", t + "px");
   box.classList.toggle("t-compact", unites > 20);
   box.classList.toggle("t-mini", unites > 45);   /* au-delà de 45 personnes : les hôtes passent en médaillons pour laisser la place */
-  box.innerHTML = `<p class="t-note">Les hôtes du jour, Patrick & Corinne et Henri & Stéphanie, vous accueillent sur <a href="#invitation">l'onglet Invitation</a>.</p><div class="t-grille">${cartes}${places.split("</a>").slice(0,nPlaces).map(x=>x+"</a>").join("")}</div>`;
+  const photos = ok.reduce((a,g)=> a + (partenaire(g) ? (PHOTOS_COUPLES[g.id] ? 1 : 0) : (photoDe(g) ? 1 : 0)), 0);
+  const stats = `<div class="t-stats"><span><b>${nbPers}</b>personnes confirmées</span><span><b>${ok.length}</b>invitations</span><span><b>${photos}</b>photos reçues</span><span><b>${INV_PUB.reduce((a,i)=>a+(i[2]==="solo"?1:2),0)}</b>personnes invitées</span></div>`;
+  box.innerHTML = stats + `<p class="t-note">Les hôtes du jour, Patrick & Corinne et Henri & Stéphanie, vous accueillent sur <a href="#invitation">l'onglet Invitation</a>.</p><div class="t-grille">${cartes}${places.split("</a>").slice(0,nPlaces).map(x=>x+"</a>").join("")}</div>`;
 }
 function render(){
   renderStats(); renderHeros(); renderTrombi();
@@ -1470,19 +1501,32 @@ function ficheInv(i){
   const f = invForm(i), t = invTexte(i), url = lienFormule(f, i);
   const d = document.createElement("div"); d.className = "fiche";
   d.innerHTML = `<div><h3>Bonjour ${esc(invNom(i))} !</h3><span class="formule ${f}">${esc(t.court)}</span><p>${esc(t.long)}</p>
-    <a class="btn btn-main" href="${esc(url)}" target="_blank" rel="noopener">Répondre au formulaire</a></div>`;
+    <a class="btn btn-main" href="${esc(url)}" target="_blank" rel="noopener">Répondre au formulaire</a>
+    <p class="note">Pense à ton e-mail de correspondance : il servira pour le programme définitif, les infos pratiques et le lien des photos.</p></div>`;
   const cv = drawQR(url); if (cv){ cv.setAttribute("role","img"); cv.setAttribute("aria-label","QR code personnel vers le formulaire"); d.appendChild(cv); }
   return d;
 }
 function montrerInv(liste){
   const res = document.getElementById("trouve-res"); res.innerHTML = "";
   document.querySelectorAll(".deux-qr .qr-card").forEach(c=>c.classList.remove("choisie"));
-  if (!liste.length){ res.innerHTML = '<p class="trouve-vide">Pas trouvé : vérifie l\'orthographe, ou <a class="lien-mail" href="'+MAIL_LISTE+'">signale-le-nous par mail</a>.</p>'; return; }
+  if (!liste.length){ res.innerHTML = '<p class="trouve-vide">Pas trouvé : vérifie l\'orthographe, ou <a class="lien-mail" href="#reponse" onclick="signalerManquant();return false">signale-le-nous juste en dessous</a>.</p>'; signalerManquant(); return; }
   if (liste.length > 4){ res.innerHTML = '<p class="trouve-vide">Continue à taper ton prénom…</p>'; return; }
   liste.forEach(i=> res.appendChild(ficheInv(i)));
   if (liste.length === 1) document.querySelector(`.deux-qr .qr-card[data-formule="${invForm(liste[0])}"]`).classList.add("choisie");
 }
 const MAIL_LISTE = "mailto:perez.henri.contact@gmail.com?subject=BIDAOUI-60%20%E2%80%93%20Je%20ne%20suis%20pas%20sur%20la%20liste&body=Bonjour%20Patrick%20et%20Henri%2C%0A%0AJe%20ne%20trouve%20pas%20mon%20nom%20dans%20la%20liste%20des%20invit%C3%A9s.%20Pr%C3%A9nom%20et%20nom%20%3A%20...%0A";
+/* Message « je ne trouve pas mon nom » */
+function initManquant(){
+  const objet = "BIDAOUI-60 – Je ne suis pas sur la liste";
+  const maj = ()=>{ const n = (document.getElementById("m-nom").value || "").trim() || "…", t = (document.getElementById("m-tel").value || "").trim() || "…";
+    const txt = "Bonjour Patrick et Henri,\n\nJe ne trouve pas mon nom dans la liste des invités du site « De Casablanca au cochonnet ».\n• Prénom et nom : " + n + "\n• Téléphone : " + t + "\n\nMerci de vérifier la liste.\n" + n;
+    document.getElementById("m-apercu").textContent = txt;
+    document.getElementById("m-mail").href = "mailto:perez.henri.contact@gmail.com?subject=" + encodeURIComponent(objet) + "&body=" + encodeURIComponent(txt);
+    return txt; };
+  ["m-nom","m-tel"].forEach(id=> document.getElementById(id).addEventListener("input", maj)); maj();
+  document.getElementById("m-copier").onclick = async ()=>{ try { await navigator.clipboard.writeText(maj()); toast("Message copié : colle-le dans ton mail ou WhatsApp"); } catch(e){ toast("Sélectionne le message pour le copier."); } };
+}
+function signalerManquant(){ const m = document.getElementById("manquant"); m.classList.remove("flash"); void m.offsetWidth; m.classList.add("flash"); m.scrollIntoView({behavior:"smooth", block:"center"}); }
 const HOTES_IDS = HOTES.map(h=>slug(h.first + " " + h.ini));
 const INV_PUB = INVITATIONS.filter(i=> !HOTES_IDS.includes(slug(i[0] + " " + i[1])));
 function initListe(){
@@ -1504,7 +1548,7 @@ function initListe(){
   tri(INV_PUB).forEach(i=>{ const o = document.createElement("option"); o.value = INV_PUB.indexOf(i); o.textContent = invNom(i); selNom.appendChild(o); });
   const o2 = document.createElement("option"); o2.value = "absent"; o2.textContent = "Mon nom n'est pas dans la liste"; selNom.appendChild(o2);
   selNom.onchange = ()=>{ const v = selNom.value; document.getElementById("trouve-q").value = "";
-    if (v === "absent"){ document.getElementById("trouve-res").innerHTML = '<p class="trouve-vide">Ce formulaire est réservé aux personnes invitées. S\'il s\'agit d\'une erreur ou d\'un oubli, <a class="lien-mail" href="'+MAIL_LISTE+'">signale-le-nous par mail</a> : nous te répondrons très vite.</p>'; return; }
+    if (v === "absent"){ document.getElementById("trouve-res").innerHTML = '<p class="trouve-vide">Ce formulaire est réservé aux personnes invitées. S\'il s\'agit d\'une erreur ou d\'un oubli, <a class="lien-mail" href="#reponse" onclick="signalerManquant();return false">signale-le-nous juste en dessous</a> : nous te répondrons très vite.</p>'; signalerManquant(); return; }
     if (v === ""){ document.getElementById("trouve-res").innerHTML = '<p class="trouve-vide">Choisis ton nom ou tape ton prénom.</p>'; return; }
     montrerInv([INV_PUB[+v]]); };
   document.getElementById("trouve-q").addEventListener("input", e=>{
@@ -1513,6 +1557,7 @@ function initListe(){
   });
 }
 initListe();
+initManquant();
 document.getElementById("copier-prompt").onclick = async ()=>{
   const t = document.getElementById("prompt-ia").textContent;
   try { await navigator.clipboard.writeText(t); toast("Texte copié : colle-le dans ton IA !"); }
