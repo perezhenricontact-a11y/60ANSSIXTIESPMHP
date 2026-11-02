@@ -59,7 +59,7 @@ header.site .wrap{display:flex;align-items:center;justify-content:space-between;
 .logo{font-family:var(--f-titre);font-weight:800;font-size:1.25rem;color:var(--zellige);text-decoration:none;white-space:nowrap}
 .logo span{color:var(--fez)}
 .onglets{display:flex;gap:4px;overflow-x:auto;scrollbar-width:none;min-width:0}
-.onglets a{flex:none;text-decoration:none;font-weight:800;font-size:.9rem;color:var(--encre-douce);padding:8px 10px;border-radius:999px;border:1px solid transparent;transition:background .2s,color .2s}
+.onglets a{flex:none;text-decoration:none;font-weight:800;font-size:.9rem;color:var(--encre-douce);padding:8px 8px;border-radius:999px;border:1px solid transparent;transition:background .2s,color .2s}
 .onglets a:hover{color:var(--fez)}
 .onglets a[aria-current="page"]{background:var(--zellige);color:#FFF6E4;border-color:var(--or)}
 .jours{flex:none;font-family:var(--f-titre);font-weight:800;color:var(--fez);background:var(--carte);border:1px solid var(--or);border-radius:999px;padding:5px 12px;font-size:.9rem}
@@ -465,6 +465,29 @@ footer .script{font-size:1.9rem;color:var(--fez);margin-bottom:6px;display:block
 .t-stats{display:flex;flex-wrap:wrap;justify-content:center;gap:10px;margin:0 0 22px}
 .t-stats span{background:var(--zellige);color:#FFF3DF;border:2px solid var(--or);border-radius:14px;padding:8px 14px;font-weight:800;font-size:.85rem}
 .t-stats b{font-family:var(--f-titre);color:var(--or-clair);font-size:1.3rem;margin-right:6px}
+
+/* Onglet Défi photo */
+.vers-defi{display:flex;align-items:center;gap:16px;max-width:760px;margin:0 auto 40px;padding:18px 20px;border-radius:22px;background:linear-gradient(135deg,#FCE7C8,#F7D3B4);border:2px dashed var(--fez);text-decoration:none;color:var(--encre)}
+.vers-defi:hover{border-style:solid}
+.vd-ico{font-size:2rem}
+.vers-defi span:nth-child(2){flex:1;color:var(--encre-douce);font-size:.95rem}
+.vers-defi b{color:var(--zellige);font-size:1.05rem}
+.vd-go{font-weight:800;color:var(--fez);white-space:nowrap}
+.exemples{display:flex;flex-wrap:wrap;justify-content:center;gap:22px;margin:0 0 36px}
+.exemples figure{margin:0;text-align:center}
+.exemples img{width:280px;max-width:100%;aspect-ratio:4/3;object-fit:cover;border-radius:16px;border:4px solid var(--or);box-shadow:0 14px 30px rgba(80,40,10,.2);cursor:zoom-in}
+.exemples figcaption{font-family:var(--f-script);font-style:italic;font-weight:700;font-size:1.2rem;color:var(--zellige);margin-top:6px}
+.mode-emploi{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:16px;margin-bottom:14px}
+@media(max-width:1000px){.mode-emploi{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:600px){.mode-emploi{grid-template-columns:1fr}}
+.me-etape{position:relative;padding:22px 18px 18px;border-radius:20px;background:var(--carte);border:1px solid var(--filet)}
+.me-num{position:absolute;top:-14px;left:16px;width:34px;height:34px;border-radius:50%;background:var(--fez);color:#FFF3DF;display:grid;place-items:center;font-family:var(--f-titre);font-weight:800;border:3px solid var(--carte)}
+.me-etape h4{font-family:var(--f-titre);color:var(--zellige);font-size:1.05rem;margin:4px 0 8px}
+.me-etape p{color:var(--encre-douce);font-size:.93rem}
+.me-btns{display:flex;flex-wrap:wrap;gap:8px;margin:10px 0}
+.me-btns .btn{padding:9px 14px;font-size:.85rem}
+.me-note{font-size:.84rem!important}
+.me-assistant{text-align:center;color:var(--encre-douce);margin:6px 0 30px;font-weight:700}
 /* Prénoms et noms : jamais en capitales */
 .hotes,.heros h3,.card h3,.fiche h3,.inv-head h2,.surprise-carte h3{font-family:var(--f-script);font-style:italic;font-weight:700;text-transform:none;letter-spacing:0}
 
@@ -526,6 +549,7 @@ footer .script{font-size:1.9rem;color:var(--fez);margin-bottom:6px;display:block
       <a href="#programme" data-tab="programme">Programme</a>
       <a href="#invites" data-tab="invites"><span class="long">Statistiques invités</span><span class="court">Stats</span></a>
       <a href="#trombi" data-tab="trombi"><span class="long">Trombinoscope</span><span class="court">Trombi</span></a>
+      <a href="#defi" data-tab="defi"><span class="long">Défi photo</span><span class="court">Défi</span></a>
       <a href="#reponse" data-tab="reponse"><span class="long">Je réponds</span><span class="court">Répondre</span></a>
       <a href="#photos" data-tab="photos">Photos<span class="long"> & vidéos</span></a>
       <a href="#surprise" data-tab="surprise">Surprise</a>
@@ -680,7 +704,7 @@ footer .script{font-size:1.9rem;color:var(--fez);margin-bottom:6px;display:block
       <div class="sec-head">
         <span class="tag">Statistiques invités</span>
         <h2>Les guest stars du jour</h2>
-        <p>Chaque réponse au formulaire ajoute une star, avec sa photo déguisée en tenue marocaine par l'IA (<a href="#reponse" style="color:var(--fez);font-weight:800">le défi photo</a>). Tu n'y es pas encore ? <a href="#reponse" style="color:var(--fez);font-weight:800">Réponds ici</a>.</p>
+        <p>Chaque réponse au formulaire ajoute une star, avec sa photo déguisée en tenue marocaine par l'IA (<a href="#defi" style="color:var(--fez);font-weight:800">le défi photo</a>). Tu n'y es pas encore ? <a href="#reponse" style="color:var(--fez);font-weight:800">Réponds ici</a>.</p>
       </div>
       <div class="stats" id="stats"></div>
       <div class="heros">
@@ -761,29 +785,11 @@ footer .script{font-size:1.9rem;color:var(--fez);margin-bottom:6px;display:block
         </div>
       </div>
 
-      <div class="defi" id="defi-photo">
-        <div class="defi-txt">
-          <span class="kicker">Le défi photo</span>
-          <h3>Déguise-toi en Marocain·e… grâce à l'IA !</h3>
-          <p>Pour pimenter la fête, on fait un délire collectif : demande à une intelligence artificielle (ChatGPT, Gemini, Claude, Copilot…) de t'habiller en tenue marocaine. Djellaba ou caftan de la couleur de ton choix, tarbouche rouge pour les messieurs, foulard pour les dames… ou toute autre idée : laisse l'IA faire preuve d'imagination !</p>
-          <ol>
-            <li>Ouvre l'IA de ton choix et envoie-lui une photo de toi (de face, bien éclairée). Le plus simple : <a class="lien-mail" href="ia.html" target="_blank" rel="noopener">notre assistant photo</a>, qui ouvre ChatGPT avec le texte déjà prêt.</li>
-            <li>Colle le texte ci-dessous et laisse-la travailler. Pas satisfait·e ? Demande-lui une autre version.</li>
-            <li>Dépose ta plus belle création : elle illustrera ta carte parmi les guest stars. <b>En couple ou en duo d'amis : une seule photo à deux</b>, déguisés ensemble.</li>
-          </ol>
-        </div>
-        <div class="defi-prompt">
-          <b>Le texte à donner à l'IA</b>
-          <p id="prompt-ia">Transforme cette photo de moi en portrait de fête marocaine pour l'anniversaire « De Casablanca au cochonnet ». Habille-moi d'une djellaba (ou d'un caftan) de la couleur de ton choix, avec un tarbouche rouge, ou pour une femme un joli foulard. Ajoute des babouches, une boule de pétanque à la main et un décor de Casablanca ou de terrain de pétanque. Fais preuve d'imagination et d'humour, mais garde mon visage bien reconnaissable.</p>
-          <button class="btn btn-main" id="copier-prompt" type="button">Copier le texte</button>
-          <a class="btn btn-ghost" href="ia.html" target="_blank" rel="noopener">Assistant pas à pas (ChatGPT gratuit)</a>
-        </div>
-        <div class="defi-envoi">
-          <a class="btn btn-main" href="https://docs.google.com/forms/d/e/1FAIpQLSeseBrP0pXsgrOveUep1u4lpHYQMpIqEOV70zHX5kyyk8zOZA/viewform" target="_blank" rel="noopener">Déposer ma photo</a>
-          <p>Le dépôt passe par un petit formulaire Google : Google demande d'être connecté à un compte Google (Gmail…).<br>
-          <b>Tu ne sais pas utiliser l'IA ?</b> Aucun souci : dépose une photo normale et coche « merci de la transformer pour moi », Patrick et Henri la déguiseront pour toi.<br><b>Pas de compte Google ?</b> Envoie ta photo par mail (précise « à transformer » si besoin) : <a class="lien-mail" href="mailto:perez.henri.contact@gmail.com?subject=PHOTO%2060%20ANS%20%E2%80%93%20&amp;body=Bonjour%20Patrick%20et%20Henri%2C%0A%0AVoici%20ma%20photo%20d%C3%A9guis%C3%A9e%20pour%20le%2015%20mai%20(pr%C3%A9nom%20et%20nom%20%3A%20...).%0A">perez.henri.contact@gmail.com</a>, objet « PHOTO 60 ANS » et ton prénom.</p>
-        </div>
-      </div>
+      <a class="vers-defi" href="#defi">
+        <span class="vd-ico" aria-hidden="true">📸</span>
+        <span><b>Le défi photo : déguise-toi en tenue marocaine grâce à l'IA</b><br>Mode d'emploi pas à pas, texte prêt à l'emploi, dépôt de ta photo : tout est dans l'onglet « Défi photo ».</span>
+        <span class="vd-go">Y aller →</span>
+      </a>
 
       <div class="liste-inv">
         <div class="sec-head" style="margin-bottom:22px">
@@ -817,6 +823,66 @@ footer .script{font-size:1.9rem;color:var(--fez);margin-bottom:6px;display:block
       </div>
       <div class="mystere" id="mystere"></div>
       <div class="surprises" id="surprises"></div>
+    </div>
+  </section>
+</div>
+
+<!-- ================= ONGLET : DÉFI PHOTO ================= -->
+<div class="vue" id="vue-defi" data-vue="defi" hidden>
+  <section>
+    <div class="wrap">
+      <div class="sec-head">
+        <span class="tag">Le délire collectif</span>
+        <h2>Le défi photo</h2>
+        <p>Chaque invité se fait déguiser en tenue marocaine par une intelligence artificielle : djellaba ou caftan de la couleur de son choix, tarbouche rouge ou foulard… Ta création illustrera ta carte dans le trombinoscope. En couple ou en duo d'amis : <b>une seule photo à deux</b>.</p>
+      </div>
+
+      <div class="exemples" id="exemples"></div>
+
+      <h3 class="t-titre">Le mode d'emploi, en 4 étapes</h3>
+      <div class="mode-emploi">
+        <div class="me-etape"><span class="me-num">1</span><h4>Choisis ta photo</h4>
+          <p>Une photo <b>de face, bien éclairée</b>, où l'on voit bien ton visage. À deux : une photo où l'on vous voit tous les deux.</p></div>
+        <div class="me-etape"><span class="me-num">2</span><h4>Ouvre une IA gratuite</h4>
+          <p>Le texte est déjà écrit, il ne reste qu'à joindre ta photo :</p>
+          <div class="me-btns">
+            <a class="btn btn-main" id="defi-chatgpt-solo" target="_blank" rel="noopener">ChatGPT · seul·e</a>
+            <a class="btn btn-main" id="defi-chatgpt-duo" target="_blank" rel="noopener">ChatGPT · à deux</a>
+            <a class="btn btn-ghost" id="defi-copilot" target="_blank" rel="noopener">Copilot</a>
+            <a class="btn btn-ghost" href="https://gemini.google.com/app" target="_blank" rel="noopener">Gemini</a>
+          </div>
+          <p class="me-note">Un compte gratuit est demandé pour créer des images. Pour Gemini, copie d'abord le texte ci-dessous.</p></div>
+        <div class="me-etape"><span class="me-num">3</span><h4>Joins ta photo et envoie</h4>
+          <p>Appuie sur <b>+</b> (ou le trombone), choisis ta photo, envoie. L'image arrive en une à deux minutes. Pas satisfait·e ? Écris « refais-la » ou « plus de couleurs ».</p></div>
+        <div class="me-etape"><span class="me-num">4</span><h4>Enregistre et dépose-la</h4>
+          <p>Sur téléphone : <b>appui long sur l'image</b>, puis « Enregistrer ». Ensuite le bouton « Déposer ma photo » plus bas, ou par mail.</p></div>
+      </div>
+      <p class="me-assistant">Tu préfères être guidé·e écran par écran ? <a class="lien-mail" href="ia.html" target="_blank" rel="noopener">Ouvre notre assistant photo</a>.</p>
+
+      <div class="defi" id="defi-photo">
+        <div class="defi-txt">
+          <span class="kicker">Le descriptif</span>
+          <h3>Déguise-toi en Marocain·e… grâce à l'IA !</h3>
+          <p>Pour pimenter la fête, on fait un délire collectif : demande à une intelligence artificielle (ChatGPT, Gemini, Claude, Copilot…) de t'habiller en tenue marocaine. Djellaba ou caftan de la couleur de ton choix, tarbouche rouge pour les messieurs, foulard pour les dames… ou toute autre idée : laisse l'IA faire preuve d'imagination !</p>
+          <ol>
+            <li>Ouvre l'IA de ton choix et envoie-lui une photo de toi (de face, bien éclairée). Le plus simple : <a class="lien-mail" href="ia.html" target="_blank" rel="noopener">notre assistant photo</a>, qui ouvre ChatGPT avec le texte déjà prêt.</li>
+            <li>Colle le texte ci-dessous et laisse-la travailler. Pas satisfait·e ? Demande-lui une autre version.</li>
+            <li>Dépose ta plus belle création : elle illustrera ta carte parmi les guest stars. <b>En couple ou en duo d'amis : une seule photo à deux</b>, déguisés ensemble.</li>
+          </ol>
+        </div>
+        <div class="defi-prompt">
+          <b>Le texte à donner à l'IA</b>
+          <p id="prompt-ia">Transforme cette photo de moi en portrait de fête marocaine pour l'anniversaire « De Casablanca au cochonnet ». Habille-moi d'une djellaba (ou d'un caftan) de la couleur de ton choix, avec un tarbouche rouge, ou pour une femme un joli foulard. Ajoute des babouches, une boule de pétanque à la main et un décor de Casablanca ou de terrain de pétanque. Fais preuve d'imagination et d'humour, mais garde mon visage bien reconnaissable.</p>
+          <button class="btn btn-main" id="copier-prompt" type="button">Copier le texte</button>
+          <a class="btn btn-ghost" href="ia.html" target="_blank" rel="noopener">Assistant pas à pas (ChatGPT gratuit)</a>
+        </div>
+        <div class="defi-envoi">
+          <a class="btn btn-main" href="https://docs.google.com/forms/d/e/1FAIpQLSeseBrP0pXsgrOveUep1u4lpHYQMpIqEOV70zHX5kyyk8zOZA/viewform" target="_blank" rel="noopener">Déposer ma photo</a>
+          <p>Le dépôt passe par un petit formulaire Google : Google demande d'être connecté à un compte Google (Gmail…).<br>
+          <b>Tu ne sais pas utiliser l'IA ?</b> Aucun souci : dépose une photo normale et coche « merci de la transformer pour moi », Patrick et Henri la déguiseront pour toi.<br><b>Pas de compte Google ?</b> Envoie ta photo par mail (précise « à transformer » si besoin) : <a class="lien-mail" href="mailto:perez.henri.contact@gmail.com?subject=PHOTO%2060%20ANS%20%E2%80%93%20&amp;body=Bonjour%20Patrick%20et%20Henri%2C%0A%0AVoici%20ma%20photo%20d%C3%A9guis%C3%A9e%20pour%20le%2015%20mai%20(pr%C3%A9nom%20et%20nom%20%3A%20...).%0A">perez.henri.contact@gmail.com</a>, objet « PHOTO 60 ANS » et ton prénom.</p>
+        </div>
+      </div>
+
     </div>
   </section>
 </div>
@@ -1103,7 +1169,7 @@ buildGuests(REPONSES);
 document.getElementById("horaires-note").hidden = !CONFIG.horairesProvisoires;
 
 /* ===== Onglets ===== */
-const TABS = ["invitation","programme","invites","trombi","reponse","photos","surprise","hotels"];
+const TABS = ["invitation","programme","invites","trombi","defi","reponse","photos","surprise","hotels"];
 function showTab(name, scroll){
   if (!TABS.includes(name)) name = "invitation";
   document.querySelectorAll(".vue").forEach(v => v.hidden = v.dataset.vue !== name);
@@ -1199,7 +1265,7 @@ function renderTrombi(){
         <figcaption>${esc(g.name)} & ${esc(p.name)}</figcaption></figure>`; }
     return `<figure class="t-cadre"><div class="t-photo" style="--grad:${g.grad};${photoDe(g) ? `background-image:url('${esc(photoDe(g))}')` : ""}">${photoDe(g) ? "" : esc(g.first[0] + (g.ini || ""))}</div>
       <figcaption>${esc(g.name)}</figcaption></figure>`; }).join("");
-  const places = Array.from({length: 3}, ()=> `<a class="t-cadre t-place" href="#reponse"><div class="t-photo">?</div><figcaption>Ta photo ici !</figcaption></a>`).join("");
+  const places = Array.from({length: 3}, ()=> `<a class="t-cadre t-place" href="#defi"><div class="t-photo">?</div><figcaption>Ta photo ici !</figcaption></a>`).join("");
   /* Taille automatique : plus il y a de photos, plus elles rétrécissent pour que tout tienne */
   const unites = ok.reduce((a,g)=> a + (partenaire(g) ? 2 : 1), 0);
   const t = unites <= 10 ? 160 : unites <= 20 ? 130 : unites <= 36 ? 105 : unites <= 50 ? 92 : unites <= 65 ? 80 : unites <= 80 ? 70 : 60;
@@ -1557,6 +1623,20 @@ function initListe(){
   });
 }
 initListe();
+(function initDefi(){
+  const base = document.getElementById("prompt-ia").textContent.trim();
+  const solo = "Je vais t'envoyer une photo de moi. " + base.replace(/^Transforme cette photo de moi/, "Transforme-la") + " Si tu n'as pas encore la photo, demande-la-moi.";
+  const duo = "Je vais t'envoyer une photo de nous deux. Transforme-la en un seul portrait de fête marocaine pour l'anniversaire « De Casablanca au cochonnet ». Habille chacun d'une djellaba ou d'un caftan de couleurs assorties, avec un tarbouche rouge pour un homme et un joli foulard pour une femme. Ajoute des babouches, des boules de pétanque à la main et un décor de Casablanca ou de terrain de pétanque. Fais preuve d'imagination et d'humour, mais garde nos deux visages bien reconnaissables. Si tu n'as pas encore la photo, demande-la-moi.";
+  document.getElementById("defi-chatgpt-solo").href = "https://chatgpt.com/?q=" + encodeURIComponent(solo);
+  document.getElementById("defi-chatgpt-duo").href = "https://chatgpt.com/?q=" + encodeURIComponent(duo);
+  document.getElementById("defi-copilot").href = "https://copilot.microsoft.com/?q=" + encodeURIComponent(solo);
+  const ex = [];
+  if (HOTES_TROMBI[1] && HOTES_TROMBI[1].photo) ex.push([HOTES_TROMBI[1].photo, HOTES_TROMBI[1].noms + " ont joué le jeu"]);
+  Object.keys(PHOTOS_COUPLES).forEach(id=>{ const g = GUESTS.find(x=>x.id===id); const p = g && GUESTS.find(x=>x.partenaireDe && x.guestId===id);
+    if (g) ex.push([PHOTOS_COUPLES[id], g.name + (p ? " & " + p.name : "") + " aussi !"]); });
+  document.getElementById("exemples").innerHTML = ex.map(([src,cap])=>`<figure><img src="${esc(src)}" alt="${esc(cap)}" data-src="${esc(src)}"><figcaption>${esc(cap)}</figcaption></figure>`).join("");
+  document.getElementById("exemples").addEventListener("click", e=>{ const im = e.target.closest("img[data-src]"); if (!im) return; openLB(0, [{ src: im.dataset.src, name: im.dataset.src.split("/").pop() }]); });
+})();
 initManquant();
 document.getElementById("copier-prompt").onclick = async ()=>{
   const t = document.getElementById("prompt-ia").textContent;
