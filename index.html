@@ -431,6 +431,22 @@ footer .script{font-size:1.9rem;color:var(--fez);margin-bottom:6px;display:block
 .trombi.t-mini .t-cadre{padding:4px;gap:4px}
 .trombi.t-compact .t-cadre{padding:6px;border-width:2px;border-radius:12px}
 @media(max-width:420px){.trombi{--t:min(var(--t,160px),130px)}.t-photo{width:min(var(--t,160px),130px);height:min(var(--t,160px),130px)}.t-photo-duo{width:min(calc(var(--t,160px) * 2 + 10px),276px);height:min(calc(var(--t,160px) * 1.35),184px)}}
+
+/* Invitation : les hôtes de part et d'autre de l'affiche */
+.trio{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,.72fr) minmax(0,1fr);gap:22px;align-items:center;margin-top:40px}
+.trio .t-orient{padding:10px}
+.trio .t-orient-in{aspect-ratio:4/3}
+.trio .t-orient-in button,.trio .affiche-centre{padding:0;border:0;background:none;cursor:zoom-in;display:block;width:100%;height:100%}
+.trio .affiche-centre{border:3px solid var(--or);border-radius:16px;overflow:hidden;box-shadow:0 18px 40px rgba(80,40,10,.22);transition:transform .25s}
+.trio .affiche-centre:hover{transform:translateY(-4px)}
+.trio .affiche-centre img{display:block;width:100%;aspect-ratio:2/3;object-fit:cover}
+.trio .t-orient-in img{width:100%;height:100%;object-fit:cover;display:block}
+.trio .t-orient figcaption{font-size:1.15rem}
+@media(max-width:760px){.trio{grid-template-columns:1fr 1fr;gap:14px}.trio .affiche-centre{grid-column:1/-1;grid-row:1;max-width:280px;justify-self:center}.trio .t-orient figcaption{font-size:.95rem;padding:4px 10px}}
+.t-note{text-align:center;color:var(--encre-douce);margin:-10px 0 22px}.t-note a{color:var(--fez);font-weight:800}
+.choix-nom{display:grid;gap:6px;font-weight:800;color:var(--zellige)}
+.choix-nom select{font:inherit;font-weight:700;padding:13px 16px;border-radius:14px;border:2px solid var(--or);background:var(--carte);color:var(--encre)}
+.trouve .ou{text-align:center;color:var(--encre-douce);font-weight:700;margin:-6px 0}
 /* Prénoms et noms : jamais en capitales */
 .hotes,.heros h3,.card h3,.fiche h3,.inv-head h2,.surprise-carte h3{font-family:var(--f-script);font-style:italic;font-weight:700;text-transform:none;letter-spacing:0}
 
@@ -558,13 +574,9 @@ footer .script{font-size:1.9rem;color:var(--fez);margin-bottom:6px;display:block
         <div class="film-txt">
           <span class="bandeau">Tournoi · Babouches · Pétanque party</span>
           <p>Deux amis du Maroc, passionnés de pétanque et amoureux de la vie, fêtent leurs 60 ans. Nos familles, nos amis et la Soirée des Dames réunis pour faire la fête. Ambiance marocaine… et pourquoi pas un couscous géant ?</p>
-          <div class="affiches" id="affiches">
-            <button type="button" data-src="media/affiche-casablanca.jpg"><img src="media/affiche-casablanca.jpg" alt="Affiche « De Casablanca au cochonnet »" loading="lazy"></button>
-            <button type="button" data-src="media/affiche-60ans.jpg"><img src="media/affiche-60ans.jpg" alt="Affiche « 60 ans, deux amis, deux cœurs »" loading="lazy"></button>
-            <button type="button" data-src="media/affiche-tournoi.jpg"><img src="media/affiche-tournoi.jpg" alt="Affiche « Tournoi, babouches, pétanque party »" loading="lazy"></button>
-          </div>
         </div>
       </div>
+      <div class="trio" id="affiches" aria-label="Les hôtes du jour et l'affiche"></div>
     </div>
   </section>
 
@@ -690,12 +702,16 @@ footer .script{font-size:1.9rem;color:var(--fez);margin-bottom:6px;display:block
       </div>
 
       <div class="trouve">
+        <label class="choix-nom"><span>Choisis ton nom dans la liste des invités</span>
+          <select id="choix-nom"><option value="">— Sélectionne ton nom —</option></select>
+        </label>
+        <p class="ou">ou tape ton prénom :</p>
         <label class="search trouve-q">
           <svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="m20 20-4-4"/></svg>
           <input id="trouve-q" type="search" placeholder="Tape ton prénom…" autocomplete="off" aria-label="Retrouver ton invitation">
         </label>
         <div class="trouve-res" id="trouve-res" aria-live="polite">
-          <p class="trouve-vide">Tape ton prénom ou clique sur ton nom dans la liste plus bas.</p>
+          <p class="trouve-vide">Choisis ton nom ou tape ton prénom.</p>
         </div>
       </div>
 
@@ -870,7 +886,7 @@ const CONFIG = {
   deadline: "15 avril 2027",
   formUrl: "https://docs.google.com/forms/d/e/1FAIpQLSe8FPssBQTnPlVSV5xzJ2NOKEL3VBMaSE-dO3y3qUtQZjEs0Q/viewform",   // lien du formulaire → génère le QR code
   formPrefill: "",             // lien pré-rempli contenant PRENOM et NOM → pré-remplit chaque carte invité
-  champs: { invitation: "entry.646744032", prenom: "entry.607566091", accompagnant: "entry.869786299" },
+  champs: { invitation: "entry.646744032", prenom: "entry.607566091", accompagnant: "entry.869786299", nomListe: "entry.1301711577" },
   valeurs: { solo: "Toi seul·e", duo: "Toi et ton conjoint·e ou ami·e" },
 
   /* --- Liste des invités en direct --- */
@@ -1161,7 +1177,7 @@ function renderTrombi(){
   box.style.setProperty("--t", t + "px");
   box.classList.toggle("t-compact", unites > 20);
   box.classList.toggle("t-mini", unites > 45);   /* au-delà de 45 personnes : les hôtes passent en médaillons pour laisser la place */
-  box.innerHTML = `<h3 class="t-titre">Les hôtes du jour</h3>${hotes}<h3 class="t-titre">Les invités</h3><div class="t-grille">${cartes}${places.split("</a>").slice(0,nPlaces).map(x=>x+"</a>").join("")}</div>`;
+  box.innerHTML = `<p class="t-note">Les hôtes du jour, Patrick & Corinne et Henri & Stéphanie, vous accueillent sur <a href="#invitation">l'onglet Invitation</a>.</p><div class="t-grille">${cartes}${places.split("</a>").slice(0,nPlaces).map(x=>x+"</a>").join("")}</div>`;
 }
 function render(){
   renderStats(); renderHeros(); renderTrombi();
@@ -1426,7 +1442,7 @@ function drawQR(url){
 function lienFormule(formule, inv){
   if (!CONFIG.formUrl) return "";
   const c = CONFIG.champs, q = ["usp=pp_url", c.invitation + "=" + encodeURIComponent(CONFIG.valeurs[formule])];
-  if (inv){ q.push(c.prenom + "=" + encodeURIComponent(inv[0]));
+  if (inv){ q.push(c.prenom + "=" + encodeURIComponent(inv[0]), c.nomListe + "=" + encodeURIComponent(invNom(inv)));
     if (formule === "duo" && inv[3]) q.push(c.accompagnant + "=" + encodeURIComponent(inv[3])); }
   return CONFIG.formUrl + "?" + q.join("&");
 }
@@ -1460,11 +1476,12 @@ function ficheInv(i){
 function montrerInv(liste){
   const res = document.getElementById("trouve-res"); res.innerHTML = "";
   document.querySelectorAll(".deux-qr .qr-card").forEach(c=>c.classList.remove("choisie"));
-  if (!liste.length){ res.innerHTML = '<p class="trouve-vide">Pas trouvé : vérifie l\'orthographe, ou appelle Henri au 06 31 04 20 42.</p>'; return; }
+  if (!liste.length){ res.innerHTML = '<p class="trouve-vide">Pas trouvé : vérifie l\'orthographe, ou <a class="lien-mail" href="'+MAIL_LISTE+'">signale-le-nous par mail</a>.</p>'; return; }
   if (liste.length > 4){ res.innerHTML = '<p class="trouve-vide">Continue à taper ton prénom…</p>'; return; }
   liste.forEach(i=> res.appendChild(ficheInv(i)));
   if (liste.length === 1) document.querySelector(`.deux-qr .qr-card[data-formule="${invForm(liste[0])}"]`).classList.add("choisie");
 }
+const MAIL_LISTE = "mailto:perez.henri.contact@gmail.com?subject=BIDAOUI-60%20%E2%80%93%20Je%20ne%20suis%20pas%20sur%20la%20liste&body=Bonjour%20Patrick%20et%20Henri%2C%0A%0AJe%20ne%20trouve%20pas%20mon%20nom%20dans%20la%20liste%20des%20invit%C3%A9s.%20Pr%C3%A9nom%20et%20nom%20%3A%20...%0A";
 const HOTES_IDS = HOTES.map(h=>slug(h.first + " " + h.ini));
 const INV_PUB = INVITATIONS.filter(i=> !HOTES_IDS.includes(slug(i[0] + " " + i[1])));
 function initListe(){
@@ -1482,6 +1499,13 @@ function initListe(){
         document.querySelector(".trouve").scrollIntoView({behavior:"smooth", block:"start"}); };
       box.appendChild(b); }); };
   remplir("liste-solo", solo); remplir("liste-duo", duo);
+  const selNom = document.getElementById("choix-nom");
+  tri(INV_PUB).forEach(i=>{ const o = document.createElement("option"); o.value = INV_PUB.indexOf(i); o.textContent = invNom(i); selNom.appendChild(o); });
+  const o2 = document.createElement("option"); o2.value = "absent"; o2.textContent = "Mon nom n'est pas dans la liste"; selNom.appendChild(o2);
+  selNom.onchange = ()=>{ const v = selNom.value; document.getElementById("trouve-q").value = "";
+    if (v === "absent"){ document.getElementById("trouve-res").innerHTML = '<p class="trouve-vide">Ce formulaire est réservé aux personnes invitées. S\'il s\'agit d\'une erreur ou d\'un oubli, <a class="lien-mail" href="'+MAIL_LISTE+'">signale-le-nous par mail</a> : nous te répondrons très vite.</p>'; return; }
+    if (v === ""){ document.getElementById("trouve-res").innerHTML = '<p class="trouve-vide">Choisis ton nom ou tape ton prénom.</p>'; return; }
+    montrerInv([INV_PUB[+v]]); };
   document.getElementById("trouve-q").addEventListener("input", e=>{
     const q = slug(e.target.value); if (q.length < 2){ document.getElementById("trouve-res").innerHTML = '<p class="trouve-vide">Tape ton prénom ou clique sur ton nom dans la liste plus bas.</p>'; return; }
     montrerInv(INV_PUB.filter(i=> slug(invNom(i)).startsWith(q) || slug(i[0]).startsWith(q)));
@@ -1644,6 +1668,13 @@ function renderSurprises(){
     </article>`; }).join("");
 }
 renderSurprises();
+
+/* ===== Onglet Invitation : hôtes + affiche du milieu ===== */
+(function(){
+  const cadre = h => `<figure class="t-orient"><div class="t-orient-in">${h.photo ? `<button type="button" data-src="${esc(h.photo)}"><img src="${esc(h.photo)}" alt="${esc(h.noms)} en tenue marocaine"></button>` : `<div class="t-vide"><span>Photo à venir</span></div>`}</div><figcaption>${esc(h.noms)}</figcaption></figure>`;
+  document.getElementById("affiches").innerHTML = cadre(HOTES_TROMBI[0]) +
+    `<button type="button" class="affiche-centre" data-src="media/affiche-60ans.jpg"><img src="media/affiche-60ans.jpg" alt="Affiche « 60 ans, deux amis, deux cœurs »"></button>` + cadre(HOTES_TROMBI[1]);
+})();
 
 /* ===== Onglet Hôtels ===== */
 (function(){
