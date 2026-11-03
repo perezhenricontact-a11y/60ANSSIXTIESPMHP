@@ -329,6 +329,13 @@ footer .script{font-size:1.9rem;color:var(--fez);margin-bottom:6px;display:block
 .fiche canvas{width:100%;height:auto;border-radius:12px;border:2px solid var(--or)}
 .fiche-choix{display:flex;flex-wrap:wrap;gap:8px;justify-content:center}
 @media(max-width:560px){.fiche{grid-template-columns:1fr}.fiche canvas{max-width:180px;justify-self:center}}
+.qr-unique{display:grid;grid-template-columns:minmax(0,320px) minmax(0,1fr);gap:28px;max-width:900px;margin:0 auto 46px;align-items:start}
+.qr-unique .qr-card{transform:none;width:100%;display:flex;flex-direction:column;align-items:center}
+.qr-bandeau.unique{background:var(--fez)}
+.secours{background:var(--carte,#FFFAF1);border:2px dashed var(--or);border-radius:24px;padding:20px 22px}
+.secours h3{font-family:var(--f-titre);color:var(--zellige);font-size:1.15rem;margin-bottom:8px}
+.secours p{font-size:.95rem;margin-bottom:10px}
+@media(max-width:720px){.qr-unique{grid-template-columns:1fr}.qr-unique .qr-card{max-width:340px;justify-self:center}}
 .deux-qr{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:24px;max-width:760px;margin:0 auto 46px}
 @media(max-width:640px){.deux-qr{grid-template-columns:1fr}}
 .deux-qr .qr-card{transform:none;width:100%;justify-self:stretch;display:flex;flex-direction:column;align-items:center}
@@ -740,7 +747,7 @@ footer .script{font-size:1.9rem;color:var(--fez);margin-bottom:6px;display:block
       <div class="sec-head">
         <span class="tag">Réponse avant le <span class="js-deadline">15 avril 2027</span></span>
         <h2>Tu viens ? Dis-le nous !</h2>
-        <p>Deux minutes suffisent. Commence par retrouver ton nom : ton invitation est prévue <b>pour toi seul·e</b> ou <b>pour toi et ton conjoint·e ou ami·e</b>, merci de la respecter.<br><b>Ce formulaire est réservé aux personnes figurant sur la liste des invités</b> : une réponse d'une personne non invitée ne sera pas prise en compte.</p>
+        <p><b>Un seul QR code, un seul formulaire</b> : ta réponse, tes accompagnants (si tu viens à deux ou à trois) et ta photo, tout au même endroit. Tu viens accompagné·e ? Indique-le : Patrick et Henri confirmeront chaque accompagnant.<br><b>Ce formulaire est réservé aux personnes figurant sur la liste des invités</b> : une réponse d'une personne non invitée ne sera pas prise en compte.</p>
       </div>
 
       <div class="trouve">
@@ -768,20 +775,19 @@ footer .script{font-size:1.9rem;color:var(--fez);margin-bottom:6px;display:block
         <div class="m-actions"><a class="btn btn-main" id="m-mail">Envoyer par mail</a><button class="btn btn-ghost" id="m-copier" type="button">Copier le message (WhatsApp, SMS)</button></div>
       </div>
 
-      <div class="deux-qr">
-        <div class="qr-card" data-formule="solo">
-          <span class="qr-bandeau solo">Invitation pour 1 personne</span>
-          <div class="qr-zone" id="qr-solo"><div class="qr-empty">QR code bientôt disponible</div></div>
-          <div class="qr-label">Tu es invité·e seul·e</div>
-          <div class="qr-sub"><span id="nb-solo">–</span> invitations · formulaire « Toi seul·e »</div>
-          <div class="qr-actions"><a class="btn qr-dl" id="lien-solo" target="_blank" rel="noopener">Répondre</a><button class="btn btn-ghost qr-dl2" data-dl="solo">Télécharger</button></div>
+      <div class="qr-unique">
+        <div class="qr-card" id="carte-qr-unique">
+          <span class="qr-bandeau unique">Le formulaire de réponse</span>
+          <div class="qr-zone" id="qr-unique"><div class="qr-empty">QR code bientôt disponible</div></div>
+          <div class="qr-label">Scanne, réponds, c'est fait !</div>
+          <div class="qr-sub">Seul·e ou accompagné·e · journée · photo</div>
+          <div class="qr-actions"><a class="btn qr-dl" id="lien-unique" target="_blank" rel="noopener">Répondre</a><button class="btn btn-ghost qr-dl2" data-dl="unique">Télécharger</button></div>
         </div>
-        <div class="qr-card" data-formule="duo">
-          <span class="qr-bandeau duo">Invitation pour 2 personnes</span>
-          <div class="qr-zone" id="qr-duo"><div class="qr-empty">QR code bientôt disponible</div></div>
-          <div class="qr-label">Toi et ton conjoint·e ou ami·e</div>
-          <div class="qr-sub"><span id="nb-duo">–</span> invitations · couple ou deux amis</div>
-          <div class="qr-actions"><a class="btn qr-dl" id="lien-duo" target="_blank" rel="noopener">Répondre</a><button class="btn btn-ghost qr-dl2" data-dl="duo">Télécharger</button></div>
+        <div class="secours" id="secours">
+          <h3>Le formulaire ne s'ouvre pas ? Réponds par mail</h3>
+          <p>Pas de compte Google (il est demandé pour joindre la photo), ou le QR code ne fonctionne pas : envoie toutes tes réponses à <a class="lien-mail" href="mailto:perez.henri.contact@gmail.com">perez.henri.contact@gmail.com</a>, objet « BIDAOUI-60 – Ma réponse », <b>et joins ta photo</b> (et celles de tes accompagnants) au mail.</p>
+          <pre class="m-apercu" id="s-modele"></pre>
+          <div class="m-actions"><a class="btn btn-main" id="s-mail">Écrire le mail (modèle prêt)</a><button class="btn btn-ghost" id="s-copier" type="button">Copier le modèle</button></div>
         </div>
       </div>
 
@@ -795,18 +801,18 @@ footer .script{font-size:1.9rem;color:var(--fez);margin-bottom:6px;display:block
         <div class="sec-head" style="margin-bottom:22px">
           <span class="tag">Pour qu'il n'y ait pas d'erreur</span>
           <h2 style="font-size:clamp(1.6rem,3.6vw,2.3rem)">La liste des invitations</h2>
-          <p>Si une réponse ne correspond pas à l'invitation prévue, nous te le rappellerons gentiment.</p>
+          <p>Seul·e ou à deux : c'est l'invitation prévue. Si tu viens avec quelqu'un d'autre ou à trois, indique-le dans le formulaire : Patrick et Henri confirmeront.</p>
         </div>
         <div class="colonnes">
           <div class="colonne"><h3><span class="pastille solo"></span>Invité·es seul·es <small id="cpt-solo"></small></h3><div class="noms-inv" id="liste-solo"></div></div>
-          <div class="colonne"><h3><span class="pastille duo"></span>Invité·es à deux <small id="cpt-duo"></small></h3><div class="noms-inv" id="liste-duo"></div></div>
+          <div class="colonne"><h3><span class="pastille duo"></span>Invité·es à deux (voire à trois) <small id="cpt-duo"></small></h3><div class="noms-inv" id="liste-duo"></div></div>
         </div>
       </div>
 
       <div class="etapes">
-        <div class="etape"><b>1. Retrouve ton nom</b><p>Ton invitation s'affiche : seul·e ou à deux. Le bouton « Répondre » ouvre le formulaire déjà rempli avec ton prénom et ta formule.</p></div>
-        <div class="etape"><b>2. Réponds à tout</b><p>Présence, pétanque ou visite, déjeuner et soirée, arrivée et départ, tenue et taille de t-shirt. Pour deux : dis-nous si ton conjoint·e ou ami·e vient.</p></div>
-        <div class="etape"><b>3. Dépose ta photo déguisée</b><p>Ta création « tenue marocaine par l'IA » (en couple ou en duo : une seule photo à deux) sur <a class="lien-mail" href="https://docs.google.com/forms/d/e/1FAIpQLSeseBrP0pXsgrOveUep1u4lpHYQMpIqEOV70zHX5kyyk8zOZA/viewform" target="_blank" rel="noopener">le formulaire photo</a> (compte Google). Sinon par mail à <a class="lien-mail" href="mailto:perez.henri.contact@gmail.com?subject=PHOTO%2060%20ANS%20%E2%80%93%20&amp;body=Bonjour%20Patrick%20et%20Henri%2C%0A%0AVoici%20ma%20photo%20d%C3%A9guis%C3%A9e%20pour%20le%2015%20mai%20(pr%C3%A9nom%20et%20nom%20%3A%20...).%0A">perez.henri.contact@gmail.com</a>, objet « PHOTO 60 ANS ».</p></div>
+        <div class="etape"><b>1. Retrouve ton nom</b><p>Ton invitation s'affiche : seul·e ou à deux. Le bouton « Répondre » ouvre le formulaire avec ton prénom déjà rempli.</p></div>
+        <div class="etape"><b>2. Seul·e ou accompagné·e ?</b><p>Coche « Seul·e » ou « Accompagné·e » : pour chaque accompagnant (1 ou 2), prénom, nom, lien et préférences. Puis ta journée : pétanque ou visite, repas, arrivée et départ, tenue.</p></div>
+        <div class="etape"><b>3. Ajoute ta photo</b><p>Dans le même formulaire : ta photo déguisée par l'IA, ou une photo normale que nous transformerons (en couple ou à plusieurs : une seule photo de groupe). Pas de compte Google ? <a class="lien-mail" href="#secours">Réponds par mail</a>.</p></div>
       </div>
     </div>
   </section>
@@ -877,9 +883,9 @@ footer .script{font-size:1.9rem;color:var(--fez);margin-bottom:6px;display:block
           <a class="btn btn-ghost" href="ia.html" target="_blank" rel="noopener">Assistant pas à pas (ChatGPT gratuit)</a>
         </div>
         <div class="defi-envoi">
-          <a class="btn btn-main" href="https://docs.google.com/forms/d/e/1FAIpQLSeseBrP0pXsgrOveUep1u4lpHYQMpIqEOV70zHX5kyyk8zOZA/viewform" target="_blank" rel="noopener">Déposer ma photo</a>
-          <p>Le dépôt passe par un petit formulaire Google : Google demande d'être connecté à un compte Google (Gmail…).<br>
-          <b>Tu ne sais pas utiliser l'IA ?</b> Aucun souci : dépose une photo normale et coche « merci de la transformer pour moi », Patrick et Henri la déguiseront pour toi.<br><b>Pas de compte Google ?</b> Envoie ta photo par mail (précise « à transformer » si besoin) : <a class="lien-mail" href="mailto:perez.henri.contact@gmail.com?subject=PHOTO%2060%20ANS%20%E2%80%93%20&amp;body=Bonjour%20Patrick%20et%20Henri%2C%0A%0AVoici%20ma%20photo%20d%C3%A9guis%C3%A9e%20pour%20le%2015%20mai%20(pr%C3%A9nom%20et%20nom%20%3A%20...).%0A">perez.henri.contact@gmail.com</a>, objet « PHOTO 60 ANS » et ton prénom.</p>
+          <a class="btn btn-main js-form" href="https://docs.google.com/forms/d/e/1FAIpQLSf8NjPOTwB11tTClvCeax93vPYewRjLEZjD7tQvDHEgEOkOnA/viewform" target="_blank" rel="noopener">Déposer ma photo (formulaire de réponse)</a>
+          <p>La photo se dépose <b>dans le formulaire de réponse</b>, à la dernière page (« Le défi photo ») : Google demande d'être connecté à un compte Google (Gmail…).<br>
+          <b>Tu ne sais pas utiliser l'IA ?</b> Aucun souci : dépose une photo normale et coche « Je ne sais pas faire », Patrick et Henri la déguiseront pour toi.<br><b>Pas de compte Google ?</b> <a class="lien-mail" href="#secours">Réponds par mail</a> en joignant ta photo (précise « à transformer » si besoin).</p>
         </div>
       </div>
 
@@ -980,10 +986,10 @@ const CONFIG = {
 
   /* --- Formulaire de réponse (liens affichés par le script Apps Script) --- */
   deadline: "15 avril 2027",
-  formUrl: "https://docs.google.com/forms/d/e/1FAIpQLSe8FPssBQTnPlVSV5xzJ2NOKEL3VBMaSE-dO3y3qUtQZjEs0Q/viewform",   // lien du formulaire → génère le QR code
+  formUrl: "https://docs.google.com/forms/d/e/1FAIpQLSf8NjPOTwB11tTClvCeax93vPYewRjLEZjD7tQvDHEgEOkOnA/viewform",   // formulaire UNIQUE (réponse + accompagnants + photo) → génère le QR code
   formPrefill: "",             // lien pré-rempli contenant PRENOM et NOM → pré-remplit chaque carte invité
-  champs: { invitation: "entry.646744032", prenom: "entry.607566091", accompagnant: "entry.869786299", nomListe: "entry.1301711577" },
-  valeurs: { solo: "Toi seul·e", duo: "Toi et ton conjoint·e ou ami·e" },
+  champs: { prenom: "entry.548589244", nom: "entry.1534383180" },   // questions « Ton prénom » et « Ton nom »
+  mailSecours: "perez.henri.contact@gmail.com",
 
   /* --- Liste des invités en direct --- */
   // Lien CSV de l'onglet « Liste publique » publié sur le Web (Fichier > Partager > Publier sur le Web).
@@ -1537,48 +1543,64 @@ function drawQR(url){
   c.fillText("15.05", lx+ls/2, lx+ls/2+2);
   return cv;
 }
-function lienFormule(formule, inv){
+function lienFormule(formule, inv){   // un seul formulaire : on pré-remplit seulement le prénom
   if (!CONFIG.formUrl) return "";
-  const c = CONFIG.champs, q = ["usp=pp_url", c.invitation + "=" + encodeURIComponent(CONFIG.valeurs[formule])];
-  if (inv){ q.push(c.prenom + "=" + encodeURIComponent(inv[0]), c.nomListe + "=" + encodeURIComponent(invNom(inv)));
-    if (formule === "duo" && inv[3]) q.push(c.accompagnant + "=" + encodeURIComponent(inv[3])); }
-  return CONFIG.formUrl + "?" + q.join("&");
+  if (!inv) return CONFIG.formUrl;
+  return CONFIG.formUrl + "?usp=pp_url&" + CONFIG.champs.prenom + "=" + encodeURIComponent(inv[0]);
 }
 const QRS = {};
 function initQR(){
-  ["solo","duo"].forEach(f=>{
-    const cv = drawQR(lienFormule(f)); if (!cv) return;
-    cv.setAttribute("role","img"); cv.setAttribute("aria-label","QR code du formulaire, invitation " + (f==="solo" ? "pour 1 personne" : "pour 2 personnes"));
-    const z = document.getElementById("qr-" + f); z.innerHTML = ""; z.appendChild(cv); QRS[f] = cv;
-    document.getElementById("lien-" + f).href = lienFormule(f);
-  });
-  document.querySelectorAll("[data-dl]").forEach(b=> b.onclick = ()=>{ const cv = QRS[b.dataset.dl]; if (!cv) return;
-    const a = document.createElement("a"); a.href = cv.toDataURL("image/png"); a.download = "qr-code-invitation-" + b.dataset.dl + ".png"; a.click(); });
+  const url = lienFormule(), cv = drawQR(url);
+  if (cv){ cv.setAttribute("role","img"); cv.setAttribute("aria-label","QR code du formulaire de réponse");
+    const z = document.getElementById("qr-unique"); z.innerHTML = ""; z.appendChild(cv); QRS.unique = cv; }
+  document.getElementById("lien-unique").href = url;
+  document.querySelectorAll(".js-form").forEach(a=> a.href = url);
+  document.querySelectorAll("[data-dl]").forEach(b=> b.onclick = ()=>{ const c = QRS[b.dataset.dl]; if (!c) return;
+    const a = document.createElement("a"); a.href = c.toDataURL("image/png"); a.download = "qr-code-reponse-60-ans.png"; a.click(); });
+  initSecours();
+}
+/* Réponse par mail (secours) : modèle reprenant toutes les questions du formulaire */
+function initSecours(){
+  const objet = "BIDAOUI-60 – Ma réponse";
+  const txt = "Bonjour Patrick et Henri,\n\nVoici ma réponse pour le samedi 15 mai 2027 :\n\n" +
+    "• Mon prénom et mon nom : \n• Mon e-mail : \n• Mon téléphone : \n" +
+    "• Je serai là : oui / peut-être / non\n" +
+    "• Je viens : seul·e / accompagné·e\n" +
+    "• Accompagnant 1 (prénom, nom, qui est-ce, taille de t-shirt) : \n" +
+    "• Accompagnant 2 (prénom, nom, qui est-ce, taille de t-shirt) : \n" +
+    "• Le matin : pétanque / visite en bus (pour moi et pour chacun) : \n" +
+    "• Je serai là pour : le déjeuner / la soirée\n" +
+    "• Arrivée : vendredi 14 / samedi 15 au matin — Départ : samedi soir / dimanche 16 / lundi 17\n" +
+    "• Tenue marocaine : prête / je cherche / en civil — Ma taille de t-shirt : \n" +
+    "• Allergies ou régime : \n" +
+    "• Photo(s) jointe(s) : déjà déguisée par l'IA / photo normale à transformer\n\n" +
+    "Un petit mot : \n";
+  document.getElementById("s-modele").textContent = txt;
+  document.getElementById("s-mail").href = "mailto:" + CONFIG.mailSecours + "?subject=" + encodeURIComponent(objet) + "&body=" + encodeURIComponent(txt);
+  document.getElementById("s-copier").onclick = async ()=>{ try { await navigator.clipboard.writeText(txt); toast("Modèle copié : colle-le dans ton mail et joins ta photo"); } catch(e){ toast("Sélectionne le modèle pour le copier."); } };
 }
 /* ===== Retrouver son invitation ===== */
 const invNom = i => i[0] + (i[1] ? " " + i[1] + "." : "");
 const invForm = i => i[2] === "solo" ? "solo" : "duo";
 function invTexte(i){
-  if (i[2] === "solo") return { court:"Pour toi seul·e", long:"Ton invitation est pour une personne : toi. Merci de répondre « Toi seul·e »." };
+  if (i[2] === "solo") return { court:"Pour toi seul·e", long:"Ton invitation est pour une personne : toi. Dans le formulaire, coche « Seul·e » (ou indique ton accompagnant : Patrick et Henri confirmeront)." };
   if (i[2] === "amis") return { court:"Pour toi et " + (i[3] || "ton ami"), long:"Vous êtes invités ensemble, à deux" + (i[3] ? " : toi et " + i[3].replace(/\.$/,"") : "") + ". Les conjoint·es ne sont pas invité·es." };
-  return { court:"Pour toi et " + (i[3] || "ton conjoint·e"), long:"Ton invitation est pour deux personnes : toi et " + (i[3] || "ton conjoint·e") + "." };
+  return { court:"Pour toi et " + (i[3] || "ton conjoint·e"), long:"Ton invitation est pour deux personnes : toi et " + (i[3] || "ton conjoint·e") + ". Dans le formulaire, coche « Accompagné·e » et indique son nom." };
 }
 function ficheInv(i){
   const f = invForm(i), t = invTexte(i), url = lienFormule(f, i);
   const d = document.createElement("div"); d.className = "fiche";
   d.innerHTML = `<div><h3>Bonjour ${esc(invNom(i))} !</h3><span class="formule ${f}">${esc(t.court)}</span><p>${esc(t.long)}</p>
     <a class="btn btn-main" href="${esc(url)}" target="_blank" rel="noopener">Répondre au formulaire</a>
-    <p class="note">Pense à ton e-mail de correspondance : il servira pour le programme définitif, les infos pratiques et le lien des photos.</p></div>`;
+    <p class="note">Tout se fait dans ce formulaire : ta réponse, tes accompagnants et ta photo. Pense à ton e-mail de correspondance : il servira pour le programme définitif et le lien des photos.</p></div>`;
   const cv = drawQR(url); if (cv){ cv.setAttribute("role","img"); cv.setAttribute("aria-label","QR code personnel vers le formulaire"); d.appendChild(cv); }
   return d;
 }
 function montrerInv(liste){
   const res = document.getElementById("trouve-res"); res.innerHTML = "";
-  document.querySelectorAll(".deux-qr .qr-card").forEach(c=>c.classList.remove("choisie"));
   if (!liste.length){ res.innerHTML = '<p class="trouve-vide">Pas trouvé : vérifie l\'orthographe, ou <a class="lien-mail" href="#reponse" onclick="signalerManquant();return false">signale-le-nous juste en dessous</a>.</p>'; signalerManquant(); return; }
   if (liste.length > 4){ res.innerHTML = '<p class="trouve-vide">Continue à taper ton prénom…</p>'; return; }
   liste.forEach(i=> res.appendChild(ficheInv(i)));
-  if (liste.length === 1) document.querySelector(`.deux-qr .qr-card[data-formule="${invForm(liste[0])}"]`).classList.add("choisie");
 }
 const MAIL_LISTE = "mailto:perez.henri.contact@gmail.com?subject=BIDAOUI-60%20%E2%80%93%20Je%20ne%20suis%20pas%20sur%20la%20liste&body=Bonjour%20Patrick%20et%20Henri%2C%0A%0AJe%20ne%20trouve%20pas%20mon%20nom%20dans%20la%20liste%20des%20invit%C3%A9s.%20Pr%C3%A9nom%20et%20nom%20%3A%20...%0A";
 /* Message « je ne trouve pas mon nom » */
@@ -1598,7 +1620,6 @@ const INV_PUB = INVITATIONS.filter(i=> !HOTES_IDS.includes(slug(i[0] + " " + i[1
 function initListe(){
   const solo = INV_PUB.filter(i=>i[2]==="solo"), duo = INV_PUB.filter(i=>i[2]!=="solo");
   const nb = (l)=> l.length;
-  document.getElementById("nb-solo").textContent = nb(solo); document.getElementById("nb-duo").textContent = nb(duo);
   document.getElementById("cpt-solo").textContent = solo.length + " invitation" + (solo.length>1?"s":"") + " · " + solo.length + " pers.";
   document.getElementById("cpt-duo").textContent = duo.length + " invitations · " + duo.length*2 + " pers.";
   const tri = l => l.slice().sort((a,b)=>a[0].localeCompare(b[0],"fr"));
