@@ -829,10 +829,10 @@ footer .script{font-size:1.9rem;color:var(--fez);margin-bottom:6px;display:block
                 <label><input type="radio" name="venue" value="seul" checked><span id="r-lbl-seul">Seul·e</span></label>
                 <label><input type="radio" name="venue" value="acc"><span id="r-lbl-acc">Accompagné·e</span></label>
               </div>
-              <div id="r-nb" hidden><label class="r-inline">Nombre d'accompagnants <select name="nb"><option value="1">1 personne (à deux)</option><option value="2">2 personnes (à trois)</option></select></label></div>
+              
               <p class="r-aide" id="r-note-acc"></p>
               <div class="r-acc" id="r-acc1" hidden>
-                <b>Accompagnant 1</b>
+                <b>Ton conjoint·e ou ami·e</b>
                 <div class="r-grille">
                   <label><span id="r-a1p-lbl">Prénom</span> <input name="a1p" autocomplete="off"></label>
                   <label><span id="r-a1n-lbl">Nom</span> <input name="a1n" autocomplete="off"></label>
@@ -841,16 +841,7 @@ footer .script{font-size:1.9rem;color:var(--fez);margin-bottom:6px;display:block
                   <label>Le matin, il ou elle préfère <select name="a1m"><option>Pétanque (tournoi des babouches)</option><option>Visite en bus</option><option>Je ne sais pas encore</option></select></label>
                 </div>
               </div>
-              <div class="r-acc" id="r-acc2" hidden>
-                <b>Accompagnant 2</b>
-                <div class="r-grille">
-                  <label>Prénom * <input name="a2p" autocomplete="off"></label>
-                  <label>Nom * <input name="a2n" autocomplete="off"></label>
-                  <label>Qui est-ce ? <select name="a2l"><option>Conjoint·e</option><option>Ami·e</option><option>Enfant</option><option>Autre membre de la famille</option><option>Autre</option></select></label>
-                  <label>Taille de t-shirt <select name="a2t"><option value="">—</option><option>XS</option><option>S</option><option>M</option><option>L</option><option>XL</option><option>XXL</option><option>3XL</option><option>Je ne sais pas encore</option></select></label>
-                  <label>Le matin, il ou elle préfère <select name="a2m"><option>Pétanque (tournoi des babouches)</option><option>Visite en bus</option><option>Je ne sais pas encore</option></select></label>
-                </div>
-              </div>
+              
             </fieldset>
             <fieldset><legend>Ta journée du 15 mai</legend>
               <div class="r-grille">
@@ -872,8 +863,10 @@ footer .script{font-size:1.9rem;color:var(--fez);margin-bottom:6px;display:block
             <div class="r-apercus" id="r-apercus"></div>
             <div class="r-choix r-choix-col">
               <label><input type="radio" name="nature" value="Déguisée par l'IA"><span>Elle est déjà déguisée par l'IA</span></label>
-              <label><input type="radio" name="nature" value="Photo normale à transformer"><span>Photo normale : Patrick et Henri la transforment</span></label>
+              <label><input type="radio" name="nature" value="Photo normale à transformer"><span>Je ne sais pas faire : photo normale, Patrick et Henri la transforment</span></label>
+              <label><input type="radio" name="nature" value="Je l'enverrai plus tard par mail"><span>Je l'enverrai plus tard par mail</span></label>
             </div>
+            <p class="r-aide">Tu ne sais pas faire ? <a class="lien-mail" href="ia.html" target="_blank" rel="noopener">Le mode d'emploi pas à pas</a> (ChatGPT gratuit, texte déjà prêt), ou dépose une photo normale : nous la transformons. Plus tard : envoie-la à <a class="lien-mail" href="mailto:perez.henri.contact@gmail.com?subject=BIDAOUI-60%20%E2%80%93%20Ma%20photo">perez.henri.contact@gmail.com</a>, objet « BIDAOUI-60 – Ma photo », avec ton prénom et ton nom.</p>
             <label class="r-consent"><input type="checkbox" name="autorisation" checked> J'autorise Patrick et Henri à afficher cette photo (prénom et initiale seulement) sur le site de la fête, accessible aux seuls invités qui ont le lien. Sans cette autorisation, la photo reste privée.</label>
           </fieldset>
           <fieldset><legend>Un petit mot pour Patrick et Henri</legend>
@@ -1729,15 +1722,14 @@ function initSecours(){
   const txt = "Bonjour Patrick et Henri,\n\nVoici ma réponse pour le samedi 15 mai 2027 :\n\n" +
     "• Mon prénom et mon nom : \n• Mon e-mail : \n• Mon téléphone : \n" +
     "• Je serai là : oui / peut-être / non\n" +
-    "• Je viens : seul·e / accompagné·e\n" +
-    "• Accompagnant 1 (prénom, nom, qui est-ce, taille de t-shirt) : \n" +
-    "• Accompagnant 2 (prénom, nom, qui est-ce, taille de t-shirt) : \n" +
+    "• Je viens : seul·e / avec mon conjoint·e ou ami·e invité·e\n" +
+    "• Mon conjoint·e ou ami·e invité·e (prénom, nom, taille de t-shirt), si l'invitation est à deux : \n" +
     "• Le matin : pétanque / visite en bus (pour moi et pour chacun) : \n" +
     "• Je serai là pour : le déjeuner / la soirée\n" +
     "• Arrivée : vendredi 14 / samedi 15 au matin — Départ : samedi soir / dimanche 16 / lundi 17\n" +
     "• Tenue marocaine : prête / je cherche / en civil — Ma taille de t-shirt : \n" +
     "• Allergies ou régime : \n" +
-    "• Photo(s) jointe(s) : déjà déguisée par l'IA / photo normale à transformer\n\n" +
+    "• Photo jointe : déjà déguisée par l'IA / photo normale à transformer / envoyée plus tard\n\n" +
     "Un petit mot : \n";
   document.getElementById("s-modele").textContent = txt;
   document.getElementById("s-mail").href = "mailto:" + CONFIG.mailSecours + "?subject=" + encodeURIComponent(objet) + "&body=" + encodeURIComponent(txt);
@@ -1838,7 +1830,6 @@ function ouvrirFormulaire(){
   $r("r-code-box").hidden = true; f.hidden = false; $r("rsvp-merci").hidden = true;
   $r("r-lbl-seul").textContent = "Je viens seul·e";
   $r("r-lbl-acc").textContent = "Avec " + (prenomPart || (i.formule === "Deux amis" ? "mon ami·e" : "mon conjoint·e"));
-  f.nb.value = "1";
   if (!solo){
     f.venue.value = "acc";
     const mots = partSans.split(/\s+/);
@@ -1857,7 +1848,6 @@ function majVisibilite(){
   const f = $r("rsvp-form"), pres = f.presence.value, acc = f.venue.value === "acc";
   $r("r-si-viens").hidden = !pres || pres === "non";
   $r("r-fs-venue").hidden = !!R.solo;                       // invitation seul·e : pas d'accompagnant possible
-  $r("r-nb").hidden = true; $r("r-acc2").hidden = true;     // jamais de deuxième accompagnant
   $r("r-acc1").hidden = !acc || !!R.solo;
 }
 /* Photos : recadrage à 1600 px (JPEG) quand le navigateur sait lire l'image ; sinon envoi du fichier tel quel (HEIC, PDF) */
@@ -1904,6 +1894,7 @@ async function envoyer(ev){
     if (viens && !f.matin.value) return "Choisis ton programme du matin.";
     if (viens && !f.querySelectorAll('[name=repas]:checked').length) return "Coche au moins un repas.";
     if ($r("r-photos").files.length && !f.nature.value) return "Précise si ta photo est déjà déguisée ou à transformer.";
+    if ($r("r-photos").files.length && /plus tard/.test(f.nature.value)) return "Tu as joint une photo : choisis « déjà déguisée » ou « je ne sais pas faire ».";
     return controlerPhotos();
   })();
   if (err){ msg("r-msg-form", err, false); return; }
