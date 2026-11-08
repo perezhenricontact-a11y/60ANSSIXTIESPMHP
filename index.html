@@ -494,10 +494,11 @@ footer .script{font-size:1.9rem;color:var(--fez);margin-bottom:6px;display:block
 .t-case img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center 25%}
 .t-case .t-ini{font-family:var(--f-titre);font-weight:800;font-size:calc(var(--t,150px) / 3.2);opacity:.9}
 .t-case figcaption{position:absolute;left:0;right:0;bottom:0;padding:14px 6px 5px;background:linear-gradient(transparent,rgba(12,67,73,.92));font-weight:800;font-size:clamp(.68rem,calc(var(--t,150px) / 11),1rem);line-height:1.1;text-align:center;color:#FFF3DF}
-.t-case.t-sans{box-shadow:inset 0 0 0 2px rgba(255,243,223,.55)}.t-case.t-sans .t-attente{position:absolute;top:5px;right:5px;width:22px;height:22px;display:grid;place-items:center;font-size:.7rem;background:rgba(255,243,223,.92);border-radius:50%}
+.t-case.t-sans{background:linear-gradient(165deg,#1E8189 0%,#126169 55%,#0C4349 100%)}
+.t-case.t-sans .t-attente{position:absolute;top:6px;right:6px;font-size:.62rem;font-weight:800;background:rgba(255,243,223,.92);color:var(--fez);border-radius:999px;padding:2px 7px;white-space:nowrap}
 .t-case.t-place{background:repeating-linear-gradient(45deg,#F4E6CC 0 12px,#FBF3E4 12px 24px);color:var(--fez)}
 .t-case.t-place figcaption{background:none;color:var(--fez)}
-@media(max-width:520px){.t-mosaique{grid-template-columns:repeat(auto-fill,minmax(min(var(--t,150px),calc((100vw - 60px) / 4)),1fr));grid-auto-rows:min(var(--t,150px),calc((100vw - 60px) / 4));gap:4px;padding:4px}}
+@media(max-width:520px){.t-mosaique{grid-template-columns:repeat(auto-fill,minmax(min(var(--t,150px),calc((100vw - 60px) / 4)),1fr));grid-auto-rows:min(var(--t,150px),calc((100vw - 60px) / 4));gap:4px;padding:4px}.t-case.t-sans .t-attente{top:3px;right:3px;font-size:.48rem;padding:1px 4px}.t-case .t-ini{font-size:1.25rem;margin-top:-8px}.t-case figcaption{font-size:.6rem;padding:10px 3px 3px}}
 
 /* Invitation : les hôtes de part et d'autre de l'affiche */
 .trio{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,.72fr) minmax(0,1fr);gap:22px;align-items:center;margin-top:40px}
@@ -1445,27 +1446,37 @@ function renderTrombi(){
   const partenaire = g => GUESTS.find(x=>x.partenaireDe && x.guestId===g.id);
   const nbPers = ok.reduce((a,g)=> a + 1 + (partenaire(g) ? 1 : 0), 0);
   document.getElementById("trombi-intro").textContent = (nbPers ? `${nbPers} invité${nbPers>1?"s":""} confirmé${nbPers>1?"s":""} à ce jour. ` : "") +
-    "Une photo par personne, et une seule photo pour les couples ou les duos d'amis.";
+    "Chaque invitation a sa case : une par personne seule, une case double (une seule photo) par couple. La photo remplace les initiales dès qu'elle arrive.";
   const vide = t => `<div class="t-vide"><span>${t}</span></div>`;
   const hotes = `<div class="t-hotes">${HOTES_TROMBI.map(h=>`<figure class="t-orient">
       <div class="t-orient-in">${h.photo ? `<img src="${esc(h.photo)}" alt="${esc(h.noms)} en tenue marocaine">` : vide("Photo à venir")}</div>
       <figcaption>${esc(h.noms)}</figcaption></figure>`).join("")}</div>`;
-  /* Une case par personne seule, une case double par couple ou duo d'amis : une seule photo par case */
-  const photoCase = g => { const p = partenaire(g); return p ? (PHOTOS_COUPLES[g.id] || photoDe(g) || photoDe(p)) : photoDe(g); };
-  const avecPhoto = ok.filter(g=>photoCase(g)), sansPhoto = ok.filter(g=>!photoCase(g));
-  const carte = g => { const p = partenaire(g), ph = photoCase(g), nom = p ? `${g.name} & ${p.name}` : g.name;
-    return `<figure class="t-case${p ? " t-double" : ""}${ph ? "" : " t-sans"}" style="--grad:${g.grad}">${ph ? `<img src="${esc(ph)}" alt="${esc(nom)}" loading="lazy">` : `<span class="t-ini">${esc(p ? g.first[0] + "&" + p.first[0] : g.first[0] + (g.ini || ""))}</span><span class="t-attente" title="Photo à venir" aria-label="Photo à venir">📷</span>`}<figcaption>${esc(nom)}</figcaption></figure>`; };
-  const cartes = avecPhoto.concat(sansPhoto).map(carte).join("");
-  /* Taille automatique : plus il y a de cases, plus elles rétrécissent pour que tout tienne sur un écran */
-  const unites = ok.reduce((a,g)=> a + (partenaire(g) ? 2 : 1), 0);
+  /* TRAME FIXE : toutes les invitations de la liste ont leur case dès le départ (une case par personne seule,
+     une case double par couple ou duo d'amis, une seule photo par case). Les photos remplacent les initiales
+     au fur et à mesure des réponses ; une invitation déclinée (« non ») quitte la mosaïque. */
+  const propre = t => String(t || "").replace(/\s*\?\s*/g, " ").trim();
+  const cases = INV_PUB.map(i=>{
+    const first = cap(propre(i[0])), ini = propre(i[1]).charAt(0).toUpperCase(), id = slug(first + " " + ini);
+    const g = GUESTS.find(x=>x.id===id && !x.partenaireDe), p = g && partenaire(g);
+    const duo = i[2] !== "solo";
+    const nomPart = duo ? cap(propre(p ? p.first : (i[3] || "Madame"))) || "Madame" : "";
+    const ph = g ? (duo ? (PHOTOS_COUPLES[id] || photoDe(g) || (p && photoDe(p)) || "") : photoDe(g)) : "";
+    return { id, first, ini, duo, nom: first + (ini ? " " + ini + "." : "") + (duo ? " & " + nomPart : ""),
+             init: duo ? first[0] + "&" + (nomPart[0] || "M") : first[0] + ini, ph, statut: g ? g.status : "attente",
+             grad: g ? g.grad : GRADS[(first.charCodeAt(0) + (ini.charCodeAt(0) || 0)) % GRADS.length] };
+  }).filter(c=> c.first && c.statut !== "non");
+  const ordre = c => c.ph ? 0 : 1;
+  cases.sort((x,y)=> ordre(x) - ordre(y));
+  const carte = c => `<figure class="t-case${c.duo ? " t-double" : ""}${c.ph ? "" : " t-sans"}" style="--grad:${c.grad}">${c.ph ? `<img src="${esc(c.ph)}" alt="${esc(c.nom)}" loading="lazy">` : `<span class="t-ini">${esc(c.init)}</span><span class="t-attente">photo à venir</span>`}<figcaption>${esc(c.nom)}</figcaption></figure>`;
+  const cartes = cases.map(carte).join("");
+  /* Taille automatique selon le nombre de cases (personnes) */
+  const unites = cases.reduce((a,c)=> a + (c.duo ? 2 : 1), 0);
   const t = unites <= 8 ? 170 : unites <= 16 ? 145 : unites <= 30 ? 125 : unites <= 50 ? 108 : unites <= 80 ? 94 : 82;
-  const nPlaces = unites < 12 ? 3 : 0;
-  const places = Array.from({length: nPlaces}, ()=> `<a class="t-case t-place" href="#defi"><span class="t-ini">?</span><figcaption>Ta photo ici !</figcaption></a>`).join("");
   box.style.setProperty("--t", t + "px");
-  const photos = avecPhoto.length;
-  const stats = `<div class="t-stats"><span><b>${nbPers}</b>personnes confirmées</span><span><b>${ok.length}</b>cases (une par personne seule ou par couple)</span><span><b>${photos}</b>photos reçues</span><span><b>${INV_PUB.reduce((a,i)=>a+(i[2]==="solo"?1:2),0)}</b>personnes invitées</span></div>`;
+  const photos = cases.filter(c=>c.ph).length;
+  const stats = `<div class="t-stats"><span><b>${nbPers}</b>personnes confirmées</span><span><b>${cases.length}</b>cases (une par personne seule ou par couple)</span><span><b>${photos}</b>photos reçues</span><span><b>${INV_PUB.reduce((a,i)=>a+(i[2]==="solo"?1:2),0)}</b>personnes invitées</span></div>`;
   box.innerHTML = stats + `<p class="t-note">Les hôtes du jour (Corinne, Hugo et Patrick ; Stéphanie et Henri) vous accueillent sur <a href="#invitation">l'onglet Invitation</a>.</p>` +
-    (ok.length ? `<div class="t-mosaique">${cartes}${places}</div>` : `<div class="trombi-vide">Les premières photos arrivent bientôt. <a href="#reponse">Réponds et envoie la tienne !</a></div>`);
+    (cases.length ? `<div class="t-mosaique">${cartes}</div>` : `<div class="trombi-vide">La liste des invités arrive bientôt.</div>`);
 }
 function render(){
   renderStats(); renderHeros(); renderTrombi();
