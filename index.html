@@ -486,6 +486,17 @@ footer .script{font-size:1.9rem;color:var(--fez);margin-bottom:6px;display:block
 .trombi.t-mini .t-cadre{padding:4px;gap:4px}
 .trombi.t-compact .t-cadre{padding:6px;border-width:2px;border-radius:12px}
 @media(max-width:420px){.trombi{--t:min(var(--t,160px),130px)}.t-photo{width:min(var(--t,160px),130px);height:min(var(--t,160px),130px)}.t-photo-duo{width:min(calc(var(--t,160px) * 2 + 10px),276px);height:min(calc(var(--t,160px) * 1.35),184px)}}
+/* Mosaïque optimisée : une case par personne, une case double par couple (une seule photo), sans trou ni marge perdue */
+.t-mosaique{display:grid;grid-template-columns:repeat(auto-fill,minmax(var(--t,150px),1fr));grid-auto-rows:var(--t,150px);grid-auto-flow:dense;gap:6px;max-width:1200px;margin:0 auto;padding:6px;background:var(--or);border-radius:16px}
+.t-case{position:relative;margin:0;overflow:hidden;border-radius:10px;background:var(--grad,#126169);display:grid;place-items:center;color:#FFF3DF;text-decoration:none}
+.t-case.t-double{grid-column:span 2}
+.t-case img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center 25%}
+.t-case .t-ini{font-family:var(--f-titre);font-weight:800;font-size:calc(var(--t,150px) / 3.2);opacity:.9}
+.t-case figcaption{position:absolute;left:0;right:0;bottom:0;padding:14px 6px 5px;background:linear-gradient(transparent,rgba(12,67,73,.92));font-weight:800;font-size:clamp(.68rem,calc(var(--t,150px) / 11),1rem);line-height:1.1;text-align:center;color:#FFF3DF}
+.t-case.t-sans{box-shadow:inset 0 0 0 2px rgba(255,243,223,.55)}.t-case.t-sans .t-attente{position:absolute;top:5px;right:5px;width:22px;height:22px;display:grid;place-items:center;font-size:.7rem;background:rgba(255,243,223,.92);border-radius:50%}
+.t-case.t-place{background:repeating-linear-gradient(45deg,#F4E6CC 0 12px,#FBF3E4 12px 24px);color:var(--fez)}
+.t-case.t-place figcaption{background:none;color:var(--fez)}
+@media(max-width:520px){.t-mosaique{grid-template-columns:repeat(auto-fill,minmax(min(var(--t,150px),calc((100vw - 60px) / 4)),1fr));grid-auto-rows:min(var(--t,150px),calc((100vw - 60px) / 4));gap:4px;padding:4px}}
 
 /* Invitation : les hôtes de part et d'autre de l'affiche */
 .trio{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,.72fr) minmax(0,1fr);gap:22px;align-items:center;margin-top:40px}
@@ -1437,23 +1448,22 @@ function renderTrombi(){
   const hotes = `<div class="t-hotes">${HOTES_TROMBI.map(h=>`<figure class="t-orient">
       <div class="t-orient-in">${h.photo ? `<img src="${esc(h.photo)}" alt="${esc(h.noms)} en tenue marocaine">` : vide("Photo à venir")}</div>
       <figcaption>${esc(h.noms)}</figcaption></figure>`).join("")}</div>`;
-  const cartes = ok.map(g=>{ const p = partenaire(g);
-    if (p){ const ph = PHOTOS_COUPLES[g.id];
-      return `<figure class="t-cadre t-duo"><div class="t-photo-duo" style="--grad:${g.grad}">${ph ? `<img src="${esc(ph)}" alt="${esc(g.name)} et ${esc(p.name)}">` : `<span>${esc(g.first[0])} & ${esc(p.first[0])}</span>`}</div>
-        <figcaption>${esc(g.name)} & ${esc(p.name)}</figcaption></figure>`; }
-    return `<figure class="t-cadre"><div class="t-photo" style="--grad:${g.grad};${photoDe(g) ? `background-image:url('${esc(photoDe(g))}')` : ""}">${photoDe(g) ? "" : esc(g.first[0] + (g.ini || ""))}</div>
-      <figcaption>${esc(g.name)}</figcaption></figure>`; }).join("");
-  const places = Array.from({length: 3}, ()=> `<a class="t-cadre t-place" href="#defi"><div class="t-photo">?</div><figcaption>Ta photo ici !</figcaption></a>`).join("");
-  /* Taille automatique : plus il y a de photos, plus elles rétrécissent pour que tout tienne */
+  /* Une case par personne seule, une case double par couple ou duo d'amis : une seule photo par case */
+  const photoCase = g => { const p = partenaire(g); return p ? (PHOTOS_COUPLES[g.id] || photoDe(g) || photoDe(p)) : photoDe(g); };
+  const avecPhoto = ok.filter(g=>photoCase(g)), sansPhoto = ok.filter(g=>!photoCase(g));
+  const carte = g => { const p = partenaire(g), ph = photoCase(g), nom = p ? `${g.name} & ${p.name}` : g.name;
+    return `<figure class="t-case${p ? " t-double" : ""}${ph ? "" : " t-sans"}" style="--grad:${g.grad}">${ph ? `<img src="${esc(ph)}" alt="${esc(nom)}" loading="lazy">` : `<span class="t-ini">${esc(p ? g.first[0] + "&" + p.first[0] : g.first[0] + (g.ini || ""))}</span><span class="t-attente" title="Photo à venir" aria-label="Photo à venir">📷</span>`}<figcaption>${esc(nom)}</figcaption></figure>`; };
+  const cartes = avecPhoto.concat(sansPhoto).map(carte).join("");
+  /* Taille automatique : plus il y a de cases, plus elles rétrécissent pour que tout tienne sur un écran */
   const unites = ok.reduce((a,g)=> a + (partenaire(g) ? 2 : 1), 0);
-  const t = unites <= 10 ? 160 : unites <= 20 ? 130 : unites <= 36 ? 105 : unites <= 50 ? 92 : unites <= 65 ? 80 : unites <= 80 ? 70 : 60;
+  const t = unites <= 8 ? 170 : unites <= 16 ? 145 : unites <= 30 ? 125 : unites <= 50 ? 108 : unites <= 80 ? 94 : 82;
   const nPlaces = unites < 12 ? 3 : 0;
+  const places = Array.from({length: nPlaces}, ()=> `<a class="t-case t-place" href="#defi"><span class="t-ini">?</span><figcaption>Ta photo ici !</figcaption></a>`).join("");
   box.style.setProperty("--t", t + "px");
-  box.classList.toggle("t-compact", unites > 20);
-  box.classList.toggle("t-mini", unites > 45);   /* au-delà de 45 personnes : les hôtes passent en médaillons pour laisser la place */
-  const photos = ok.reduce((a,g)=> a + (partenaire(g) ? (PHOTOS_COUPLES[g.id] ? 1 : 0) : (photoDe(g) ? 1 : 0)), 0);
-  const stats = `<div class="t-stats"><span><b>${nbPers}</b>personnes confirmées</span><span><b>${ok.length}</b>invitations</span><span><b>${photos}</b>photos reçues</span><span><b>${INV_PUB.reduce((a,i)=>a+(i[2]==="solo"?1:2),0)}</b>personnes invitées</span></div>`;
-  box.innerHTML = stats + `<p class="t-note">Les hôtes du jour, Patrick & Corinne et Henri & Stéphanie, vous accueillent sur <a href="#invitation">l'onglet Invitation</a>.</p><div class="t-grille">${cartes}${places.split("</a>").slice(0,nPlaces).map(x=>x+"</a>").join("")}</div>`;
+  const photos = avecPhoto.length;
+  const stats = `<div class="t-stats"><span><b>${nbPers}</b>personnes confirmées</span><span><b>${ok.length}</b>cases (une par personne seule ou par couple)</span><span><b>${photos}</b>photos reçues</span><span><b>${INV_PUB.reduce((a,i)=>a+(i[2]==="solo"?1:2),0)}</b>personnes invitées</span></div>`;
+  box.innerHTML = stats + `<p class="t-note">Les hôtes du jour (Corinne, Hugo et Patrick ; Stéphanie et Henri) vous accueillent sur <a href="#invitation">l'onglet Invitation</a>.</p>` +
+    (ok.length ? `<div class="t-mosaique">${cartes}${places}</div>` : `<div class="trombi-vide">Les premières photos arrivent bientôt. <a href="#reponse">Réponds et envoie la tienne !</a></div>`);
 }
 function render(){
   renderStats(); renderHeros(); renderTrombi();
