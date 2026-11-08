@@ -329,6 +329,54 @@ footer .script{font-size:1.9rem;color:var(--fez);margin-bottom:6px;display:block
 .fiche canvas{width:100%;height:auto;border-radius:12px;border:2px solid var(--or)}
 .fiche-choix{display:flex;flex-wrap:wrap;gap:8px;justify-content:center}
 @media(max-width:560px){.fiche{grid-template-columns:1fr}.fiche canvas{max-width:180px;justify-self:center}}
+.rsvp{max-width:820px;margin:0 auto 30px}
+.r-code,.aide,#rsvp-form,.r-merci{padding:22px;border-radius:26px;background:var(--carte);border:2px solid var(--or)}
+.r-code{background:linear-gradient(135deg,#FBE3C4,#F5CDB5);text-align:center}
+.r-code h3,.aide h3,.r-merci h3{font-family:var(--f-titre);color:var(--zellige);font-size:1.3rem;margin-bottom:6px}
+.r-code p,.aide>p{color:var(--encre-douce);font-size:.95rem}
+.code-row{display:flex;gap:10px;justify-content:center;margin:14px auto 6px;max-width:420px}
+.code-row input{flex:1;min-width:0;font:800 1.4rem var(--f-titre,Georgia),serif;letter-spacing:.18em;text-transform:uppercase;text-align:center;padding:10px 12px;border-radius:14px;border:2px solid var(--or);background:var(--creme)}
+.code-row .btn{padding:12px 20px}
+.r-msg{font-weight:800;min-height:1.2em;margin-top:6px}
+.r-msg.ok{color:#2E7D4F}.r-msg.ko{color:var(--fez)}
+.r-petit{font-size:.9rem;margin-top:6px}
+#rsvp-form{margin-top:18px;display:grid;gap:16px}
+#rsvp-form fieldset{border:1px solid var(--filet);border-radius:18px;padding:14px 16px 16px;min-width:0}
+#rsvp-form legend{font-family:var(--f-titre);font-weight:800;color:var(--zellige);padding:0 8px}
+.r-bonjour h3{font-family:var(--f-script,Georgia);font-style:italic;font-size:1.8rem;color:var(--fez)}
+.r-bonjour p{color:var(--encre-douce)}
+.r-grille{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:12px}
+.r-grille label,.r-large,.r-inline{display:grid;gap:4px;font-weight:800;font-size:.9rem;color:var(--zellige)}
+.r-large{margin-top:12px}
+.rsvp input:not([type=radio]):not([type=checkbox]):not([type=file]),.rsvp select,.rsvp textarea,.aide input,.aide select,.aide textarea{font:inherit;font-weight:600;color:var(--encre);padding:10px 12px;border-radius:12px;border:1px solid var(--filet);background:var(--creme);width:100%;min-width:0}
+.r-choix{display:flex;flex-wrap:wrap;gap:10px}
+.r-choix-col{margin-top:10px}
+.r-choix label{cursor:pointer}
+.r-choix input{position:absolute;opacity:0;pointer-events:none}
+.r-choix span{display:inline-block;padding:10px 16px;border-radius:999px;border:2px solid var(--filet);font-weight:800;background:var(--creme)}
+.r-choix input:checked+span{border-color:var(--fez);background:#FDEBDD;color:var(--fez)}
+.r-choix input:focus-visible+span{outline:3px solid var(--or)}
+.r-cases{display:grid;gap:6px;font-weight:800;font-size:.9rem;color:var(--zellige)}
+.r-cases label{font-weight:700;color:var(--encre)}
+.r-acc{margin-top:14px;padding:14px;border-radius:14px;background:var(--creme-2,#F4E6CC)}
+.r-acc>b{display:block;margin-bottom:8px;color:var(--fez)}
+.r-aide{font-size:.88rem;color:var(--encre-douce);margin-top:8px}
+.r-inline{margin-top:10px;max-width:320px}
+.r-fichier{display:inline-block;margin-top:10px;cursor:pointer}
+.r-fichier input{position:absolute;opacity:0;width:1px;height:1px}
+.r-fichier span{display:inline-block;padding:11px 18px;border-radius:999px;background:var(--zellige);color:#FFF6E4;font-weight:800}
+.r-fichier input:focus-visible+span{outline:3px solid var(--or)}
+.r-apercus{display:flex;flex-wrap:wrap;gap:10px;margin-top:10px}
+.r-apercus figure{width:96px;text-align:center;font-size:.72rem;color:var(--encre-douce);word-break:break-all}
+.r-apercus img,.r-apercus .r-doc{width:96px;height:96px;object-fit:cover;border-radius:12px;border:2px solid var(--or);display:grid;place-items:center;background:var(--creme-2,#F4E6CC);font-weight:800}
+.r-consent{display:flex;gap:10px;align-items:flex-start;margin-top:12px;font-size:.88rem;color:var(--encre-douce)}
+.r-consent input{margin-top:4px}
+.r-envoyer{justify-self:center;font-size:1.05rem;padding:14px 30px}
+.r-envoyer[disabled]{opacity:.6;cursor:wait}
+.r-merci{margin-top:18px;text-align:center}
+.r-merci p{color:var(--encre-douce)}
+.aide{max-width:820px;margin:0 auto 34px;border-style:dashed;border-color:var(--fez)}
+.aide.flash{animation:flashM 1.2s ease}
 .qr-unique{display:grid;grid-template-columns:minmax(0,320px) minmax(0,1fr);gap:28px;max-width:900px;margin:0 auto 46px;align-items:start}
 .qr-unique .qr-card{transform:none;width:100%;display:flex;flex-direction:column;align-items:center}
 .qr-bandeau.unique{background:var(--fez)}
@@ -747,45 +795,122 @@ footer .script{font-size:1.9rem;color:var(--fez);margin-bottom:6px;display:block
       <div class="sec-head">
         <span class="tag">Réponse avant le <span class="js-deadline">15 avril 2027</span></span>
         <h2>Tu viens ? Dis-le nous !</h2>
-        <p><b>Un seul QR code, un seul formulaire</b> : ta réponse, tes accompagnants (si tu viens à deux ou à trois) et ta photo, tout au même endroit. Tu viens accompagné·e ? Indique-le : Patrick et Henri confirmeront chaque accompagnant.<br><b>Ce formulaire est réservé aux personnes figurant sur la liste des invités</b> : une réponse d'une personne non invitée ne sera pas prise en compte.</p>
+        <p>Ton <b>invitation personnelle</b> contient ton <b>code</b> (6 caractères) et ton QR code : scanne-le, le formulaire s'ouvre à ton nom. Réponse, accompagnants (si tu viens à deux ou à trois) et photo : tout se fait ici, <b>sans compte Google</b>.<br>Ce formulaire est réservé aux personnes figurant sur la liste des invités, et l'invitation est nominative : seul·e, ou avec le conjoint·e ou l'ami·e prévu sur ton invitation.</p>
       </div>
 
-      <div class="trouve">
-        <label class="choix-nom"><span>Choisis ton nom dans la liste des invités</span>
-          <select id="choix-nom"><option value="">— Sélectionne ton nom —</option></select>
-        </label>
-        <p class="ou">ou tape ton prénom :</p>
-        <label class="search trouve-q">
-          <svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="m20 20-4-4"/></svg>
-          <input id="trouve-q" type="search" placeholder="Tape ton prénom…" autocomplete="off" aria-label="Retrouver ton invitation">
-        </label>
-        <div class="trouve-res" id="trouve-res" aria-live="polite">
-          <p class="trouve-vide">Choisis ton nom ou tape ton prénom.</p>
+      <div class="rsvp" id="rsvp">
+        <div class="r-code" id="r-code-box">
+          <h3>Ton code d'invitation</h3>
+          <p>Il figure sur ton invitation (carte, mail ou WhatsApp). Avec le QR code, il est déjà rempli.</p>
+          <div class="code-row"><input id="r-code" maxlength="8" autocomplete="off" autocapitalize="characters" spellcheck="false" placeholder="EX. K7P3QM" aria-label="Ton code d'invitation"><button class="btn btn-main" id="r-verif" type="button">Valider</button></div>
+          <p class="r-msg" id="r-msg-code" aria-live="polite"></p>
+          <p class="r-petit"><a class="lien-mail" href="#aide" id="lien-aide">Pas de code, ou ton nom n'est pas sur la liste ? Demande de l'aide</a></p>
         </div>
+
+        <form id="rsvp-form" hidden novalidate>
+          <div class="r-bonjour" id="r-bonjour"></div>
+          <fieldset><legend>Tes coordonnées</legend>
+            <div class="r-grille">
+              <label>Ton e-mail * <input name="email" type="email" autocomplete="email" required></label>
+              <label>Ton téléphone <input name="tel" type="tel" autocomplete="tel"></label>
+            </div>
+            <p class="r-aide">Pour t'envoyer le programme définitif et le lien des photos.</p>
+          </fieldset>
+          <fieldset><legend>Seras-tu des nôtres le samedi 15 mai 2027 ? *</legend>
+            <div class="r-choix">
+              <label><input type="radio" name="presence" value="oui"><span>Oui, je serai là !</span></label>
+              <label><input type="radio" name="presence" value="peut-etre"><span>Peut-être</span></label>
+              <label><input type="radio" name="presence" value="non"><span>Non, je ne pourrai pas</span></label>
+            </div>
+          </fieldset>
+          <div id="r-si-viens" hidden>
+            <fieldset id="r-fs-venue"><legend>Tu viens…</legend>
+              <div class="r-choix">
+                <label><input type="radio" name="venue" value="seul" checked><span id="r-lbl-seul">Seul·e</span></label>
+                <label><input type="radio" name="venue" value="acc"><span id="r-lbl-acc">Accompagné·e</span></label>
+              </div>
+              <div id="r-nb" hidden><label class="r-inline">Nombre d'accompagnants <select name="nb"><option value="1">1 personne (à deux)</option><option value="2">2 personnes (à trois)</option></select></label></div>
+              <p class="r-aide" id="r-note-acc"></p>
+              <div class="r-acc" id="r-acc1" hidden>
+                <b>Accompagnant 1</b>
+                <div class="r-grille">
+                  <label><span id="r-a1p-lbl">Prénom</span> <input name="a1p" autocomplete="off"></label>
+                  <label><span id="r-a1n-lbl">Nom</span> <input name="a1n" autocomplete="off"></label>
+                  <label>Qui est-ce ? <select name="a1l"><option>Conjoint·e</option><option>Ami·e</option><option>Enfant</option><option>Autre membre de la famille</option><option>Autre</option></select></label>
+                  <label>Taille de t-shirt <select name="a1t"><option value="">—</option><option>XS</option><option>S</option><option>M</option><option>L</option><option>XL</option><option>XXL</option><option>3XL</option><option>Je ne sais pas encore</option></select></label>
+                  <label>Le matin, il ou elle préfère <select name="a1m"><option>Pétanque (tournoi des babouches)</option><option>Visite en bus</option><option>Je ne sais pas encore</option></select></label>
+                </div>
+              </div>
+              <div class="r-acc" id="r-acc2" hidden>
+                <b>Accompagnant 2</b>
+                <div class="r-grille">
+                  <label>Prénom * <input name="a2p" autocomplete="off"></label>
+                  <label>Nom * <input name="a2n" autocomplete="off"></label>
+                  <label>Qui est-ce ? <select name="a2l"><option>Conjoint·e</option><option>Ami·e</option><option>Enfant</option><option>Autre membre de la famille</option><option>Autre</option></select></label>
+                  <label>Taille de t-shirt <select name="a2t"><option value="">—</option><option>XS</option><option>S</option><option>M</option><option>L</option><option>XL</option><option>XXL</option><option>3XL</option><option>Je ne sais pas encore</option></select></label>
+                  <label>Le matin, il ou elle préfère <select name="a2m"><option>Pétanque (tournoi des babouches)</option><option>Visite en bus</option><option>Je ne sais pas encore</option></select></label>
+                </div>
+              </div>
+            </fieldset>
+            <fieldset><legend>Ta journée du 15 mai</legend>
+              <div class="r-grille">
+                <label>Le matin, tu préfères * <select name="matin"><option value="">— Choisis —</option><option>Pétanque (tournoi des babouches)</option><option>Visite en bus</option><option>Je ne sais pas encore</option></select></label>
+                <div class="r-cases"><span>Tu seras là pour *</span>
+                  <label><input type="checkbox" name="repas" value="Le déjeuner" checked> le déjeuner</label>
+                  <label><input type="checkbox" name="repas" value="La soirée inoubliable" checked> la soirée inoubliable</label></div>
+                <label>Ton arrivée <select name="arrivee"><option>Samedi 15 mai, le matin</option><option>Vendredi 14 mai</option><option>Autre</option></select></label>
+                <label>Ton départ <select name="depart"><option>Samedi 15 mai, après la soirée</option><option>Dimanche 16 mai</option><option>Lundi 17 mai</option><option>Autre</option></select></label>
+                <label>Côté tenue marocaine <select name="tenue"><option>Djellaba (ou caftan) prête !</option><option>Je cherche encore ma tenue</option><option>Je viendrai en civil</option></select></label>
+                <label>Ta taille de t-shirt <select name="taille"><option value="">—</option><option>XS</option><option>S</option><option>M</option><option>L</option><option>XL</option><option>XXL</option><option>3XL</option><option>Je ne sais pas encore</option></select></label>
+              </div>
+              <label class="r-large">Allergies ou régime alimentaire (toi et tes accompagnants) <input name="regime" autocomplete="off"></label>
+            </fieldset>
+          </div>
+          <fieldset><legend>Ta photo pour le trombinoscope</legend>
+            <p class="r-aide">Seul·e, ou une photo de groupe avec tes accompagnants. Formats : JPEG, PNG, HEIC (iPhone), WebP ou PDF · 3 fichiers maximum · 10 Mo chacun. <b>Aucun compte Google n'est demandé.</b> Pas encore prête ? <a class="lien-mail" href="#defi">Le défi photo</a> t'explique tout ; tu pourras renvoyer le formulaire plus tard avec ton code.</p>
+            <label class="r-fichier"><input type="file" id="r-photos" accept="image/*,.heic,.heif,application/pdf" multiple><span>📷 Choisir ma photo</span></label>
+            <div class="r-apercus" id="r-apercus"></div>
+            <div class="r-choix r-choix-col">
+              <label><input type="radio" name="nature" value="Déguisée par l'IA"><span>Elle est déjà déguisée par l'IA</span></label>
+              <label><input type="radio" name="nature" value="Photo normale à transformer"><span>Photo normale : Patrick et Henri la transforment</span></label>
+            </div>
+            <label class="r-consent"><input type="checkbox" name="autorisation" checked> J'autorise Patrick et Henri à afficher cette photo (prénom et initiale seulement) sur le site de la fête, accessible aux seuls invités qui ont le lien. Sans cette autorisation, la photo reste privée.</label>
+          </fieldset>
+          <fieldset><legend>Un petit mot pour Patrick et Henri</legend>
+            <textarea name="message" rows="3"></textarea>
+          </fieldset>
+          <p class="r-msg" id="r-msg-form" aria-live="polite"></p>
+          <button class="btn btn-main r-envoyer" type="submit" id="r-envoyer">Envoyer ma réponse</button>
+        </form>
+
+        <div class="r-merci" id="rsvp-merci" hidden></div>
       </div>
 
-      <div class="manquant" id="manquant">
-        <h3>Je ne trouve pas mon nom</h3>
-        <p>On t'a invité·e de vive voix et ton nom n'apparaît pas ? Pas de formulaire dans ce cas : envoie-nous ce message, nous vérifions la liste et nous te répondons.</p>
-        <div class="m-row">
-          <label>Prénom et nom <input id="m-nom" placeholder="Ton prénom et ton nom" autocomplete="name"></label>
-          <label>Téléphone <input id="m-tel" placeholder="06 …" autocomplete="tel"></label>
+      <div class="aide" id="aide">
+        <h3>Besoin d'aide ?</h3>
+        <p>Pas de code, nom absent de la liste, souci avec le formulaire ou la photo : écris-nous, Patrick et Henri te répondent vite.</p>
+        <div class="r-grille">
+          <label>Ta demande <select id="h-type"><option>Je n'ai pas de code</option><option>Je ne suis pas sur la liste</option><option>Problème avec le formulaire</option><option>Problème avec ma photo</option><option>Autre question</option></select></label>
+          <label>Prénom et nom * <input id="h-nom" autocomplete="name"></label>
+          <label>E-mail <input id="h-email" type="email" autocomplete="email"></label>
+          <label>Téléphone <input id="h-tel" type="tel" autocomplete="tel"></label>
         </div>
-        <pre class="m-apercu" id="m-apercu"></pre>
-        <div class="m-actions"><a class="btn btn-main" id="m-mail">Envoyer par mail</a><button class="btn btn-ghost" id="m-copier" type="button">Copier le message (WhatsApp, SMS)</button></div>
+        <label class="r-large">Ton message <textarea id="h-msg" rows="3"></textarea></label>
+        <p class="r-msg" id="h-retour" aria-live="polite"></p>
+        <div class="m-actions"><button class="btn btn-main" id="h-envoyer" type="button">Envoyer ma demande</button><a class="btn btn-ghost" id="h-mail">Par mail</a></div>
       </div>
 
       <div class="qr-unique">
         <div class="qr-card" id="carte-qr-unique">
-          <span class="qr-bandeau unique">Le formulaire de réponse</span>
+          <span class="qr-bandeau unique">Le site de la fête</span>
           <div class="qr-zone" id="qr-unique"><div class="qr-empty">QR code bientôt disponible</div></div>
-          <div class="qr-label">Scanne, réponds, c'est fait !</div>
-          <div class="qr-sub">Seul·e ou accompagné·e · journée · photo</div>
-          <div class="qr-actions"><a class="btn qr-dl" id="lien-unique" target="_blank" rel="noopener">Répondre</a><button class="btn btn-ghost qr-dl2" data-dl="unique">Télécharger</button></div>
+          <div class="qr-label">Partage le site !</div>
+          <div class="qr-sub">Pour répondre, utilise ton code personnel</div>
+          <div class="qr-actions"><a class="btn qr-dl" id="lien-unique" href="#reponse">Ouvrir</a><button class="btn btn-ghost qr-dl2" data-dl="unique">Télécharger</button></div>
         </div>
         <div class="secours" id="secours">
-          <h3>Le formulaire ne s'ouvre pas ? Réponds par mail</h3>
-          <p>Pas de compte Google (il est demandé pour joindre la photo), ou le QR code ne fonctionne pas : envoie toutes tes réponses à <a class="lien-mail" href="mailto:perez.henri.contact@gmail.com">perez.henri.contact@gmail.com</a>, objet « BIDAOUI-60 – Ma réponse », <b>et joins ta photo</b> (et celles de tes accompagnants) au mail.</p>
+          <h3>Le formulaire ne fonctionne pas ? Réponds par mail</h3>
+          <p>Envoie toutes tes réponses à <a class="lien-mail" href="mailto:perez.henri.contact@gmail.com">perez.henri.contact@gmail.com</a>, objet « BIDAOUI-60 – Ma réponse », <b>et joins ta photo</b> (et celles de tes accompagnants) au mail.</p>
           <pre class="m-apercu" id="s-modele"></pre>
           <div class="m-actions"><a class="btn btn-main" id="s-mail">Écrire le mail (modèle prêt)</a><button class="btn btn-ghost" id="s-copier" type="button">Copier le modèle</button></div>
         </div>
@@ -801,18 +926,18 @@ footer .script{font-size:1.9rem;color:var(--fez);margin-bottom:6px;display:block
         <div class="sec-head" style="margin-bottom:22px">
           <span class="tag">Pour qu'il n'y ait pas d'erreur</span>
           <h2 style="font-size:clamp(1.6rem,3.6vw,2.3rem)">La liste des invitations</h2>
-          <p>Seul·e ou à deux : c'est l'invitation prévue. Si tu viens avec quelqu'un d'autre ou à trois, indique-le dans le formulaire : Patrick et Henri confirmeront.</p>
+          <p>Seul·e ou à deux : c'est l'invitation prévue, et le formulaire la respecte. Pour toute demande particulière, écris-nous. Ton nom est dans la liste mais tu n'as pas de code ? <a class="lien-mail" href="#aide">Demande-le ici</a>.</p>
         </div>
         <div class="colonnes">
           <div class="colonne"><h3><span class="pastille solo"></span>Invité·es seul·es <small id="cpt-solo"></small></h3><div class="noms-inv" id="liste-solo"></div></div>
-          <div class="colonne"><h3><span class="pastille duo"></span>Invité·es à deux (voire à trois) <small id="cpt-duo"></small></h3><div class="noms-inv" id="liste-duo"></div></div>
+          <div class="colonne"><h3><span class="pastille duo"></span>Invité·es à deux <small id="cpt-duo"></small></h3><div class="noms-inv" id="liste-duo"></div></div>
         </div>
       </div>
 
       <div class="etapes">
-        <div class="etape"><b>1. Retrouve ton nom</b><p>Ton invitation s'affiche : seul·e ou à deux. Le bouton « Répondre » ouvre le formulaire avec ton prénom déjà rempli.</p></div>
-        <div class="etape"><b>2. Seul·e ou accompagné·e ?</b><p>Coche « Seul·e » ou « Accompagné·e » : pour chaque accompagnant (1 ou 2), prénom, nom, lien et préférences. Puis ta journée : pétanque ou visite, repas, arrivée et départ, tenue.</p></div>
-        <div class="etape"><b>3. Ajoute ta photo</b><p>Dans le même formulaire : ta photo déguisée par l'IA, ou une photo normale que nous transformerons (en couple ou à plusieurs : une seule photo de groupe). Pas de compte Google ? <a class="lien-mail" href="#secours">Réponds par mail</a>.</p></div>
+        <div class="etape"><b>1. Ton code</b><p>Scanne le QR code de ton invitation, ou tape ton code : le formulaire s'ouvre à ton nom.</p></div>
+        <div class="etape"><b>2. Ta réponse</b><p>Présence, puis ta journée : pétanque ou visite, repas, arrivée et départ, tenue. Ton invitation est à deux ? Le nom de ton conjoint·e ou ami·e est déjà rempli.</p></div>
+        <div class="etape"><b>3. Ta photo</b><p>Déguisée par l'IA ou normale (nous la transformerons), directement dans le formulaire, sans compte Google. Elle apparaît ensuite toute seule dans le trombinoscope.</p></div>
       </div>
     </div>
   </section>
@@ -883,9 +1008,9 @@ footer .script{font-size:1.9rem;color:var(--fez);margin-bottom:6px;display:block
           <a class="btn btn-ghost" href="ia.html" target="_blank" rel="noopener">Assistant pas à pas (ChatGPT gratuit)</a>
         </div>
         <div class="defi-envoi">
-          <a class="btn btn-main js-form" href="https://docs.google.com/forms/d/e/1FAIpQLSf8NjPOTwB11tTClvCeax93vPYewRjLEZjD7tQvDHEgEOkOnA/viewform" target="_blank" rel="noopener">Déposer ma photo (formulaire de réponse)</a>
-          <p>La photo se dépose <b>dans le formulaire de réponse</b>, à la dernière page (« Le défi photo ») : Google demande d'être connecté à un compte Google (Gmail…).<br>
-          <b>Tu ne sais pas utiliser l'IA ?</b> Aucun souci : dépose une photo normale et coche « Je ne sais pas faire », Patrick et Henri la déguiseront pour toi.<br><b>Pas de compte Google ?</b> <a class="lien-mail" href="#secours">Réponds par mail</a> en joignant ta photo (précise « à transformer » si besoin).</p>
+          <a class="btn btn-main" href="#reponse">Déposer ma photo</a>
+          <p>La photo se dépose <b>dans le formulaire de réponse</b> (onglet « Je réponds »), avec ton code personnel : <b>aucun compte Google n'est demandé</b>. JPEG, PNG, HEIC (iPhone), WebP ou PDF.<br>
+          <b>Tu ne sais pas utiliser l'IA ?</b> Aucun souci : dépose une photo normale et coche « Photo normale », Patrick et Henri la déguiseront pour toi.<br>Ta photo apparaît ensuite toute seule dans le trombinoscope et ici, dans la galerie du défi.</p>
         </div>
       </div>
 
@@ -990,6 +1115,8 @@ const CONFIG = {
   formPrefill: "",             // lien pré-rempli contenant PRENOM et NOM → pré-remplit chaque carte invité
   champs: { prenom: "entry.548589244", nom: "entry.1534383180" },   // questions « Ton prénom » et « Ton nom »
   mailSecours: "perez.henri.contact@gmail.com",
+  apiUrl: "",                  // URL /exec de l'application Web Apps Script (système d'invitation) : vérification des codes, réponses, photos, données en direct
+  siteUrl: "https://perezhenricontact-a11y.github.io/60ANSSIXTIESPMHP/",
 
   /* --- Liste des invités en direct --- */
   // Lien CSV de l'onglet « Liste publique » publié sur le Web (Fichier > Partager > Publier sur le Web).
@@ -1050,7 +1177,7 @@ const INVITATIONS = [
  ["Noura", "B", "solo", "", 1],
  ["Michel", "B", "couple", "", 0],
  ["Oceanne", "B", "solo", "", 1],
- ["Joel", "B", "couple", "", 0],
+ ["Joël", "B", "couple", "", 0],
  ["Thanh", "B", "solo", "", 0],
  ["Bastien", "C", "couple", "Jenny", 0],
  ["Yohan", "C", "couple", "", 0],
@@ -1062,10 +1189,10 @@ const INVITATIONS = [
  ["Serge", "G", "couple", "", 0],
  ["Antonio", "H", "couple", "Véronique", 0],
  ["Franck", "J", "couple", "Véronique", 0],
- ["Céline", "L", "couple", "", 1],
+ ["Céline", "L", "solo", "", 1],
  ["Cyrille", "L", "couple", "", 0],
  ["Bruno", "L", "solo", "", 0],
- ["Cedric", "L", "solo", "", 0],
+ ["Cédric", "L", "solo", "", 0],
  ["Vincent", "L", "couple", "Samia", 0],
  ["Kevin", "M", "couple", "", 0],
  ["Mayade", "D", "solo", "", 0],
@@ -1076,12 +1203,55 @@ const INVITATIONS = [
  ["Julien", "S", "couple", "Cindy", 0],
  ["Jean", "A", "couple", "Véronique", 0],
  ["Reda", "", "solo", "", 0],
- ["Romain", "B", "amis", "Thibaut D.", 0],
+ ["Romain", "B", "solo", "", 0],
  ["Yann", "L", "couple", "Camille", 0],
  ["Mendy", "R", "couple", "", 0],
- ["Dédé", "L", "solo", "", 0],
- ["Dédé", "P", "solo", "", 0],
- ["Romain", "O", "solo", "", 0]
+ ["André", "L", "couple", "Françoise", 0],
+ ["André", "P", "couple", "Isabelle", 0],
+ ["Philippe", "D", "couple", "Véronique", 0],
+ ["Stéphane", "D", "couple", "", 0],
+ ["Hugo", "M", "solo", "", 0],
+ ["Sophie", "P", "solo", "", 1],
+ ["Nicolas", "E", "couple", "", 0],
+ ["Laurent", "O", "solo", "", 0],
+ ["Steve", "D", "solo", "", 0],
+ ["Laurine", "R", "solo", "", 1],
+ ["Christophe", "M", "couple", "Sylvie", 0],
+ ["Laura", "D", "couple", "Louis", 1],
+ ["Yvon", "C", "solo", "", 0],
+ ["Christophe", "L", "couple", "Houda", 0],
+ ["Didier", "H", "couple", "Nathalie", 0],
+ ["Serge", "D", "couple", "Marie", 0],
+ ["Maxime", "F", "solo", "", 0],
+ ["Jérémy", "S", "couple", "", 0],
+ ["Yves", "B", "solo", "", 0],
+ ["Jean-François", "F", "solo", "", 0],
+ ["Kevin", "L", "couple", "Tiphanie", 0],
+ ["Caroline", "B", "couple", "Florent", 1],
+ ["Michel", "L", "couple", "Line", 0],
+ ["Florent", "N", "couple", "Chloé", 0],
+ ["Jordan", "C", "solo", "", 0],
+ ["Clément", "D", "couple", "Charlène", 0],
+ ["Maryan", "B", "solo", "", 0],
+ ["Marina", "B", "solo", "", 1],
+ ["Charlotte", "L", "couple", "Franck", 1],
+ ["Thierry", "H", "couple", "Sabine", 0],
+ ["Éric", "C", "solo", "", 0],
+ ["Jean-Pierre", "M", "couple", "Sophie", 0],
+ ["Jean-Pierre", "L", "solo", "", 0],
+ ["Franck", "B", "couple", "Clémentine", 0],
+ ["Arnaud", "V", "couple", "Alexandra", 0],
+ ["Sehaile", "E", "couple", "Medina", 0],
+ ["Philippe", "Q", "couple", "Marie", 0],
+ ["Jean-Luc", "R", "solo", "", 0],
+ ["Kevin", "M", "solo", "", 0],
+ ["Bernard", "K", "couple", "Nathalie", 0],
+ ["Eliane", "P", "solo", "", 1],
+ ["Geneviève", "R", "solo", "", 1],
+ ["Sébastien", "N", "couple", "Karona", 0],
+ ["Romain", "A", "couple", "", 0],
+ ["Taïeb", "A", "couple", "Jamila", 0],
+ ["Thibault", "S", "solo", "", 0]
 ];
 
 /* ===== SURPRISES — se dévoilent automatiquement à leur date =====
@@ -1543,20 +1713,14 @@ function drawQR(url){
   c.fillText("15.05", lx+ls/2, lx+ls/2+2);
   return cv;
 }
-function lienFormule(formule, inv){   // un seul formulaire : on pré-remplit seulement le prénom
-  if (!CONFIG.formUrl) return "";
-  if (!inv) return CONFIG.formUrl;
-  return CONFIG.formUrl + "?usp=pp_url&" + CONFIG.champs.prenom + "=" + encodeURIComponent(inv[0]);
-}
+function lienFormule(){ return (CONFIG.siteUrl || location.href.split("#")[0]) + "#reponse"; }
 const QRS = {};
 function initQR(){
   const url = lienFormule(), cv = drawQR(url);
   if (cv){ cv.setAttribute("role","img"); cv.setAttribute("aria-label","QR code du formulaire de réponse");
     const z = document.getElementById("qr-unique"); z.innerHTML = ""; z.appendChild(cv); QRS.unique = cv; }
-  document.getElementById("lien-unique").href = url;
-  document.querySelectorAll(".js-form").forEach(a=> a.href = url);
   document.querySelectorAll("[data-dl]").forEach(b=> b.onclick = ()=>{ const c = QRS[b.dataset.dl]; if (!c) return;
-    const a = document.createElement("a"); a.href = c.toDataURL("image/png"); a.download = "qr-code-reponse-60-ans.png"; a.click(); });
+    const a = document.createElement("a"); a.href = c.toDataURL("image/png"); a.download = "qr-code-site-60-ans.png"; a.click(); });
   initSecours();
 }
 /* Réponse par mail (secours) : modèle reprenant toutes les questions du formulaire */
@@ -1587,61 +1751,21 @@ function invTexte(i){
   if (i[2] === "amis") return { court:"Pour toi et " + (i[3] || "ton ami"), long:"Vous êtes invités ensemble, à deux" + (i[3] ? " : toi et " + i[3].replace(/\.$/,"") : "") + ". Les conjoint·es ne sont pas invité·es." };
   return { court:"Pour toi et " + (i[3] || "ton conjoint·e"), long:"Ton invitation est pour deux personnes : toi et " + (i[3] || "ton conjoint·e") + ". Dans le formulaire, coche « Accompagné·e » et indique son nom." };
 }
-function ficheInv(i){
-  const f = invForm(i), t = invTexte(i), url = lienFormule(f, i);
-  const d = document.createElement("div"); d.className = "fiche";
-  d.innerHTML = `<div><h3>Bonjour ${esc(invNom(i))} !</h3><span class="formule ${f}">${esc(t.court)}</span><p>${esc(t.long)}</p>
-    <a class="btn btn-main" href="${esc(url)}" target="_blank" rel="noopener">Répondre au formulaire</a>
-    <p class="note">Tout se fait dans ce formulaire : ta réponse, tes accompagnants et ta photo. Pense à ton e-mail de correspondance : il servira pour le programme définitif et le lien des photos.</p></div>`;
-  const cv = drawQR(url); if (cv){ cv.setAttribute("role","img"); cv.setAttribute("aria-label","QR code personnel vers le formulaire"); d.appendChild(cv); }
-  return d;
-}
-function montrerInv(liste){
-  const res = document.getElementById("trouve-res"); res.innerHTML = "";
-  if (!liste.length){ res.innerHTML = '<p class="trouve-vide">Pas trouvé : vérifie l\'orthographe, ou <a class="lien-mail" href="#reponse" onclick="signalerManquant();return false">signale-le-nous juste en dessous</a>.</p>'; signalerManquant(); return; }
-  if (liste.length > 4){ res.innerHTML = '<p class="trouve-vide">Continue à taper ton prénom…</p>'; return; }
-  liste.forEach(i=> res.appendChild(ficheInv(i)));
-}
-const MAIL_LISTE = "mailto:perez.henri.contact@gmail.com?subject=BIDAOUI-60%20%E2%80%93%20Je%20ne%20suis%20pas%20sur%20la%20liste&body=Bonjour%20Patrick%20et%20Henri%2C%0A%0AJe%20ne%20trouve%20pas%20mon%20nom%20dans%20la%20liste%20des%20invit%C3%A9s.%20Pr%C3%A9nom%20et%20nom%20%3A%20...%0A";
-/* Message « je ne trouve pas mon nom » */
-function initManquant(){
-  const objet = "BIDAOUI-60 – Je ne suis pas sur la liste";
-  const maj = ()=>{ const n = (document.getElementById("m-nom").value || "").trim() || "…", t = (document.getElementById("m-tel").value || "").trim() || "…";
-    const txt = "Bonjour Patrick et Henri,\n\nJe ne trouve pas mon nom dans la liste des invités du site « De Casablanca au cochonnet ».\n• Prénom et nom : " + n + "\n• Téléphone : " + t + "\n\nMerci de vérifier la liste.\n" + n;
-    document.getElementById("m-apercu").textContent = txt;
-    document.getElementById("m-mail").href = "mailto:perez.henri.contact@gmail.com?subject=" + encodeURIComponent(objet) + "&body=" + encodeURIComponent(txt);
-    return txt; };
-  ["m-nom","m-tel"].forEach(id=> document.getElementById(id).addEventListener("input", maj)); maj();
-  document.getElementById("m-copier").onclick = async ()=>{ try { await navigator.clipboard.writeText(maj()); toast("Message copié : colle-le dans ton mail ou WhatsApp"); } catch(e){ toast("Sélectionne le message pour le copier."); } };
-}
-function signalerManquant(){ const m = document.getElementById("manquant"); m.classList.remove("flash"); void m.offsetWidth; m.classList.add("flash"); m.scrollIntoView({behavior:"smooth", block:"center"}); }
 const HOTES_IDS = HOTES.map(h=>slug(h.first + " " + h.ini));
-const INV_PUB = INVITATIONS.filter(i=> !HOTES_IDS.includes(slug(i[0] + " " + i[1])));
+let INV_PUB = INVITATIONS.filter(i=> !HOTES_IDS.includes(slug(i[0] + " " + i[1])));
 function initListe(){
   const solo = INV_PUB.filter(i=>i[2]==="solo"), duo = INV_PUB.filter(i=>i[2]!=="solo");
-  const nb = (l)=> l.length;
   document.getElementById("cpt-solo").textContent = solo.length + " invitation" + (solo.length>1?"s":"") + " · " + solo.length + " pers.";
   document.getElementById("cpt-duo").textContent = duo.length + " invitations · " + duo.length*2 + " pers.";
   const tri = l => l.slice().sort((a,b)=>a[0].localeCompare(b[0],"fr"));
-  const remplir = (id, l)=>{ const box = document.getElementById(id);
+  const remplir = (id, l)=>{ const box = document.getElementById(id); box.innerHTML = "";
     tri(l).forEach(i=>{ const b = document.createElement("button"); b.type = "button";
       b.innerHTML = esc(invNom(i)) + (i[2]!=="solo" ? ` <em>+ ${esc(i[3] || (i[2]==="amis" ? "ami" : "conjoint·e"))}</em>` : "");
       b.onclick = ()=>{ document.querySelectorAll(".noms-inv button").forEach(x=>x.classList.remove("on")); b.classList.add("on");
-        document.getElementById("trouve-q").value = invNom(i); montrerInv([i]);
-        document.querySelector(".trouve").scrollIntoView({behavior:"smooth", block:"start"}); };
+        toast("Bonjour " + i[0] + " ! Ton code est sur ton invitation personnelle.");
+        document.getElementById("r-code-box").scrollIntoView({behavior:"smooth", block:"center"}); document.getElementById("r-code").focus({preventScroll:true}); };
       box.appendChild(b); }); };
   remplir("liste-solo", solo); remplir("liste-duo", duo);
-  const selNom = document.getElementById("choix-nom");
-  tri(INV_PUB).forEach(i=>{ const o = document.createElement("option"); o.value = INV_PUB.indexOf(i); o.textContent = invNom(i); selNom.appendChild(o); });
-  const o2 = document.createElement("option"); o2.value = "absent"; o2.textContent = "Mon nom n'est pas dans la liste"; selNom.appendChild(o2);
-  selNom.onchange = ()=>{ const v = selNom.value; document.getElementById("trouve-q").value = "";
-    if (v === "absent"){ document.getElementById("trouve-res").innerHTML = '<p class="trouve-vide">Ce formulaire est réservé aux personnes invitées. S\'il s\'agit d\'une erreur ou d\'un oubli, <a class="lien-mail" href="#reponse" onclick="signalerManquant();return false">signale-le-nous juste en dessous</a> : nous te répondrons très vite.</p>'; signalerManquant(); return; }
-    if (v === ""){ document.getElementById("trouve-res").innerHTML = '<p class="trouve-vide">Choisis ton nom ou tape ton prénom.</p>'; return; }
-    montrerInv([INV_PUB[+v]]); };
-  document.getElementById("trouve-q").addEventListener("input", e=>{
-    const q = slug(e.target.value); if (q.length < 2){ document.getElementById("trouve-res").innerHTML = '<p class="trouve-vide">Tape ton prénom ou clique sur ton nom dans la liste plus bas.</p>'; return; }
-    montrerInv(INV_PUB.filter(i=> slug(invNom(i)).startsWith(q) || slug(i[0]).startsWith(q)));
-  });
 }
 initListe();
 (function initDefi(){
@@ -1651,20 +1775,215 @@ initListe();
   document.getElementById("defi-chatgpt-solo").href = "https://chatgpt.com/?q=" + encodeURIComponent(solo);
   document.getElementById("defi-chatgpt-duo").href = "https://chatgpt.com/?q=" + encodeURIComponent(duo);
   document.getElementById("defi-copilot").href = "https://copilot.microsoft.com/?q=" + encodeURIComponent(solo);
+  renderExemples();
+  document.getElementById("exemples").addEventListener("click", e=>{ const im = e.target.closest("img[data-src]"); if (!im) return; openLB(0, [{ src: im.dataset.src, name: im.dataset.src.split("/").pop().split("?")[0] + ".jpg" }]); });
+})();
+var DEFI_DIRECT;
+function renderExemples(){
   const ex = [];
-  if (HOTES_TROMBI[1] && HOTES_TROMBI[1].photo) ex.push([HOTES_TROMBI[1].photo, HOTES_TROMBI[1].noms + " ont joué le jeu"]);
+  HOTES_TROMBI.forEach(h=>{ if (h.photo) ex.push([h.photo, h.noms + " ont joué le jeu"]); });
   Object.keys(PHOTOS_COUPLES).forEach(id=>{ const g = GUESTS.find(x=>x.id===id); const p = g && GUESTS.find(x=>x.partenaireDe && x.guestId===id);
     if (g) ex.push([PHOTOS_COUPLES[id], g.name + (p ? " & " + p.name : "") + " aussi !"]); });
-  document.getElementById("exemples").innerHTML = ex.map(([src,cap])=>`<figure><img src="${esc(src)}" alt="${esc(cap)}" data-src="${esc(src)}"><figcaption>${esc(cap)}</figcaption></figure>`).join("");
-  document.getElementById("exemples").addEventListener("click", e=>{ const im = e.target.closest("img[data-src]"); if (!im) return; openLB(0, [{ src: im.dataset.src, name: im.dataset.src.split("/").pop() }]); });
-})();
-initManquant();
+  (DEFI_DIRECT || []).forEach(d=>{ if (!ex.some(x=>x[0]===d.src)) ex.push([d.src, d.cap]); });
+  document.getElementById("exemples").innerHTML = ex.map(([src,cap])=>`<figure><img src="${esc(src)}" alt="${esc(cap)}" data-src="${esc(src)}" loading="lazy" referrerpolicy="no-referrer"><figcaption>${esc(cap)}</figcaption></figure>`).join("");
+}
 document.getElementById("copier-prompt").onclick = async ()=>{
   const t = document.getElementById("prompt-ia").textContent;
   try { await navigator.clipboard.writeText(t); toast("Texte copié : colle-le dans ton IA !"); }
   catch(e){ const r = document.createRange(); r.selectNodeContents(document.getElementById("prompt-ia")); const sel = getSelection(); sel.removeAllRanges(); sel.addRange(r); toast("Texte sélectionné : copie-le avec ton téléphone."); }
 };
 (document.fonts ? document.fonts.ready : Promise.resolve()).then(initQR);
+
+/* ===== Système d'invitation : code personnel, formulaire maison, photos, assistance, données en direct ===== */
+const API = CONFIG.apiUrl;
+const R = { invite: null };
+const $r = id => document.getElementById(id);
+function msg(id, t, ok){ const el = $r(id); el.textContent = t || ""; el.className = "r-msg" + (t ? (ok ? " ok" : " ko") : ""); }
+async function apiGet(params){
+  const r = await fetch(API + "?" + new URLSearchParams(params), { redirect: "follow" });
+  if (!r.ok) throw new Error("HTTP " + r.status);
+  return r.json();
+}
+async function apiPost(data){   // text/plain : pas de pré-vérification CORS côté Google
+  const r = await fetch(API, { method: "POST", body: JSON.stringify(data), redirect: "follow" });
+  if (!r.ok) throw new Error("HTTP " + r.status);
+  return r.json();
+}
+const HORS_LIGNE = "Le formulaire en ligne ne répond pas pour l'instant : réponds par mail (modèle ci-dessous) ou réessaie plus tard.";
+
+async function verifierCode(code){
+  code = String(code || "").toUpperCase().replace(/[^A-Z0-9]/g, "");
+  $r("r-code").value = code;
+  if (code.length < 6){ msg("r-msg-code", "Ton code comporte 6 caractères (lettres et chiffres).", false); return; }
+  if (!API){ msg("r-msg-code", HORS_LIGNE, false); return; }
+  msg("r-msg-code", "Vérification…", true); $r("r-verif").disabled = true;
+  try {
+    const d = await apiGet({ action: "verif", code });
+    if (!d.ok){ msg("r-msg-code", "Ce code n'est pas reconnu. Vérifie-le, ou demande de l'aide juste en dessous.", false); flashAide(); return; }
+    R.invite = Object.assign({ code }, d); ouvrirFormulaire();
+  } catch(e){ msg("r-msg-code", HORS_LIGNE, false); }
+  finally { $r("r-verif").disabled = false; }
+}
+function ouvrirFormulaire(){
+  const i = R.invite, f = $r("rsvp-form"), solo = i.formule === "Seul·e";
+  const part = String(i.partenaire || "").trim(), partSans = part.replace(/\s*\?\s*$/, "").trim();
+  const inconnu = !part || /^(madame|monsieur)\b/i.test(part);
+  const connu = !inconnu && !part.includes("?") && part.split(/\s+/).length >= 2;
+  const prenomPart = inconnu ? "" : partSans.split(/\s+/)[0];
+  R.solo = solo; R.connu = connu;
+  const pour = solo ? "pour toi seul·e" : "pour toi et " + (prenomPart || (i.formule === "Deux amis" ? "ton ami·e" : "ton conjoint·e"));
+  $r("r-bonjour").innerHTML = `<h3>Bonjour ${esc(i.prenom.replace(/\s*\?$/, ""))} !</h3><p>Ton invitation est prévue <b>${esc(pour)}</b>.` +
+    (solo ? " Ton invitation est personnelle : aucun renseignement sur un conjoint n'est demandé." : "") + (i.dejaRepondu ? ` Tu as déjà répondu (« ${esc(i.reponse)} ») : tu peux modifier ta réponse en renvoyant ce formulaire.` : "") + `</p>`;
+  msg("r-msg-code", "Code reconnu : à toi de jouer !", true);
+  $r("r-code-box").hidden = true; f.hidden = false; $r("rsvp-merci").hidden = true;
+  $r("r-lbl-seul").textContent = "Je viens seul·e";
+  $r("r-lbl-acc").textContent = "Avec " + (prenomPart || (i.formule === "Deux amis" ? "mon ami·e" : "mon conjoint·e"));
+  f.nb.value = "1";
+  if (!solo){
+    f.venue.value = "acc";
+    const mots = partSans.split(/\s+/);
+    f.a1p.value = prenomPart; f.a1n.value = connu ? mots.slice(1).join(" ") : "";
+    f.a1p.readOnly = connu; f.a1n.readOnly = connu;
+    f.a1l.value = i.formule === "Deux amis" ? "Ami·e" : "Conjoint·e";
+  } else f.venue.value = "seul";
+  R.inconnu = !solo && !connu;
+  $r("r-note-acc").textContent = connu ? "Le nom de ton conjoint·e ou ami·e est déjà rempli, comme sur ton invitation : rien à saisir."
+    : "Son nom n'est pas encore précisé sur ton invitation : tu peux l'indiquer si tu le souhaites, ce n'est pas obligatoire.";
+  $r("r-a1p-lbl").textContent = connu ? "Prénom" : "Prénom (facultatif)"; $r("r-a1n-lbl").textContent = connu ? "Nom" : "Nom (facultatif)";
+  majVisibilite();
+  f.scrollIntoView({ behavior: "smooth", block: "start" });
+}
+function majVisibilite(){
+  const f = $r("rsvp-form"), pres = f.presence.value, acc = f.venue.value === "acc";
+  $r("r-si-viens").hidden = !pres || pres === "non";
+  $r("r-fs-venue").hidden = !!R.solo;                       // invitation seul·e : pas d'accompagnant possible
+  $r("r-nb").hidden = true; $r("r-acc2").hidden = true;     // jamais de deuxième accompagnant
+  $r("r-acc1").hidden = !acc || !!R.solo;
+}
+/* Photos : recadrage à 1600 px (JPEG) quand le navigateur sait lire l'image ; sinon envoi du fichier tel quel (HEIC, PDF) */
+const TYPES_OK = ["image/jpeg","image/png","image/heic","image/heif","image/webp","application/pdf"];
+const typeDe = f => f.type || (/\.hei[cf]$/i.test(f.name) ? "image/heic" : /\.pdf$/i.test(f.name) ? "application/pdf" : "");
+function lireBase64(blob){ return new Promise((ok, ko)=>{ const r = new FileReader(); r.onload = ()=> ok(String(r.result).split(",")[1]); r.onerror = ko; r.readAsDataURL(blob); }); }
+async function preparerPhoto(f){
+  const type = typeDe(f);
+  if (/^image\/(jpeg|png|webp|heic|heif)$/.test(type)){
+    try {
+      const bmp = await createImageBitmap(f), k = Math.min(1, 1600 / Math.max(bmp.width, bmp.height));
+      const c = document.createElement("canvas"); c.width = Math.round(bmp.width * k); c.height = Math.round(bmp.height * k);
+      c.getContext("2d").drawImage(bmp, 0, 0, c.width, c.height);
+      const b = await new Promise(ok => c.toBlob(ok, "image/jpeg", 0.86));
+      return { nom: f.name.replace(/\.[^.]+$/, "") + ".jpg", type: "image/jpeg", data: await lireBase64(b) };
+    } catch(e){ /* HEIC sur Android ou ordinateur : on envoie l'original */ }
+  }
+  return { nom: f.name, type, data: await lireBase64(f) };
+}
+function controlerPhotos(){
+  const fs = [...$r("r-photos").files], out = [];
+  for (const f of fs){
+    if (!TYPES_OK.includes(typeDe(f))) return "« " + f.name + " » : format non accepté (JPEG, PNG, HEIC, WebP ou PDF).";
+    if (f.size > 10 * 1024 * 1024 && !/^image\/(jpeg|png|webp)$/.test(typeDe(f))) return "« " + f.name + " » dépasse 10 Mo.";
+    out.push(f);
+  }
+  if (fs.length > 3) return "3 fichiers maximum.";
+  return "";
+}
+function apercus(){
+  const box = $r("r-apercus"); box.innerHTML = "";
+  [...$r("r-photos").files].slice(0, 3).forEach(f=>{
+    const fig = document.createElement("figure"), img = /^image\/(jpeg|png|webp|gif)$/.test(f.type);
+    fig.innerHTML = (img ? `<img alt="" src="${URL.createObjectURL(f)}">` : `<div class="r-doc">${esc((f.name.split(".").pop() || "").toUpperCase())}</div>`) + `<figcaption>${esc(f.name)}</figcaption>`;
+    box.appendChild(fig); });
+  const err = controlerPhotos(); msg("r-msg-form", err, false);
+}
+async function envoyer(ev){
+  ev.preventDefault();
+  const f = $r("rsvp-form"), pres = f.presence.value, viens = pres && pres !== "non", acc = viens && !R.solo && f.venue.value === "acc", nb = acc ? 1 : 0;
+  const err = (()=>{
+    if (!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(f.email.value.trim())) return "Indique ton e-mail.";
+    if (!pres) return "Dis-nous si tu seras des nôtres.";
+    if (viens && !f.matin.value) return "Choisis ton programme du matin.";
+    if (viens && !f.querySelectorAll('[name=repas]:checked').length) return "Coche au moins un repas.";
+    if ($r("r-photos").files.length && !f.nature.value) return "Précise si ta photo est déjà déguisée ou à transformer.";
+    return controlerPhotos();
+  })();
+  if (err){ msg("r-msg-form", err, false); return; }
+  if (!API){ msg("r-msg-form", HORS_LIGNE, false); return; }
+  const btn = $r("r-envoyer"); btn.disabled = true;
+  try {
+    msg("r-msg-form", $r("r-photos").files.length ? "Préparation de ta photo…" : "Envoi…", true);
+    const photos = []; for (const p of [...$r("r-photos").files].slice(0, 3)) photos.push(await preparerPhoto(p));
+    const part = String(R.invite.partenaire || "").replace(/\s*\?\s*$/, "").trim();
+    const accs = []; for (let k = 1; k <= nb; k++) accs.push({ prenom: f["a"+k+"p"].value.trim() || part.split(/\s+/)[0] || (R.invite.formule === "Deux amis" ? "Ami·e" : "Conjoint·e"),
+      nom: f["a"+k+"n"].value.trim() || (part.split(/\s+/).length > 1 ? part.split(/\s+/).slice(1).join(" ") : ""), lien: f["a"+k+"l"].value, taille: f["a"+k+"t"].value, matin: f["a"+k+"m"].value });
+    msg("r-msg-form", "Envoi en cours… (quelques secondes avec une photo)", true);
+    const d = await apiPost({ action: "reponse", code: R.invite.code, email: f.email.value.trim(), tel: f.tel.value.trim(), presence: pres,
+      accompagnants: accs, matin: viens ? f.matin.value : "", repas: [...f.querySelectorAll('[name=repas]:checked')].map(x=>x.value),
+      arrivee: f.arrivee.value, depart: f.depart.value, tenue: f.tenue.value, taille: f.taille.value, regime: f.regime.value.trim(),
+      naturePhoto: f.nature.value, autorisation: f.autorisation.checked, photos, message: f.message.value.trim() });
+    if (!d.ok) throw new Error(d.erreur || "refus");
+    f.hidden = true; const m = $r("rsvp-merci"); m.hidden = false;
+    m.innerHTML = `<h3>Merci ${esc(d.prenom)} !</h3><p>${pres === "non" ? "Ta réponse est bien enregistrée. Tu nous manqueras !" : "Ta réponse est bien enregistrée. Rendez-vous le 15 mai à Saint-Marcel-lès-Valence !"}` +
+      (d.photos ? ` ${d.photos > 1 ? "Tes " + d.photos + " photos sont arrivées" : "Ta photo est arrivée"}${f.autorisation.checked ? " : elle apparaîtra dans le trombinoscope d'ici une minute." : "."}` : "") +
+      "" + `</p><p>Pour modifier ta réponse ou ajouter une photo plus tard, reviens ici avec ton code.</p>`;
+    burst && burst(); m.scrollIntoView({ behavior: "smooth", block: "center" });
+    setTimeout(chargerDirect, 4000);
+  } catch(e){
+    msg("r-msg-form", String(e.message) === "code" ? "Ton code n'est plus reconnu : demande de l'aide juste en dessous." : "L'envoi n'a pas abouti. Réessaie, ou réponds par mail (modèle plus bas) en joignant ta photo.", false);
+  } finally { btn.disabled = false; }
+}
+function flashAide(){ const a = $r("aide"); a.classList.remove("flash"); void a.offsetWidth; a.classList.add("flash"); }
+function texteAide(){
+  return "Bonjour Patrick et Henri,\n\nDemande : " + $r("h-type").value + "\nPrénom et nom : " + ($r("h-nom").value.trim() || "…") +
+    "\nE-mail : " + ($r("h-email").value.trim() || "…") + "\nTéléphone : " + ($r("h-tel").value.trim() || "…") + "\n\n" + $r("h-msg").value.trim() + "\n";
+}
+async function envoyerAide(){
+  if (!$r("h-nom").value.trim() || (!$r("h-email").value.trim() && !$r("h-tel").value.trim())){ msg("h-retour", "Indique ton nom et un e-mail ou un téléphone pour qu'on te réponde.", false); return; }
+  if (!API){ location.href = $r("h-mail").href; return; }
+  $r("h-envoyer").disabled = true; msg("h-retour", "Envoi…", true);
+  try {
+    const d = await apiPost({ action: "aide", type: $r("h-type").value, nom: $r("h-nom").value.trim(), email: $r("h-email").value.trim(), tel: $r("h-tel").value.trim(),
+      code: $r("r-code").value, message: $r("h-msg").value.trim() });
+    if (!d.ok) throw 0;
+    msg("h-retour", "Demande envoyée : Patrick et Henri reviennent vers toi très vite.", true);
+  } catch(e){ msg("h-retour", "L'envoi n'a pas abouti : utilise le bouton « Par mail ».", false); }
+  finally { $r("h-envoyer").disabled = false; }
+}
+function initRsvp(){
+  const f = $r("rsvp-form");
+  $r("r-verif").onclick = ()=> verifierCode($r("r-code").value);
+  $r("r-code").addEventListener("keydown", e=>{ if (e.key === "Enter"){ e.preventDefault(); verifierCode($r("r-code").value); } });
+  f.addEventListener("change", e=>{ if (["presence","venue","nb"].includes(e.target.name)) majVisibilite(); });
+  $r("r-photos").addEventListener("change", apercus);
+  f.addEventListener("submit", envoyer);
+  const majMail = ()=>{ $r("h-mail").href = "mailto:" + CONFIG.mailSecours + "?subject=" + encodeURIComponent("BIDAOUI-60 – " + $r("h-type").value) + "&body=" + encodeURIComponent(texteAide()); };
+  ["h-type","h-nom","h-email","h-tel","h-msg"].forEach(id=> $r(id).addEventListener("input", majMail)); majMail();
+  $r("h-envoyer").onclick = envoyerAide;
+  $r("lien-aide").onclick = e=>{ e.preventDefault(); $r("aide").scrollIntoView({ behavior: "smooth", block: "center" }); flashAide(); $r("h-nom").focus({ preventScroll: true }); };
+  const code = new URLSearchParams(location.search).get("c");
+  if (code){ $r("r-code").value = code.toUpperCase(); if (!location.hash) location.hash = "reponse"; verifierCode(code); }
+}
+initRsvp();
+
+/* Données en direct (réponses, photos autorisées, liste) : alimentent la liste, le trombinoscope et le défi photo sans ressaisie */
+async function chargerDirect(){
+  if (!API) return;
+  try {
+    const d = await apiGet({ action: "public", t: Date.now() });
+    if (!d.ok) return;
+    if (Array.isArray(d.invitations) && d.invitations.length){
+      const femme = {}; INVITATIONS.forEach(i=> femme[slug(i[0] + " " + i[1])] = i[4]);
+      const hotes = INVITATIONS.filter(i=> HOTES_IDS.includes(slug(i[0] + " " + i[1])));
+      INVITATIONS.length = 0; hotes.concat(d.invitations.map(i=>[i[0], i[1], i[2], i[3], femme[slug(i[0] + " " + i[1])] || 0])).forEach(i=>INVITATIONS.push(i));
+      INV_PUB = INVITATIONS.filter(i=> !HOTES_IDS.includes(slug(i[0] + " " + i[1])));
+      initListe();
+    }
+    (d.reponses || []).forEach(r=>{ if (+r[4] === 1 && r[6] && r[7]) PHOTOS_COUPLES[slug(r[0] + " " + String(r[1]).charAt(0))] = r[7]; });
+    buildGuests(REPONSES.concat(d.reponses || []));
+    DEFI_DIRECT = d.defi || [];
+    render(); renderExemples(); route(false);
+  } catch(e){ /* le site garde la liste intégrée */ }
+}
+chargerDirect();
 
 /* ===== Photos & vidéos ===== */
 const IMG_RE = /\.(jpe?g|png|webp|gif|avif)$/i, VID_RE = /\.(mp4|webm|mov|m4v)$/i;
