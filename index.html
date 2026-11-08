@@ -1126,6 +1126,8 @@ const REPONSES = [
 const PHOTOS_COUPLES = {
   "franck-j": "invites/franck-j-veronique.jpg"
 };
+/* Photos publiées de toutes les invitations, même sans réponse (photo reçue par mail et déposée dans Drive) — remplies en direct */
+const PHOTOS_SEULES = {};
 /* ===== Les hôtes en tête du trombinoscope (gauche, droite) ===== */
 const HOTES_TROMBI = [
   { noms: "Corinne, Hugo et Patrick", photo: "invites/hotes-patrick-corinne.jpg" },
@@ -1412,7 +1414,7 @@ function renderTrombi(){
     const g = GUESTS.find(x=>x.id===id && !x.partenaireDe), p = g && partenaire(g);
     const duo = i[2] !== "solo";
     const nomPart = duo ? cap(propre(p ? p.first : (i[3] || "Madame"))) || "Madame" : "";
-    const ph = g ? (duo ? (PHOTOS_COUPLES[id] || photoDe(g) || (p && photoDe(p)) || "") : photoDe(g)) : "";
+    const ph = (g ? (duo ? (PHOTOS_COUPLES[id] || photoDe(g) || (p && photoDe(p)) || "") : photoDe(g)) : "") || PHOTOS_SEULES[id] || "";
     return { id, first, ini, duo, nom: first + (ini ? " " + ini + "." : "") + (duo ? " & " + nomPart : ""),
              init: duo ? first[0] + "&" + (nomPart[0] || "M") : first[0] + ini, ph, statut: g ? g.status : "attente",
              grad: g ? g.grad : GRADS[(first.charCodeAt(0) + (ini.charCodeAt(0) || 0)) % GRADS.length] };
@@ -1887,6 +1889,7 @@ async function chargerDirect(){
       initQR(); rafraichirFiche();
     }
     (d.reponses || []).forEach(r=>{ if (+r[4] === 1 && r[6] && r[7]) PHOTOS_COUPLES[slug(r[0] + " " + String(r[1]).charAt(0))] = r[7]; });
+    (d.photos || []).forEach(p=>{ PHOTOS_SEULES[slug(p[0] + " " + String(p[1]).charAt(0))] = p[2]; });   // photo arrivée sans réponse (par mail)
     buildGuests(REPONSES.concat(d.reponses || []));
     DEFI_DIRECT = d.defi || [];
     render(); renderExemples(); route(false);
