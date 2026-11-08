@@ -832,13 +832,16 @@ footer .script{font-size:1.9rem;color:var(--fez);margin-bottom:6px;display:block
               
               <p class="r-aide" id="r-note-acc"></p>
               <div class="r-acc" id="r-acc1" hidden>
-                <b>Ton conjoint·e ou ami·e</b>
+                <b id="r-acc1-titre">Ton conjoint·e ou ami·e</b>
                 <div class="r-grille">
                   <label><span id="r-a1p-lbl">Prénom</span> <input name="a1p" autocomplete="off"></label>
                   <label><span id="r-a1n-lbl">Nom</span> <input name="a1n" autocomplete="off"></label>
                   <label>Qui est-ce ? <select name="a1l"><option>Conjoint·e</option><option>Ami·e</option><option>Enfant</option><option>Autre membre de la famille</option><option>Autre</option></select></label>
-                  <label>Taille de t-shirt <select name="a1t"><option value="">—</option><option>XS</option><option>S</option><option>M</option><option>L</option><option>XL</option><option>XXL</option><option>3XL</option><option>Je ne sais pas encore</option></select></label>
-                  <label>Le matin, il ou elle préfère <select name="a1m"><option>Pétanque (tournoi des babouches)</option><option>Visite en bus</option><option>Je ne sais pas encore</option></select></label>
+                  <label>Sa taille de t-shirt * <select name="a1t"><option value="">—</option><option>XS</option><option>S</option><option>M</option><option>L</option><option>XL</option><option>XXL</option><option>3XL</option><option>Je ne sais pas encore</option></select></label>
+                  <label>Le matin, il ou elle préfère * <select name="a1m"><option value="">— Choisis —</option><option>Pétanque (tournoi des babouches)</option><option>Visite en bus</option><option>Je ne sais pas encore</option></select></label>
+                  <label>Sa tenue marocaine <select name="a1tenue"><option>Djellaba (ou caftan) prête !</option><option>Je cherche encore ma tenue</option><option>Je viendrai en civil</option></select></label>
+                  <label>Son e-mail <input name="a1e" type="email" autocomplete="off"></label>
+                  <label>Son téléphone <input name="a1tel" type="tel" autocomplete="off"></label>
                 </div>
               </div>
               
@@ -854,6 +857,11 @@ footer .script{font-size:1.9rem;color:var(--fez);margin-bottom:6px;display:block
                 <label>Côté tenue marocaine <select name="tenue"><option>Djellaba (ou caftan) prête !</option><option>Je cherche encore ma tenue</option><option>Je viendrai en civil</option></select></label>
                 <label>Ta taille de t-shirt <select name="taille"><option value="">—</option><option>XS</option><option>S</option><option>M</option><option>L</option><option>XL</option><option>XXL</option><option>3XL</option><option>Je ne sais pas encore</option></select></label>
               </div>
+              <div class="r-cases r-large"><span>Sur place, tu auras besoin de (plusieurs choix possibles)</span>
+                <label><input type="checkbox" name="besoins" value="Un hôtel"> un hôtel</label>
+                <label><input type="checkbox" name="besoins" value="Une voiture de location"> une voiture de location</label>
+                <label><input type="checkbox" name="besoins" value="Un covoiturage ou une navette depuis la gare"> un covoiturage ou une navette depuis la gare</label></div>
+              <p class="r-aide">Rien de coché : tu t'organises seul·e. Les hôtels proches sont dans l'onglet <a class="lien-mail" href="#hotels">Hôtels</a>.</p>
               <label class="r-large">Allergies ou régime alimentaire (toi et tes accompagnants) <input name="regime" autocomplete="off"></label>
             </fieldset>
           </div>
@@ -1157,8 +1165,8 @@ const PHOTOS_COUPLES = {
 };
 /* ===== Les hôtes en tête du trombinoscope (gauche, droite) ===== */
 const HOTES_TROMBI = [
-  { noms: "Patrick & Corinne", photo: "invites/hotes-patrick-corinne.jpg" },
-  { noms: "Henri & Stéphanie", photo: "invites/hotes-henri-stephanie.jpg" }
+  { noms: "Corinne, Hugo et Patrick", photo: "invites/hotes-patrick-corinne.jpg" },
+  { noms: "Stéphanie et Henri", photo: "invites/hotes-henri-stephanie.jpg" }
 ];
 
 /* ===== INVITATIONS (d'après le classeur PILOTAGE_INVITATIONS_60ANS, onglet INVITÉS) =====
@@ -1725,11 +1733,12 @@ function initSecours(){
     "• Mon prénom et mon nom : \n• Mon e-mail : \n• Mon téléphone : \n" +
     "• Je serai là : oui / peut-être / non\n" +
     "• Je viens : seul·e / avec mon conjoint·e ou ami·e invité·e\n" +
-    "• Mon conjoint·e ou ami·e invité·e (prénom, nom, taille de t-shirt), si l'invitation est à deux : \n" +
+    "• Uniquement si l'invitation est à deux, mon conjoint·e ou ami·e : prénom, nom, e-mail, téléphone, taille de t-shirt, tenue, programme du matin : \n" +
     "• Le matin : pétanque / visite en bus (pour moi et pour chacun) : \n" +
     "• Je serai là pour : le déjeuner / la soirée\n" +
     "• Arrivée : vendredi 14 / samedi 15 au matin — Départ : samedi soir / dimanche 16 / lundi 17\n" +
     "• Tenue marocaine : prête / je cherche / en civil — Ma taille de t-shirt : \n" +
+    "• Sur place, j'aurai besoin de : un hôtel / une voiture de location / un covoiturage ou une navette (plusieurs choix possibles, ou rien)\n" +
     "• Allergies ou régime : \n" +
     "• Photo jointe : déjà déguisée par l'IA / photo normale à transformer / envoyée plus tard\n\n" +
     "Un petit mot : \n";
@@ -1840,9 +1849,10 @@ function ouvrirFormulaire(){
     f.a1l.value = i.formule === "Deux amis" ? "Ami·e" : "Conjoint·e";
   } else f.venue.value = "seul";
   R.inconnu = !solo && !connu;
-  $r("r-note-acc").textContent = connu ? "Le nom de ton conjoint·e ou ami·e est déjà rempli, comme sur ton invitation : rien à saisir."
-    : "Son nom n'est pas encore précisé sur ton invitation : tu peux l'indiquer si tu le souhaites, ce n'est pas obligatoire.";
-  $r("r-a1p-lbl").textContent = connu ? "Prénom" : "Prénom (facultatif)"; $r("r-a1n-lbl").textContent = connu ? "Nom" : "Nom (facultatif)";
+  $r("r-note-acc").textContent = connu ? "Son nom est déjà rempli, comme sur ton invitation. Merci de compléter ses autres informations (les champs * sont obligatoires)."
+    : "Merci d'indiquer son prénom et son nom, puis ses informations (les champs * sont obligatoires).";
+  $r("r-acc1-titre").textContent = solo ? "" : (connu ? partSans : (i.formule === "Deux amis" ? "Ton ami·e invité·e" : "Ton conjoint·e invité·e"));
+  $r("r-a1p-lbl").textContent = "Prénom *"; $r("r-a1n-lbl").textContent = "Nom *";
   majVisibilite();
   f.scrollIntoView({ behavior: "smooth", block: "start" });
 }
@@ -1895,6 +1905,11 @@ async function envoyer(ev){
     if (!pres) return "Dis-nous si tu seras des nôtres.";
     if (viens && !f.matin.value) return "Choisis ton programme du matin.";
     if (viens && !f.querySelectorAll('[name=repas]:checked').length) return "Coche au moins un repas.";
+    if (acc){ const qui = f.a1p.value.trim() || "ton conjoint·e ou ami·e";
+      if (!f.a1p.value.trim() || !f.a1n.value.trim()) return "Indique le prénom et le nom de ton conjoint·e ou ami·e.";
+      if (!f.a1t.value) return "Indique la taille de t-shirt de " + qui + ".";
+      if (!f.a1m.value) return "Choisis le programme du matin de " + qui + ".";
+      if (f.a1e.value.trim() && !/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(f.a1e.value.trim())) return "L'e-mail de " + qui + " n'est pas valide."; }
     if ($r("r-photos").files.length && !f.nature.value) return "Précise si ta photo est déjà déguisée ou à transformer.";
     if ($r("r-photos").files.length && /plus tard/.test(f.nature.value)) return "Tu as joint une photo : choisis « déjà déguisée » ou « je ne sais pas faire ».";
     return controlerPhotos();
@@ -1907,11 +1922,12 @@ async function envoyer(ev){
     const photos = []; for (const p of [...$r("r-photos").files].slice(0, 3)) photos.push(await preparerPhoto(p));
     const part = String(R.invite.partenaire || "").replace(/\s*\?\s*$/, "").trim();
     const accs = []; for (let k = 1; k <= nb; k++) accs.push({ prenom: f["a"+k+"p"].value.trim() || part.split(/\s+/)[0] || (R.invite.formule === "Deux amis" ? "Ami·e" : "Conjoint·e"),
-      nom: f["a"+k+"n"].value.trim() || (part.split(/\s+/).length > 1 ? part.split(/\s+/).slice(1).join(" ") : ""), lien: f["a"+k+"l"].value, taille: f["a"+k+"t"].value, matin: f["a"+k+"m"].value });
+      nom: f["a"+k+"n"].value.trim() || (part.split(/\s+/).length > 1 ? part.split(/\s+/).slice(1).join(" ") : ""), lien: f["a"+k+"l"].value, taille: f["a"+k+"t"].value, matin: f["a"+k+"m"].value,
+      tenue: f.a1tenue.value, email: f.a1e.value.trim(), tel: f.a1tel.value.trim() });
     msg("r-msg-form", "Envoi en cours… (quelques secondes avec une photo)", true);
     const d = await apiPost({ action: "reponse", code: R.invite.code, email: f.email.value.trim(), tel: f.tel.value.trim(), presence: pres,
       accompagnants: accs, matin: viens ? f.matin.value : "", repas: [...f.querySelectorAll('[name=repas]:checked')].map(x=>x.value),
-      arrivee: f.arrivee.value, depart: f.depart.value, tenue: f.tenue.value, taille: f.taille.value, regime: f.regime.value.trim(),
+      arrivee: f.arrivee.value, depart: f.depart.value, besoins: viens ? [...f.querySelectorAll('[name=besoins]:checked')].map(x=>x.value) : [], tenue: f.tenue.value, taille: f.taille.value, regime: f.regime.value.trim(),
       naturePhoto: f.nature.value, autorisation: f.autorisation.checked, photos, message: f.message.value.trim() });
     if (!d.ok) throw new Error(d.erreur || "refus");
     f.hidden = true; const m = $r("rsvp-merci"); m.hidden = false;
