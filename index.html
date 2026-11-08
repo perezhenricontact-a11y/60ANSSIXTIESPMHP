@@ -442,12 +442,12 @@ footer .script{font-size:1.9rem;color:var(--fez);margin-bottom:6px;display:block
 /* Invitation : les hôtes de part et d'autre de l'affiche */
 .trio{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,.72fr) minmax(0,1fr);gap:22px;align-items:center;margin-top:40px}
 .trio .t-orient{padding:10px}
-.trio .t-orient-in{aspect-ratio:4/3}
+.trio .t-orient-in{aspect-ratio:4/5}
 .trio .t-orient-in button,.trio .affiche-centre{padding:0;border:0;background:none;cursor:zoom-in;display:block;width:100%;height:100%}
 .trio .affiche-centre{border:3px solid var(--or);border-radius:16px;overflow:hidden;box-shadow:0 18px 40px rgba(80,40,10,.22);transition:transform .25s}
 .trio .affiche-centre:hover{transform:translateY(-4px)}
 .trio .affiche-centre img{display:block;width:100%;aspect-ratio:2/3;object-fit:cover}
-.trio .t-orient-in img{width:100%;height:100%;object-fit:cover;display:block}
+.trio .t-orient-in img{width:100%;height:100%;object-fit:cover;object-position:50% 30%;display:block}
 .trio .t-orient figcaption{font-size:1.15rem}
 @media(max-width:760px){.trio{grid-template-columns:1fr 1fr;gap:14px}.trio .affiche-centre{grid-column:1/-1;grid-row:1;max-width:280px;justify-self:center}.trio .t-orient figcaption{font-size:.95rem;padding:4px 10px}}
 .t-note{text-align:center;color:var(--encre-douce);margin:-10px 0 22px}.t-note a{color:var(--fez);font-weight:800}
@@ -1037,7 +1037,7 @@ const PHOTOS_COUPLES = {
 };
 /* ===== Les hôtes en tête du trombinoscope (gauche, droite) ===== */
 const HOTES_TROMBI = [
-  { noms: "Patrick & Corinne", photo: "" },
+  { noms: "Patrick & Corinne", photo: "invites/hotes-patrick-corinne.jpg" },
   { noms: "Henri & Stéphanie", photo: "invites/hotes-henri-stephanie.jpg" }
 ];
 
