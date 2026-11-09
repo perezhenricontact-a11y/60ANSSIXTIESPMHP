@@ -1412,7 +1412,8 @@ function renderTrombi(){
   const cases = INV_PUB.map(i=>{
     const first = cap(propre(i[0])), ini = propre(i[1]).charAt(0).toUpperCase(), id = slug(first + " " + ini);
     const g = GUESTS.find(x=>x.id===id && !x.partenaireDe), p = g && partenaire(g);
-    const duo = i[2] !== "solo";
+    /* invitation pour deux dont le conjoint ne vient pas (« Oui, mais moi seul·e ») : la case redevient simple */
+    const duo = i[2] !== "solo" && !(g && g.status === "oui" && !p);
     const nomPart = duo ? cap(propre(p ? p.first : (i[3] || "Madame"))) || "Madame" : "";
     const ph = (g ? (duo ? (PHOTOS_COUPLES[id] || photoDe(g) || (p && photoDe(p)) || "") : photoDe(g)) : "") || PHOTOS_SEULES[id] || "";
     return { id, first, ini, duo, nom: first + (ini ? " " + ini + "." : "") + (duo ? " & " + nomPart : ""),
