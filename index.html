@@ -195,6 +195,24 @@ section+section{padding-top:20px}
 .st-attente .pt-st,.l-attente{background:#fff;border-color:var(--or)}
 .pt-nom{font-size:.72rem;font-weight:800;line-height:1.15;text-align:center;max-width:100%;overflow:hidden;text-overflow:ellipsis}
 .pt-nom small{font-weight:700;color:var(--encre-douce);font-size:.68rem}
+.legende-st{display:inline-flex;flex-wrap:wrap;gap:6px;margin:6px 0;vertical-align:middle}
+p.legende-st{display:flex;justify-content:center;margin:4px 0 10px}
+.lg{border-radius:999px;padding:3px 11px;font-size:.8rem;font-weight:800;white-space:nowrap;border:2px solid transparent}
+.lg-oui{background:#DDF2E4;color:#1F6B3F;border-color:#2E8B57}
+.lg-peut-etre{background:#FDEBC8;color:#8A5300;border-color:#E3A21A}
+.lg-attente{background:#fff;color:var(--encre-douce);border:2px dashed var(--or)}
+.lg-non{background:#ECECEC;color:#666;border-color:#9a9a9a}
+.pt-inv.st-oui{background:#DDF2E4;box-shadow:inset 0 0 0 2px #2E8B57}
+.pt-inv.st-peut-etre{background:#FDEBC8;box-shadow:inset 0 0 0 2px #E3A21A}
+.pt-inv.st-non{background:#F0F0F0}
+.st-oui .pt{border-width:3px}
+.t-case.t-st-oui{box-shadow:inset 0 0 0 4px #2E8B57,0 0 0 2px #2E8B57}
+.t-case.t-st-peut-etre{box-shadow:inset 0 0 0 4px #E3A21A,0 0 0 2px #E3A21A}
+.t-case.t-st-attente.t-sans{opacity:.72}
+.t-badge{position:absolute;top:6px;left:6px;z-index:2;font-size:.62rem;font-weight:900;border-radius:999px;padding:2px 8px;white-space:nowrap;text-transform:uppercase;letter-spacing:.04em}
+.t-st-oui .t-badge{background:#2E8B57;color:#fff}
+.t-st-peut-etre .t-badge{background:#E3A21A;color:#3A2408}
+@media(max-width:520px){.t-badge{font-size:.46rem;padding:1px 4px;top:3px;left:3px}}
 .count .leg{display:inline-flex;align-items:center;gap:4px;margin-right:8px;white-space:nowrap}
 .count .leg .pt-st{position:static;display:inline-block;border:1.5px solid var(--or)}
 @media(max-width:520px){.pt-inv{width:68px}.pt-inv.pt-duo{width:88px}.pt{width:38px;height:38px}}
@@ -1446,9 +1464,10 @@ function renderTrombi(){
              init: duo ? first[0] + "&" + (nomPart[0] || "M") : first[0] + ini, ph, statut: g ? g.status : "attente",
              grad: g ? g.grad : GRADS[(first.charCodeAt(0) + (ini.charCodeAt(0) || 0)) % GRADS.length] };
   }).filter(c=> c.first && c.statut !== "non");
-  const ordre = c => c.ph ? 0 : 1;
+  const ordre = c => (c.ph ? 0 : 3) + ({ oui: 0, "peut-etre": 1 }[c.statut] ?? 2);   // photos d'abord, puis présents, peut-être, en attente
   cases.sort((x,y)=> ordre(x) - ordre(y));
-  const carte = c => `<figure class="t-case${c.duo ? " t-double" : ""}${c.ph ? "" : " t-sans"}" style="--grad:${c.grad}">${c.ph ? `<img src="${esc(c.ph)}" alt="${esc(c.nom)}" loading="lazy">` : `<span class="t-ini">${esc(c.init)}</span><span class="t-attente">photo à venir</span>`}<figcaption>${esc(c.nom)}</figcaption></figure>`;
+  const BADGE = { oui: "Présent·e", "peut-etre": "Peut-être" };
+  const carte = c => `<figure class="t-case t-st-${c.statut}${c.duo ? " t-double" : ""}${c.ph ? "" : " t-sans"}" style="--grad:${c.grad}">${BADGE[c.statut] ? `<span class="t-badge">${c.duo && c.statut === "oui" ? "Présents" : BADGE[c.statut]}</span>` : ""}${c.ph ? `<img src="${esc(c.ph)}" alt="${esc(c.nom)}" loading="lazy">` : `<span class="t-ini">${esc(c.init)}</span>${BADGE[c.statut] ? "" : `<span class="t-attente">photo à venir</span>`}`}<figcaption>${esc(c.nom)}</figcaption></figure>`;
   const cartes = cases.map(carte).join("");
   /* Taille automatique selon le nombre de cases (personnes) */
   const unites = cases.reduce((a,c)=> a + (c.duo ? 2 : 1), 0);
@@ -1456,7 +1475,9 @@ function renderTrombi(){
   box.style.setProperty("--t", t + "px");
   const photos = cases.filter(c=>c.ph).length;
   const stats = `<div class="t-stats"><span><b>${nbPers}</b>personnes confirmées</span><span><b>${cases.length}</b>cases (une par personne seule ou par couple)</span><span><b>${photos}</b>photos reçues</span><span><b>${INV_PUB.reduce((a,i)=>a+(i[2]==="solo"?1:2),0)}</b>personnes invitées</span></div>`;
-  box.innerHTML = stats + `<p class="t-note">Les hôtes du jour (Corinne, Hugo et Patrick ; Stéphanie et Henri) vous accueillent sur <a href="#invitation">l'onglet Invitation</a>.</p>` +
+  const nbSt = k => cases.filter(c=>c.statut===k).length;
+  const legende = `<p class="legende-st"><span class="lg lg-oui">● ${nbSt("oui")} présent${nbSt("oui")>1?"s":""}</span><span class="lg lg-peut-etre">● ${nbSt("peut-etre")} peut-être</span><span class="lg lg-attente">○ ${nbSt("attente")} en attente de réponse</span></p>`;
+  box.innerHTML = stats + legende + `<p class="t-note">Les hôtes du jour (Corinne, Hugo et Patrick ; Stéphanie et Henri) vous accueillent sur <a href="#invitation">l'onglet Invitation</a>.</p>` +
     (cases.length ? `<div class="t-mosaique">${cartes}</div>` : `<div class="trombi-vide">La liste des invités arrive bientôt.</div>`);
 }
 function render(){
@@ -1494,8 +1515,8 @@ function render(){
   }).join("");
   const nb = k => items.filter(x=>x.statut===k).length;
   document.getElementById("count").innerHTML = `<b>${list.length}</b> invitation${list.length>1?"s":""} affichée${list.length>1?"s":""} sur ${items.length} · ` +
-    `<span class="leg"><i class="pt-st l-oui"></i>${nb("oui")} présent${nb("oui")>1?"s":""}</span> <span class="leg"><i class="pt-st l-peut-etre"></i>${nb("peut-etre")} peut-être</span> ` +
-    `<span class="leg"><i class="pt-st l-attente"></i>${nb("attente")} en attente</span> <span class="leg"><i class="pt-st l-non"></i>${nb("non")} absent${nb("non")>1?"s":""}</span>`;
+    `<span class="legende-st"><span class="lg lg-oui">● ${nb("oui")} présent${nb("oui")>1?"s":""}</span><span class="lg lg-peut-etre">● ${nb("peut-etre")} peut-être</span>` +
+    `<span class="lg lg-attente">○ ${nb("attente")} en attente</span><span class="lg lg-non">● ${nb("non")} absent${nb("non")>1?"s":""}</span></span>`;
   const empty = document.getElementById("empty");
   empty.textContent = "Personne pour l'instant avec ce nom ou ce filtre.";
   empty.style.display = list.length ? "none" : "block";
@@ -1938,6 +1959,17 @@ async function chargerDirect(){
   } catch(e){ /* le site garde la liste intégrée */ }
 }
 chargerDirect();
+setInterval(()=>{ if (!document.hidden) chargerDirect(); }, 60000);          // les réponses et les photos arrivent sans recharger la page
+/* Si une nouvelle version du site a été publiée, on la charge (évite d'afficher une ancienne page gardée par le navigateur) */
+const VERSION_SITE = "20261109055616";
+(async ()=>{
+  try {
+    const t = await fetch(location.pathname + "?v=" + Date.now(), { cache: "no-store" }).then(r=>r.text());
+    const m = t.match(/const VERSION_SITE = "([^"]+)"/);
+    let deja = ""; try { deja = sessionStorage.getItem("rechargeVersion") || ""; } catch(e){}
+    if (m && m[1] !== VERSION_SITE && deja !== m[1]){ try { sessionStorage.setItem("rechargeVersion", m[1]); } catch(e){} location.reload(); }
+  } catch(e){}
+})();
 
 /* ===== Photos & vidéos ===== */
 const IMG_RE = /\.(jpe?g|png|webp|gif|avif)$/i, VID_RE = /\.(mp4|webm|mov|m4v)$/i;
