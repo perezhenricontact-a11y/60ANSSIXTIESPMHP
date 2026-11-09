@@ -1467,7 +1467,7 @@ function renderTrombi(){
   const ordre = c => (c.ph ? 0 : 3) + ({ oui: 0, "peut-etre": 1 }[c.statut] ?? 2);   // photos d'abord, puis présents, peut-être, en attente
   cases.sort((x,y)=> ordre(x) - ordre(y));
   const BADGE = { oui: "Présent·e", "peut-etre": "Peut-être" };
-  const carte = c => `<figure class="t-case t-st-${c.statut}${c.duo ? " t-double" : ""}${c.ph ? "" : " t-sans"}" style="--grad:${c.grad}">${BADGE[c.statut] ? `<span class="t-badge">${c.duo && c.statut === "oui" ? "Présents" : BADGE[c.statut]}</span>` : ""}${c.ph ? `<img src="${esc(c.ph)}" alt="${esc(c.nom)}" loading="lazy">` : `<span class="t-ini">${esc(c.init)}</span>${BADGE[c.statut] ? "" : `<span class="t-attente">photo à venir</span>`}`}<figcaption>${esc(c.nom)}</figcaption></figure>`;
+  const carte = c => `<figure class="t-case t-st-${c.statut}${c.duo ? " t-double" : ""}${c.ph ? "" : " t-sans"}" style="--grad:${c.grad}">${BADGE[c.statut] ? `<span class="t-badge">${c.duo && c.statut === "oui" ? "Présents" : BADGE[c.statut]}</span>` : ""}${c.ph ? `<img src="${esc(c.ph)}" alt="${esc(c.nom)}" loading="lazy" referrerpolicy="no-referrer" onerror="if(!this.dataset.r){this.dataset.r=1;var m=this.src.match(/\/d\/([\w-]+)/);if(m)this.src='https://drive.google.com/thumbnail?id='+m[1]+'&sz=w1000'}">` : `<span class="t-ini">${esc(c.init)}</span>${BADGE[c.statut] ? "" : `<span class="t-attente">photo à venir</span>`}`}<figcaption>${esc(c.nom)}</figcaption></figure>`;
   const cartes = cases.map(carte).join("");
   /* Taille automatique selon le nombre de cases (personnes) */
   const unites = cases.reduce((a,c)=> a + (c.duo ? 2 : 1), 0);
@@ -1951,6 +1951,10 @@ async function chargerDirect(){
       FORM.url = d.formulaire.url; if (d.formulaire.entree) FORM.entree = d.formulaire.entree;   // le lien et l'identifiant du formulaire suivent le script
       initQR(); rafraichirFiche();
     }
+    /* adresse d'image Google la plus fiable sans compte Google (lh3), comme sur le site des 20 ans */
+    const lh3 = u => { const m = String(u || "").match(/[?&]id=([\w-]+)/); return m ? "https://lh3.googleusercontent.com/d/" + m[1] + "=w1000" : (u || ""); };
+    (d.reponses || []).forEach(r=>{ r[7] = lh3(r[7]); r[8] = lh3(r[8]); });
+    (d.photos || []).forEach(p=>{ p[2] = lh3(p[2]); });
     (d.reponses || []).forEach(r=>{ if (+r[4] === 1 && r[6] && r[7]) PHOTOS_COUPLES[slug(r[0] + " " + String(r[1]).charAt(0))] = r[7]; });
     (d.photos || []).forEach(p=>{ PHOTOS_SEULES[slug(p[0] + " " + String(p[1]).charAt(0))] = p[2]; });   // photo arrivée sans réponse (par mail)
     buildGuests(REPONSES.concat(d.reponses || []));
@@ -1961,7 +1965,7 @@ async function chargerDirect(){
 chargerDirect();
 setInterval(()=>{ if (!document.hidden) chargerDirect(); }, 60000);          // les réponses et les photos arrivent sans recharger la page
 /* Si une nouvelle version du site a été publiée, on la charge (évite d'afficher une ancienne page gardée par le navigateur) */
-const VERSION_SITE = "20261109055616";
+const VERSION_SITE = "20261109060758";
 (async ()=>{
   try {
     const t = await fetch(location.pathname + "?v=" + Date.now(), { cache: "no-store" }).then(r=>r.text());
