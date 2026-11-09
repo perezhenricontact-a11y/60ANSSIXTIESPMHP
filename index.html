@@ -172,7 +172,32 @@ section+section{padding-top:20px}
 .info .btn{margin-top:14px;padding:10px 18px;font-size:.9rem}
 
 /* INVITÉS */
-.stats{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px;margin-bottom:28px}
+.stats{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:10px;margin-bottom:24px}
+@media(max-width:1000px){.stats{grid-template-columns:repeat(3,minmax(0,1fr))}}
+/* Pastilles des invités (toutes les invitations, compactes : plus de 100 invités) */
+.pastilles{display:flex;flex-wrap:wrap;gap:12px 8px;justify-content:flex-start}
+.pt-inv{font:inherit;background:none;border:0;padding:4px 2px;width:76px;display:flex;flex-direction:column;align-items:center;gap:4px;cursor:pointer;color:var(--encre);border-radius:12px;animation:entre .4s both}
+.pt-inv.pt-duo{width:96px}
+.pt-inv:hover,.pt-inv:focus-visible{background:rgba(255,250,241,.85);outline:none;box-shadow:0 0 0 2px var(--or)}
+.pt-ronds{position:relative;display:flex;justify-content:center}
+.pt{width:42px;height:42px;border-radius:50%;display:grid;place-items:center;background:var(--grad);background-size:cover;background-position:center 20%;color:#FFF3DF;font-family:var(--f-titre);font-weight:800;font-size:.82rem;border:3px solid var(--filet);box-sizing:border-box}
+.pt + .pt{margin-left:-10px}
+.pt.ovale{width:74px;border-radius:21px}
+.pt.absent{opacity:.35;filter:grayscale(1)}
+.st-oui .pt{border-color:#2E8B57}
+.st-peut-etre .pt{border-color:var(--safran)}
+.st-attente .pt{border:2px dashed var(--or);opacity:.85}
+.st-non .pt{border-color:#9a9a9a;filter:grayscale(1);opacity:.5}
+.pt-st{position:absolute;right:-2px;bottom:0;width:12px;height:12px;border-radius:50%;border:2px solid var(--fond, #FFF6EA);background:#cfc6b8}
+.st-oui .pt-st,.l-oui{background:#2E8B57}
+.st-peut-etre .pt-st,.l-peut-etre{background:var(--safran)}
+.st-non .pt-st,.l-non{background:#9a9a9a}
+.st-attente .pt-st,.l-attente{background:#fff;border-color:var(--or)}
+.pt-nom{font-size:.72rem;font-weight:800;line-height:1.15;text-align:center;max-width:100%;overflow:hidden;text-overflow:ellipsis}
+.pt-nom small{font-weight:700;color:var(--encre-douce);font-size:.68rem}
+.count .leg{display:inline-flex;align-items:center;gap:4px;margin-right:8px;white-space:nowrap}
+.count .leg .pt-st{position:static;display:inline-block;border:1.5px solid var(--or)}
+@media(max-width:520px){.pt-inv{width:68px}.pt-inv.pt-duo{width:88px}.pt{width:38px;height:38px}}
 @media(max-width:760px){.stats{grid-template-columns:repeat(2,minmax(0,1fr))}}
 .stat{padding:18px 10px;border-radius:18px;background:var(--zellige);border:2px solid var(--or);text-align:center;color:#FFF3DF}
 .stat .n{font-family:var(--f-titre);font-size:2.4rem;font-weight:800;color:var(--or-clair);line-height:1;font-variant-numeric:tabular-nums}
@@ -639,7 +664,7 @@ footer .script{font-size:1.9rem;color:var(--fez);margin-bottom:6px;display:block
 
 <header class="site">
   <div class="wrap">
-    <a class="logo" href="#invitation">15<span>.</span>05</a>
+    <a class="logo" href="#invitation">15<span>.</span>05<span>.</span>2027</a>
     <nav class="onglets" aria-label="Onglets">
       <a href="#invitation" data-tab="invitation">Invitation</a>
       <a href="#programme" data-tab="programme">Programme</a>
@@ -804,7 +829,17 @@ footer .script{font-size:1.9rem;color:var(--fez);margin-bottom:6px;display:block
         <p>Chaque réponse au formulaire ajoute une star, avec sa photo déguisée en tenue marocaine par l'IA (<a href="#defi" style="color:var(--fez);font-weight:800">le défi photo</a>). Tu n'y es pas encore ? <a href="#reponse" style="color:var(--fez);font-weight:800">Réponds ici</a>.</p>
       </div>
       <div class="stats" id="stats"></div>
-      <div class="heros">
+      <div class="toolbar">
+        <label class="search">
+          <svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="m20 20-4-4"/></svg>
+          <input id="q" type="search" placeholder="Cherche ton prénom…" autocomplete="off" aria-label="Chercher un invité">
+        </label>
+        <div class="filters" id="filters"></div>
+      </div>
+      <div class="count" id="count"></div>
+      <div class="grid" id="grid"></div>
+      <div class="empty" id="empty">Personne pour l'instant avec ce nom ou ce filtre.</div>
+      <div class="heros" style="margin-top:34px">
         <div class="duo">
           <figure><img src="media/figurines-duo.jpg" alt="Patrick et Henri en figurines marocaines"><figcaption>En figurines…</figcaption></figure>
           <figure><img src="media/photo-terrain.jpg" alt="Patrick et Henri sur un terrain de pétanque"><figcaption>… et en vrai !</figcaption></figure>
@@ -816,16 +851,6 @@ footer .script{font-size:1.9rem;color:var(--fez);margin-bottom:6px;display:block
           <div class="noms" id="noms-heros"></div>
         </div>
       </div>
-      <div class="toolbar">
-        <label class="search">
-          <svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="m20 20-4-4"/></svg>
-          <input id="q" type="search" placeholder="Cherche ton prénom…" autocomplete="off" aria-label="Chercher un invité">
-        </label>
-        <div class="filters" id="filters"></div>
-      </div>
-      <div class="count" id="count"></div>
-      <div class="grid" id="grid"></div>
-      <div class="empty" id="empty">Personne pour l'instant avec ce nom ou ce filtre.</div>
     </div>
   </section>
 </div>
@@ -1365,7 +1390,7 @@ function tick(){
 tick(); setInterval(tick,1000);
 
 /* ===== Liste ===== */
-const FILTERS = [["tous","Tous"],["oui","Présents"],["peut-etre","Peut-être"],["non","Absents"]];
+const FILTERS = [["tous","Toutes"],["oui","Présents"],["peut-etre","Peut-être"],["attente","Sans réponse"],["non","Absents"]];
 let activeGroup = "tous";
 const fWrap = document.getElementById("filters");
 FILTERS.forEach(([k,label])=>{
@@ -1385,7 +1410,8 @@ function renderStats(){
   const nb = touOui.length + touOui.reduce((a,g)=>a+g.plus,0);          // couverture : hôtes et épouses compris
   const rep = tous.filter(g=>!g.hote);                                   // guest stars : sans Patrick, Henri ni leurs épouses
   const oui = rep.filter(g=>g.status==="oui"), plus = oui.reduce((a,g)=>a+g.plus,0);
-  const stats = [[rep.length,"Réponses"],[oui.length,"Présents confirmés"],[plus,"Accompagnants"],[oui.length+plus,"Personnes attendues"]];
+  const invit = (typeof INV_PUB !== "undefined" ? INV_PUB : []), persInv = invit.reduce((a,i)=> a + (i[2] === "solo" ? 1 : 2), 0);
+  const stats = [[invit.length,"Invitations"],[persInv,"Personnes invitées"],[rep.length,"Réponses"],[oui.length,"Présents confirmés"],[plus,"Accompagnants"],[oui.length+plus,"Personnes attendues"]];
   document.getElementById("nb-confirmes").textContent = nb;
   document.getElementById("stats").innerHTML = stats.map(([n,l])=>`<div class="stat"><div class="n">${n}</div><div class="l">${l}</div></div>`).join("");
 }
@@ -1435,34 +1461,49 @@ function renderTrombi(){
 }
 function render(){
   renderStats(); renderHeros(); renderTrombi();
+  /* TOUTES les invitations de la liste, en petites pastilles rondes (une par personne seule, deux pour un couple),
+     colorées selon la réponse lue en direct : vert présent, safran peut-être, gris absent, pointillé en attente. */
   const q = slug(document.getElementById("q").value);
-  const STARS = GUESTS.filter(g=>!g.hote && !(g.partenaireDe && GUESTS.some(h=>h.hote && h.id===g.guestId)));
-  const list = STARS.filter(g => (activeGroup==="tous" || g.status===activeGroup) && (!q || g.id.includes(q)));
+  const propre = t => String(t || "").replace(/\s*\?\s*/g, " ").trim();
+  const partenaire = g => GUESTS.find(x=>x.partenaireDe && x.guestId===g.id);
+  const items = INV_PUB.map(i=>{
+    const first = cap(propre(i[0])), ini = propre(i[1]).charAt(0).toUpperCase(), id = slug(first + " " + ini);
+    const g = GUESTS.find(x=>x.id===id && !x.partenaireDe), p = g && partenaire(g);
+    const duo = i[2] !== "solo", statut = g ? g.status : "attente";
+    const nomPart = duo ? cap(propre(p ? p.first : (i[3] || "Madame")).split(" ")[0]) || "Madame" : "";
+    const partVient = duo && !(g && g.status === "oui" && !p);
+    const phCouple = duo && partVient ? (PHOTOS_COUPLES[id] || "") : "";
+    const ph1 = g ? photoDe(g) : (PHOTOS_SEULES[id] || "");
+    return { i, id, first, ini, duo, statut, nomPart, partVient, phCouple, ph1: ph1 || (!duo ? PHOTOS_SEULES[id] || "" : ""), ph2: p ? photoDe(p) : "",
+      nom: first + (ini ? " " + ini + "." : ""), grad: g ? g.grad : GRADS[(first.charCodeAt(0) + (ini.charCodeAt(0) || 0)) % GRADS.length], repondu: !!g };
+  }).filter(x=>x.first);
+  const ordreSt = { oui: 0, "peut-etre": 1, attente: 2, non: 3 };
+  items.sort((a,b)=> ordreSt[a.statut] - ordreSt[b.statut] || a.first.localeCompare(b.first, "fr"));
+  const list = items.filter(x=> (activeGroup==="tous" || x.statut===activeGroup) && (!q || slug(x.nom + " " + x.nomPart).includes(q)));
+  const rond = (txt, ph, cls) => ph ? `<span class="pt${cls||""}" style="background-image:url('${esc(ph)}')" aria-hidden="true"></span>`
+                                    : `<span class="pt${cls||""}" aria-hidden="true">${esc(txt)}</span>`;
   const grid = document.getElementById("grid");
-  const groupes = [];
-  list.forEach(g=>{ if (g.partenaireDe) return; const p = list.find(x=>x.partenaireDe && x.guestId===g.id); groupes.push(p ? [g,p] : [g]); });
-  list.filter(x=>x.partenaireDe && !groupes.some(gr=>gr.includes(x))).forEach(x=>groupes.push([x]));
-  const carre = g => photoDe(g) ? `<div class="carre" role="img" aria-label="Photo de ${esc(g.name)}" style="background-image:url('${esc(photoDe(g))}')"></div>`
-                                : `<div class="carre" style="--grad:${g.grad}">${esc(g.first[0] + (g.ini || ""))}</div>`;
-  grid.innerHTML = groupes.map((gr,i)=>{ const g = gr[0], duo = gr.length > 1, phc = duo && PHOTOS_COUPLES[g.id];
-    return `<article class="card${duo ? " duo" : ""}" style="--grad:${g.grad};animation-delay:${Math.min(i,20)*30}ms" data-id="${g.guestId || g.id}" tabindex="0" aria-label="Ouvrir la carte de ${esc(gr.map(x=>x.name).join(" et "))}">
-      <div class="bulles${phc ? " couple" : ""}">${phc ? `<figure class="bulle"><div class="carre rect" role="img" aria-label="Photo de ${esc(gr.map(x=>x.name).join(" et "))}" style="background-image:url('${esc(phc)}')"></div><figcaption>${esc(gr.map(x=>x.name).join(" & "))}</figcaption></figure>` :
-        gr.map(x=>`<figure class="bulle">${carre(x)}<figcaption>${esc(x.name)}</figcaption></figure>`).join("") + (duo ? `<span class="lien-duo" aria-hidden="true">&amp;</span>` : "")}${g.status ? `<span class="badge b-${g.status}">${LABEL[g.status]}</span>` : ""}</div>
-      <div class="card-body">
-        <span class="role">${duo ? "Guest stars en duo" : g.partenaireDe ? "Accompagne " + esc(g.partenaireDe) : "Guest star"}</span>
-        <div class="mom">${g.moments.map(m=>`<span>${m}</span>`).join("")}</div>
-        <p>${g.status==="non" ? "Ne pourra pas venir" : duo ? "Viennent ensemble" : g.plus ? `<span class="plus">+${g.plus} accompagnant${g.plus>1?"s":""}</span>` : "Vient seul·e"}</p>
-        ${g.tenue && g.status!=="non" ? `<div class="tenue">${esc(g.tenue)}</div>` : ""}
-        <span class="open">Voir l'invitation →</span>
-      </div>
-    </article>`; }).join("");
-  document.getElementById("count").innerHTML = `<b>${list.length}</b> guest star${list.length>1?"s":""} affichée${list.length>1?"s":""} sur ${STARS.length}`;
+  grid.className = "pastilles";
+  grid.innerHTML = list.map((x,k)=>{
+    const ronds = x.phCouple ? rond("", x.phCouple, " ovale")
+      : rond(x.first[0] + x.ini, x.ph1) + (x.duo ? rond(x.nomPart[0] || "M", x.ph2, x.partVient ? "" : " absent") : "");
+    const titre = x.nom + (x.duo ? " & " + x.nomPart : "") + " · " + (x.statut === "attente" ? "en attente de réponse" : LABEL[x.statut]) + (x.duo && !x.partVient ? " (vient seul·e)" : "");
+    return `<button type="button" class="pt-inv st-${x.statut}${x.duo ? " pt-duo" : ""}" data-id="${x.id}" title="${esc(titre)}" aria-label="${esc(titre)}" style="--grad:${x.grad};animation-delay:${Math.min(k,40)*12}ms">
+      <span class="pt-ronds">${ronds}<i class="pt-st" aria-hidden="true"></i></span>
+      <span class="pt-nom">${esc(x.nom)}${x.duo ? `<br><small>&amp; ${esc(x.nomPart)}</small>` : ""}</span></button>`;
+  }).join("");
+  const nb = k => items.filter(x=>x.statut===k).length;
+  document.getElementById("count").innerHTML = `<b>${list.length}</b> invitation${list.length>1?"s":""} affichée${list.length>1?"s":""} sur ${items.length} · ` +
+    `<span class="leg"><i class="pt-st l-oui"></i>${nb("oui")} présent${nb("oui")>1?"s":""}</span> <span class="leg"><i class="pt-st l-peut-etre"></i>${nb("peut-etre")} peut-être</span> ` +
+    `<span class="leg"><i class="pt-st l-attente"></i>${nb("attente")} en attente</span> <span class="leg"><i class="pt-st l-non"></i>${nb("non")} absent${nb("non")>1?"s":""}</span>`;
   const empty = document.getElementById("empty");
-  empty.textContent = STARS.length ? "Personne pour l'instant avec ce nom ou ce filtre." : "Les premières guest stars arrivent bientôt : réponds au formulaire pour ouvrir le bal !";
+  empty.textContent = "Personne pour l'instant avec ce nom ou ce filtre.";
   empty.style.display = list.length ? "none" : "block";
-  grid.querySelectorAll(".card").forEach(c=>{
-    c.onclick = ()=> location.hash = c.dataset.id;
-    c.onkeydown = e=>{ if(e.key==="Enter") location.hash = c.dataset.id; };
+  grid.querySelectorAll(".pt-inv").forEach(b=> b.onclick = ()=>{
+    const x = items.find(y=>y.id===b.dataset.id);
+    if (x && x.repondu){ location.hash = x.id; return; }
+    showTab("reponse", false); montrerInv([x.i]);                         // pas encore répondu : sa fiche avec son lien personnel
+    setTimeout(()=> document.getElementById("trouve-box").scrollIntoView({ behavior: "smooth", block: "start" }), 60);
   });
 }
 
