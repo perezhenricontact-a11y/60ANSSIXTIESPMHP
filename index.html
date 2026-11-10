@@ -74,6 +74,7 @@ header.site .wrap{display:flex;align-items:center;justify-content:space-between;
 }
 
 [hidden]{display:none!important}
+html,body{overflow-x:clip}   /* aucun défilement horizontal sur téléphone (cadres des hôtes inclinés) */
 .onglets .court{display:none}
 
 /* HÉROS */
@@ -204,6 +205,11 @@ section+section{padding-top:20px}
 .btn-rafr:disabled{opacity:.6;cursor:wait}
 @media(min-width:721px) and (max-width:1300px){header.site .wrap{flex-wrap:wrap;row-gap:2px;padding-block:6px}.onglets{order:3;width:100%;flex-wrap:wrap;overflow:visible;justify-content:center}}
 @media(min-width:1301px){.onglets{flex-wrap:wrap;overflow:visible;justify-content:center}}
+.pastilles-accueil{display:flex;flex-wrap:wrap;align-items:center;gap:4px;margin:8px 0 2px;justify-content:inherit}
+.pastilles-accueil .pa{width:34px;height:34px;border-radius:50%;display:inline-grid;place-items:center;background:var(--zellige);background-size:cover;background-position:center 20%;color:#FFF3DF;font-weight:800;font-size:.72rem;border:2px solid #2E8B57;box-shadow:0 1px 4px rgba(0,0,0,.2)}
+.pastilles-accueil .pa.ovale{width:52px;border-radius:17px}
+.pastilles-accueil .plus{font-weight:800;font-size:.85rem;margin-left:4px}
+.pastilles-accueil .jour{background:#2E8B57;color:#fff;border-radius:999px;padding:2px 10px;font-weight:800;font-size:.75rem;margin-left:6px}
 .news{margin:6px 0 0;font-size:.86rem;display:flex;flex-wrap:wrap;gap:6px;align-items:center;justify-content:inherit}
 .news-tag{background:var(--zellige);color:#fff;border-radius:999px;padding:2px 10px;font-weight:800;font-size:.72rem;text-transform:uppercase;letter-spacing:.05em}
 .news-item{font-weight:700;animation:newsIn .8s both}
@@ -750,6 +756,7 @@ footer .script{font-size:1.9rem;color:var(--fez);margin-bottom:6px;display:block
         <h1>De Casablanca <em>au cochonnet !</em></h1>
         <p class="devise">60 ans chacun… et toujours le goût du challenge !</p>
         <p class="confirmes"><b id="nb-confirmes">4</b> participants déjà confirmés · <a href="#invites">voir qui vient</a></p>
+        <div class="pastilles-accueil" id="pastilles-accueil" aria-label="Ils ont confirmé"></div>
         <p class="news" id="news" aria-live="polite" hidden><span class="news-tag">Dernières confirmations</span> <span id="news-txt"></span></p>
         <div class="chips">
           <span class="chip"><b>Samedi</b> 15 mai 2027</span>
@@ -2025,7 +2032,16 @@ async function chargerDirect(){
       else if (nbPh > DIRECT_AVANT.ph) toast("Nouvelle photo dans le trombinoscope !");
     }
     DIRECT_AVANT = { rep: reps.length, ph: nbPh };
-    const oui5 = reps.filter(r=>r[2] === "oui").slice(-5).reverse(), news = document.getElementById("news");
+    const ouiT = reps.filter(r=>r[2] === "oui").slice().sort((a,b)=> String(b[9]||"").localeCompare(String(a[9]||"")));
+    const oui5 = ouiT.slice(0, 5), news = document.getElementById("news");
+    /* page de garde : pastilles des invités qui ont confirmé (photo ou initiales) et confirmations du jour */
+    const pa = document.getElementById("pastilles-accueil");
+    if (pa){
+      const auj = new Date().toDateString(), nJour = ouiT.filter(r=> r[9] && new Date(r[9]).toDateString() === auj).length;
+      const rond = r => { const n = nom(r) + (+r[4] >= 1 ? " & " + (r[6] || "son invité·e") : ""), ph = r[7] || PHOTOS_SEULES[slug(r[0] + " " + String(r[1]).charAt(0))] || "";
+        return `<span class="pa${ph && +r[4] >= 1 ? " ovale" : ""}" title="${esc(n)}" role="img" aria-label="${esc(n)}"${ph ? ` style="background-image:url('${esc(ph)}')"` : ""}>${ph ? "" : esc(String(r[0]).charAt(0) + String(r[1]).charAt(0))}</span>`; };
+      pa.innerHTML = ouiT.slice(0, 24).map(rond).join("") + (ouiT.length > 24 ? `<span class="plus">+${ouiT.length - 24}</span>` : "") + (nJour ? `<span class="jour">${nJour} aujourd'hui</span>` : "");
+    }
     if (news && oui5.length){ news.hidden = false; document.getElementById("news-txt").innerHTML = oui5.map((r,i)=>`<span class="news-item" style="animation-delay:${i*0.6}s">${esc(nom(r))}${+r[4] >= 1 ? " et son invité·e" : ""}</span>`).join(" · "); }
     const der = document.getElementById("derniers");
     if (der) der.innerHTML = reps.length ? "<b>Dernières réponses :</b> " + reps.slice(-6).reverse().map(r=>`<span class="der der-${r[2]}">${esc(nom(r))}${r[7] ? " 📷" : ""}</span>`).join(" ") : "";
@@ -2054,7 +2070,7 @@ setInterval(directSiBesoin, 30000);          // les réponses et les photos arri
 document.addEventListener("visibilitychange", directSiBesoin);   // au retour sur la page (après avoir rempli le formulaire, par exemple)
 addEventListener("focus", directSiBesoin);
 /* Si une nouvelle version du site a été publiée, on la charge (évite d'afficher une ancienne page gardée par le navigateur) */
-const VERSION_SITE = "20261110174431";
+const VERSION_SITE = "20261110181232";
 (async ()=>{
   try {
     const t = await fetch(location.pathname + "?v=" + Date.now(), { cache: "no-store" }).then(r=>r.text());
