@@ -198,7 +198,12 @@ section+section{padding-top:20px}
 .pt-nom small{font-weight:700;color:var(--encre-douce);font-size:.68rem}
 .derniers{text-align:center;font-size:.85rem;margin:4px 0;display:flex;flex-wrap:wrap;gap:6px;justify-content:center;align-items:center}
 .der{border-radius:999px;padding:2px 9px;font-weight:800;background:#ECECEC}.der-oui{background:#DDF2E4;color:#1F6B3F}.der-peut-etre{background:#FDEBC8;color:#8A5300}
-.maj-direct{text-align:center;font-size:.72rem;opacity:.65;margin:0 0 8px}
+.maj-direct{text-align:center;font-size:.72rem;margin:0 0 8px}
+#maj-direct-60{opacity:.65}
+.btn-rafr{font:800 .85rem var(--f-texte);background:var(--zellige);color:#FFF6E4;border:1.5px solid var(--or);border-radius:999px;padding:7px 14px;cursor:pointer;margin:4px}
+.btn-rafr:disabled{opacity:.6;cursor:wait}
+@media(min-width:721px) and (max-width:1300px){header.site .wrap{flex-wrap:wrap;row-gap:2px;padding-block:6px}.onglets{order:3;width:100%;flex-wrap:wrap;overflow:visible;justify-content:center}}
+@media(min-width:1301px){.onglets{flex-wrap:wrap;overflow:visible;justify-content:center}}
 .news{margin:6px 0 0;font-size:.86rem;display:flex;flex-wrap:wrap;gap:6px;align-items:center;justify-content:inherit}
 .news-tag{background:var(--zellige);color:#fff;border-radius:999px;padding:2px 10px;font-weight:800;font-size:.72rem;text-transform:uppercase;letter-spacing:.05em}
 .news-item{font-weight:700;animation:newsIn .8s both}
@@ -884,7 +889,7 @@ footer .script{font-size:1.9rem;color:var(--fez);margin-bottom:6px;display:block
         <div class="filters" id="filters"></div>
       </div>
       <div class="count" id="count"></div>
-      <p class="derniers" id="derniers"></p><p class="maj-direct" id="maj-direct-60"></p>
+      <p class="derniers" id="derniers"></p><p class="maj-direct"><button type="button" class="btn-rafr" id="btn-rafr" onclick="rafraichirMaintenant()">🔄 Rafraîchir maintenant</button> <span id="maj-direct-60"></span></p>
       <div class="grid" id="grid"></div>
       <div class="empty" id="empty">Personne pour l'instant avec ce nom ou ce filtre.</div>
       <div class="heros" style="margin-top:34px">
@@ -2029,6 +2034,14 @@ async function chargerDirect(){
   } catch(e){ /* le site garde la liste intégrée */ }
 }
 let DIRECT_AVANT = null, DIRECT_DERNIER = 0;
+/* Bouton « Rafraîchir maintenant » : la base relit tout le formulaire (réponses et photos), puis le site recharge les données */
+async function rafraichirMaintenant(){
+  const b = document.getElementById("btn-rafr"); if (!b || !API) return;
+  b.disabled = true; b.textContent = "⏳ Rafraîchissement…";
+  try { await fetch(API + (API.includes("?") ? "&" : "?") + "action=rafraichir&t=" + Date.now(), { mode: "no-cors" }); } catch(e){}
+  DIRECT_DERNIER = Date.now(); await chargerDirect();
+  b.disabled = false; b.textContent = "🔄 Rafraîchir maintenant"; toast("Données à jour");
+}
 function directSiBesoin(){ if (document.hidden || Date.now() - DIRECT_DERNIER < 8000) return; DIRECT_DERNIER = Date.now(); chargerDirect(); }
 /* Bouton « Retour » : revient à l'onglet précédent sans quitter la page (fonctionne aussi dans l'aperçu Claude) */
 (function(){
@@ -2041,7 +2054,7 @@ setInterval(directSiBesoin, 30000);          // les réponses et les photos arri
 document.addEventListener("visibilitychange", directSiBesoin);   // au retour sur la page (après avoir rempli le formulaire, par exemple)
 addEventListener("focus", directSiBesoin);
 /* Si une nouvelle version du site a été publiée, on la charge (évite d'afficher une ancienne page gardée par le navigateur) */
-const VERSION_SITE = "20261110171057";
+const VERSION_SITE = "20261110174431";
 (async ()=>{
   try {
     const t = await fetch(location.pathname + "?v=" + Date.now(), { cache: "no-store" }).then(r=>r.text());
