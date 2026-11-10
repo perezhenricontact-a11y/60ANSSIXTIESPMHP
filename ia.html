@@ -83,10 +83,25 @@ a.lien{color:var(--fez);font-weight:800}
 </main>
 <div class="toast" id="toast"></div>
 <script>
-const TEXTES = {
-  seul: "Je vais t'envoyer une photo de moi. Transforme-la en portrait de fête marocaine pour l'anniversaire « De Casablanca au cochonnet ». Habille-moi d'une djellaba (ou d'un caftan) de la couleur de ton choix, avec un tarbouche rouge, ou pour une femme un joli foulard. Ajoute des babouches, une boule de pétanque à la main et un décor de Casablanca ou de terrain de pétanque. Fais preuve d'imagination et d'humour, mais garde mon visage bien reconnaissable. Si tu n'as pas encore la photo, demande-la-moi.",
-  duo: "Je vais t'envoyer une photo de nous deux. Transforme-la en un seul portrait de fête marocaine pour l'anniversaire « De Casablanca au cochonnet ». Habille chacun d'une djellaba ou d'un caftan de couleurs assorties, avec un tarbouche rouge pour un homme et un joli foulard pour une femme. Ajoute des babouches, des boules de pétanque à la main et un décor de Casablanca ou de terrain de pétanque. Fais preuve d'imagination et d'humour, mais garde nos deux visages bien reconnaissables. Si tu n'as pas encore la photo, demande-la-moi."
-};
+/* Même texte que l'onglet Défi photo du site (visage conservé, personne de droite, image imprimable) */
+const STUDIO_THEME = { site: "https://perezhenricontact-a11y.github.io/60ANSSIXTIESPMHP/",
+  fete: "de fête marocaine pour l'anniversaire « De Casablanca au cochonnet » (60 ans de Patrick et Henri)",
+  tenue: "habille-moi d'une djellaba ou d'un caftan coloré, avec un tarbouche rouge (ou, pour une femme, un foulard élégant) et des babouches, une boule de pétanque à la main, sur un terrain de pétanque avec son cochonnet, dans un décor de Casablanca : lanternes, mosaïques et palmiers.",
+  tenueDuo: "habille chacun d'une djellaba ou d'un caftan aux couleurs assorties, avec un tarbouche rouge pour un homme et un foulard élégant pour une femme, des babouches, une boule de pétanque à la main, sur un terrain de pétanque avec son cochonnet, dans un décor de Casablanca : lanternes, mosaïques et palmiers." };
+  const AMB = { classique: "Ambiance classique et élégante : couleurs raffinées, belle lumière, pose soignée.",
+                retro: "Ambiance rétro et humoristique, façon carte postale ancienne, couleurs vintage, avec une pointe d'humour.",
+                festive: "Ambiance très festive et décalée : couleurs éclatantes, confettis, attitude joyeuse et pleine d'humour." };
+function texte(qui, amb){
+    const duo = qui === "duo";
+    return (duo ? "Je vais t'envoyer une photo de nous deux dans le message suivant. Quand tu l'auras, transforme-la en un seul portrait commun "
+                : "Je vais t'envoyer une photo de moi dans le message suivant. Quand tu l'auras, transforme-la en portrait ")
+      + T.fete + " : " + (duo ? T.tenueDuo : T.tenue) + " " + (AMB[amb] || AMB.festive) + " "
+      + (duo ? "Règles importantes : garde exactement nos deux visages, notre âge apparent, nos yeux, nos cheveux, nos sourires et nos traits ; ne les remplace pas par des visages génériques. "
+             : "Règles importantes : garde exactement mon visage, mon âge apparent, mes yeux, mes cheveux, mon sourire et mes traits ; ne le remplace pas par un visage générique. Fais un portrait individuel : si la photo montre plusieurs personnes, ne garde que la personne située à droite. ")
+      + "Image de bonne qualité, assez nette pour être imprimée. Si tu n'as pas encore la photo, demande-la-moi.";
+  }
+const T = STUDIO_THEME;
+const TEXTES = { seul: texte("solo", "festive"), duo: texte("duo", "festive") };
 const qui = () => document.querySelector('input[name="qui"]:checked').value;
 const etape = document.querySelector('.carte:nth-of-type(3) li:nth-child(2)');
 const etapeHTML = etape.innerHTML;
