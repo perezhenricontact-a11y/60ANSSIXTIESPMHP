@@ -674,6 +674,24 @@ footer .script{font-size:1.9rem;color:var(--fez);margin-bottom:6px;display:block
 @keyframes appel{0%,100%{box-shadow:0 6px 18px rgba(12,67,73,.35)}50%{box-shadow:0 0 0 8px rgba(239,162,58,.35)}}
 @media (prefers-reduced-motion:reduce){.musique .notes i,.musique.appel{animation:none!important}}
 @media print{.musique{display:none}}
+.studio-ia{margin:26px 0;padding:20px;border-radius:20px;border:2px solid var(--studio-c,#126169);background:var(--studio-bg,#fffaf1);display:grid;gap:12px}
+.studio-titre{margin:0;font-size:1.35rem;color:var(--studio-c,#126169)}
+.studio-intro,.studio-note{margin:0;font-size:.92rem;opacity:.85}
+.studio-ligne{display:grid;grid-template-columns:130px 1fr;gap:8px;align-items:center}
+.studio-lab{font-weight:800;font-size:.85rem;text-transform:uppercase;letter-spacing:.06em;color:var(--studio-c,#126169)}
+.studio-choix{display:flex;flex-wrap:wrap;gap:8px}
+.studio-ia .sc{font:inherit;font-weight:700;font-size:.9rem;padding:9px 15px;border-radius:999px;border:2px solid var(--studio-c,#126169);background:#fff;color:var(--studio-c,#126169);cursor:pointer;text-decoration:none;display:inline-block}
+.studio-ia .sc.on,.studio-ia .sc-go{background:var(--studio-c,#126169);color:#fff}
+.studio-ia .sc-go{background:var(--studio-a,#BE3A24);border-color:var(--studio-a,#BE3A24)}
+.studio-bas{display:flex;flex-wrap:wrap;gap:16px;align-items:flex-start}
+.studio-texte{flex:1 1 280px;font-size:.88rem}
+.studio-texte summary{cursor:pointer;font-weight:700}
+.studio-texte p{margin:8px 0 0;line-height:1.45}
+.studio-qr{margin:0;display:grid;justify-items:center;gap:6px;width:170px;text-align:center;font-size:.78rem}
+.studio-qr img,.studio-qr canvas{width:150px;height:150px;border-radius:10px;background:#fff;padding:6px}
+@media(max-width:620px){.studio-ligne{grid-template-columns:1fr}.studio-qr{display:none}}
+
+.studio-ia{--studio-c:#126169;--studio-a:#BE3A24;--studio-bg:#FFFAF1}
 </style>
 </head>
 <body>
@@ -995,6 +1013,33 @@ footer .script{font-size:1.9rem;color:var(--fez);margin-bottom:6px;display:block
           <p>Sur téléphone : <b>appui long sur l'image</b>, puis « Enregistrer ». Ensuite le bouton « Déposer ma photo » plus bas, ou par mail.</p></div>
       </div>
       <p class="me-assistant">Tu préfères être guidé·e écran par écran ? <a class="lien-mail" href="ia.html" target="_blank" rel="noopener">Ouvre notre assistant photo</a>.</p>
+<div class="studio-ia" id="studio-ia">
+  <h3 class="studio-titre">Ton portrait en 3 gestes</h3>
+  <p class="studio-intro">Choisis, puis ouvre ChatGPT : le texte est déjà écrit, il ne reste qu'à joindre ta photo. Ton visage est conservé tel quel.</p>
+  <div class="studio-ligne"><span class="studio-lab">1. Pour qui ?</span>
+    <div class="studio-choix" role="radiogroup" aria-label="Pour qui">
+      <button type="button" class="sc on" data-qui="solo" role="radio" aria-checked="true">Moi seul·e</button>
+      <button type="button" class="sc" data-qui="duo" role="radio" aria-checked="false">Nous deux (une seule photo)</button>
+    </div></div>
+  <div class="studio-ligne"><span class="studio-lab">2. L'ambiance</span>
+    <div class="studio-choix" role="radiogroup" aria-label="Ambiance">
+      <button type="button" class="sc" data-amb="classique" role="radio" aria-checked="false">Classique et élégante</button>
+      <button type="button" class="sc" data-amb="retro" role="radio" aria-checked="false">Rétro et humoristique</button>
+      <button type="button" class="sc on" data-amb="festive" role="radio" aria-checked="true">Très festive et décalée</button>
+    </div></div>
+  <div class="studio-ligne"><span class="studio-lab">3. C'est parti</span>
+    <div class="studio-choix">
+      <a class="sc sc-go" id="studio-chatgpt" target="_blank" rel="noopener">Ouvrir ChatGPT avec le texte</a>
+      <button type="button" class="sc" id="studio-copier">Copier le texte</button>
+      <a class="sc" id="studio-gemini" href="https://gemini.google.com/app" target="_blank" rel="noopener">Gemini (Google)</a>
+    </div></div>
+  <div class="studio-bas">
+    <details class="studio-texte"><summary>Voir le texte envoyé à l'IA</summary><p id="studio-prompt"></p></details>
+    <figure class="studio-qr"><div id="studio-qr" aria-hidden="true"></div>
+      <figcaption>Sur ordinateur ? <b>Scanne avec ton téléphone</b> : ChatGPT s'ouvre avec ce texte.</figcaption></figure>
+  </div>
+  <p class="studio-note">Une fois l'image prête : appui long dessus › « Enregistrer », puis dépose-la dans le formulaire de réponse. Pour Gemini ou une autre IA : « Copier le texte », puis colle-le avec ta photo.</p>
+</div>
 
       <div class="defi" id="defi-photo">
         <div class="defi-txt">
@@ -1015,8 +1060,8 @@ footer .script{font-size:1.9rem;color:var(--fez);margin-bottom:6px;display:block
         </div>
         <div class="defi-envoi">
           <a class="btn btn-main" href="#reponse">Déposer ma photo</a>
-          <p>La photo se dépose <b>dans le formulaire de réponse</b> (onglet « Je réponds »), avec ton code personnel : <b>aucun compte Google n'est demandé</b>. JPEG, PNG, HEIC (iPhone), WebP ou PDF.<br>
-          <b>Tu ne sais pas utiliser l'IA ?</b> Aucun souci : dépose une photo normale et coche « Photo normale », Patrick et Henri la déguiseront pour toi.<br>Ta photo apparaît ensuite toute seule dans le trombinoscope et ici, dans la galerie du défi.</p>
+          <p>La photo se dépose <b>dans le formulaire de réponse</b> (onglet « Je réponds », ton lien personnel), question « Ta photo pour le trombinoscope ». Sans compte Google : envoie-la par mail. JPEG, PNG, HEIC (iPhone), WebP ou PDF.<br>
+          <b>Tu ne sais pas utiliser l'IA ?</b> Aucun souci : dépose une photo normale et choisis « Je ne sais pas faire », Patrick et Henri la déguiseront pour toi.<br>Ta photo apparaît ensuite toute seule dans le trombinoscope et ici, dans la galerie du défi.</p>
         </div>
       </div>
 
@@ -1965,7 +2010,7 @@ async function chargerDirect(){
 chargerDirect();
 setInterval(()=>{ if (!document.hidden) chargerDirect(); }, 60000);          // les réponses et les photos arrivent sans recharger la page
 /* Si une nouvelle version du site a été publiée, on la charge (évite d'afficher une ancienne page gardée par le navigateur) */
-const VERSION_SITE = "20261109060758";
+const VERSION_SITE = "20261110041416";
 (async ()=>{
   try {
     const t = await fetch(location.pathname + "?v=" + Date.now(), { cache: "no-store" }).then(r=>r.text());
@@ -1973,6 +2018,57 @@ const VERSION_SITE = "20261109060758";
     let deja = ""; try { deja = sessionStorage.getItem("rechargeVersion") || ""; } catch(e){}
     if (m && m[1] !== VERSION_SITE && deja !== m[1]){ try { sessionStorage.setItem("rechargeVersion", m[1]); } catch(e){} location.reload(); }
   } catch(e){}
+})();
+
+const STUDIO_THEME = { site: "https://perezhenricontact-a11y.github.io/60ANSSIXTIESPMHP/", ok: m => toast(m),
+  fete: "de fête marocaine pour l'anniversaire « De Casablanca au cochonnet » (60 ans de Patrick et Henri)",
+  tenue: "habille-moi d'une djellaba ou d'un caftan coloré, avec un tarbouche rouge (ou, pour une femme, un foulard élégant) et des babouches, une boule de pétanque à la main, sur un terrain de pétanque avec son cochonnet, dans un décor de Casablanca : lanternes, mosaïques et palmiers.",
+  tenueDuo: "habille chacun d'une djellaba ou d'un caftan aux couleurs assorties, avec un tarbouche rouge pour un homme et un foulard élégant pour une femme, des babouches, une boule de pétanque à la main, sur un terrain de pétanque avec son cochonnet, dans un décor de Casablanca : lanternes, mosaïques et palmiers." };
+/* ===== Studio IA : texte de transformation (thème, pour qui, ambiance), lien ChatGPT pré-rempli et QR code court ===== */
+(function studioIA(){
+  const T = STUDIO_THEME, $s = id => document.getElementById(id);
+  const AMB = { classique: "Ambiance classique et élégante : couleurs raffinées, belle lumière, pose soignée.",
+                retro: "Ambiance rétro et humoristique, façon carte postale ancienne, couleurs vintage, avec une pointe d'humour.",
+                festive: "Ambiance très festive et décalée : couleurs éclatantes, confettis, attitude joyeuse et pleine d'humour." };
+  function texte(qui, amb){
+    const duo = qui === "duo";
+    return (duo ? "Je vais t'envoyer une photo de nous deux dans le message suivant. Quand tu l'auras, transforme-la en un seul portrait commun "
+                : "Je vais t'envoyer une photo de moi dans le message suivant. Quand tu l'auras, transforme-la en portrait ")
+      + T.fete + " : " + (duo ? T.tenueDuo : T.tenue) + " " + (AMB[amb] || AMB.festive) + " "
+      + (duo ? "Règles importantes : garde exactement nos deux visages, notre âge apparent, nos yeux, nos cheveux, nos sourires et nos traits ; ne les remplace pas par des visages génériques. "
+             : "Règles importantes : garde exactement mon visage, mon âge apparent, mes yeux, mes cheveux, mon sourire et mes traits ; ne le remplace pas par un visage générique. Fais un portrait individuel : si la photo montre plusieurs personnes, ne garde que la personne située à droite. ")
+      + "Image de bonne qualité, assez nette pour être imprimée. Si tu n'as pas encore la photo, demande-la-moi.";
+  }
+  const lienGPT = (q, a) => "https://chatgpt.com/?q=" + encodeURIComponent(texte(q, a));
+  /* lien court du site (?ia=solo&amb=festive) : il ouvre ChatGPT avec le texte — idéal pour un QR code ou WhatsApp */
+  const p = new URLSearchParams(location.search);
+  if (p.get("ia")) { location.replace(lienGPT(p.get("ia") === "duo" ? "duo" : "solo", p.get("amb") || "festive")); return; }
+  window.STUDIO_TEXTE = texte; window.STUDIO_LIEN = lienGPT;
+  if (!$s("studio-ia")) return;
+  let qui = "solo", amb = "festive";
+  function maj(){
+    document.querySelectorAll("#studio-ia [data-qui]").forEach(b=>{ const on = b.dataset.qui === qui; b.classList.toggle("on", on); b.setAttribute("aria-checked", on); });
+    document.querySelectorAll("#studio-ia [data-amb]").forEach(b=>{ const on = b.dataset.amb === amb; b.classList.toggle("on", on); b.setAttribute("aria-checked", on); });
+    $s("studio-prompt").textContent = texte(qui, amb);
+    $s("studio-chatgpt").href = lienGPT(qui, amb);
+    const court = T.site + "?ia=" + qui + "&amb=" + amb, box = $s("studio-qr"); box.innerHTML = "";
+    try {
+      if (typeof qrcode === "function") { const q = qrcode(0, "M"); q.addData(court); q.make(); box.innerHTML = q.createImgTag(5, 8, "QR code ChatGPT"); }
+      else if (window.QRCode) new QRCode(box, { text: court, width: 150, height: 150, correctLevel: QRCode.CorrectLevel.M });
+    } catch(e){}
+  }
+  $s("studio-ia").addEventListener("click", e=>{
+    const b = e.target.closest("[data-qui],[data-amb]"); if (!b) return;
+    if (b.dataset.qui) qui = b.dataset.qui; if (b.dataset.amb) amb = b.dataset.amb; maj();
+  });
+  const copier = async ()=>{ try { await navigator.clipboard.writeText(texte(qui, amb)); T.ok && T.ok("Texte copié : colle-le dans ton IA avec ta photo !"); } catch(e){ T.ok && T.ok("Ouvre « Voir le texte » et sélectionne-le pour le copier."); } };
+  $s("studio-copier").onclick = copier;
+  $s("studio-gemini").addEventListener("click", copier);
+  maj();
+  /* les anciens boutons de l'étape 2 utilisent aussi le nouveau texte */
+  const b1 = $s("defi-chatgpt-solo"), b2 = $s("defi-chatgpt-duo"), b3 = $s("defi-copilot");
+  if (b1) b1.href = lienGPT("solo", "festive"); if (b2) b2.href = lienGPT("duo", "festive");
+  if (b3) b3.href = "https://copilot.microsoft.com/?q=" + encodeURIComponent(texte("solo", "festive"));
 })();
 
 /* ===== Photos & vidéos ===== */
