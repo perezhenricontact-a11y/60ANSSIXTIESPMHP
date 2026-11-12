@@ -17,13 +17,13 @@
 <meta property="og:locale" content="fr_FR">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:image" content="https://perezhenricontact-a11y.github.io/60ANSSIXTIESPMHP/media/apercu-partage.jpg">
-<link rel="icon" href="media/favicon.png" type="image/png">
-<link rel="apple-touch-icon" href="media/apple-touch-icon.png">
 <title>Sixties Bidaouis Birthday — De Casablanca au cochonnet</title>
 <meta name="description" content="Patrick Messonnier et Henri Perez fêtent leurs 60 ans : samedi 15 mai 2027 au BistrÔboul', à Saint-Marcel-lès-Valence (Drôme). Tournoi, babouches et pétanque party.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700;800;900&family=Cormorant+Garamond:ital,wght@1,600;1,700&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
+<link rel="icon" href="media/favicon.png" type="image/png">
+<link rel="apple-touch-icon" href="media/apple-touch-icon.png">
 <style>
 /* Layout : une invitation de riad au coucher du soleil — bandeaux de zellige, arches mauresques, onglets comme les portes d'un patio */
 :root{
@@ -319,6 +319,19 @@ p.legende-st{display:flex;justify-content:center;margin:4px 0 10px}
 .btn-yes{background:var(--zellige);color:#FFF6E4}
 .tools{display:flex;gap:10px;flex-wrap:wrap;margin-top:12px}
 .tools .btn{padding:10px 16px;font-size:.85rem}
+/* Reprise : retrouver ses réponses déjà données (e-mail de la réponse), comme sur le site des 20 ans */
+.reprise{text-align:left;border:1.5px dashed var(--zellige);border-radius:14px;padding:12px 14px;margin-top:10px;background:#FFF8EC}
+.reprise p{margin:0 0 8px;font-size:.93rem;color:var(--encre)}
+.reprise-ligne{display:flex;gap:8px;flex-wrap:wrap}
+.reprise-ligne input{flex:1 1 180px;min-width:0;font:inherit;padding:10px 12px;border:1.5px solid var(--filet);border-radius:12px;background:#fff;color:var(--encre)}
+.reprise .reprise-ligne .btn,.reprise .reprise-msg .btn,.reprise .reprise-aide .btn{flex:none;margin:0;padding:10px 16px;font-size:.9rem}
+.reprise .reprise-msg{font-weight:700;min-height:1.2em}
+.reprise .reprise-msg .btn{margin-top:6px}
+.reprise-oubli,.reprise-ouvrir{background:none;border:0;padding:0;color:var(--zellige);text-decoration:underline;cursor:pointer;font:inherit;font-size:.86rem;font-weight:700}
+.reprise-oubli:disabled{opacity:.6;cursor:wait}
+.reprise-indice{font-weight:800;user-select:all;white-space:nowrap}
+.reprise p.petit,.reprise .petit{font-size:.84rem;color:var(--encre-douce)}
+.reprise-aide{border-top:1px dashed var(--filet);margin:8px 0;padding-top:8px}
 .toast{position:fixed;bottom:calc(24px + env(safe-area-inset-bottom,0px));left:50%;transform:translate(-50%,140px);background:var(--zellige);color:#FFF3DF;border:2px solid var(--or-clair);padding:12px 22px;border-radius:999px;font-weight:800;z-index:60;transition:transform .3s;max-width:calc(100% - 32px)}
 .toast.show{transform:translate(-50%,0)}
 
@@ -1614,6 +1627,43 @@ if (CONFIG.guestsCsv){
     .catch(()=>{});
 }
 
+/* ===== Reprise : l'invité qui a déjà répondu retrouve le formulaire avec ses réponses déjà données =====
+   Il indique l'e-mail de sa réponse (vérifié par le script, quelques essais seulement) ; le formulaire s'ouvre rempli.
+   La nouvelle réponse remplace l'ancienne (une seule réponse par invitation) ; la photo déjà envoyée est conservée. Même principe que le site des 20 ans. */
+function blocReprise(cle, nomAffiche, lienVierge){
+  const d = document.createElement("div"); d.className = "reprise";
+  d.innerHTML = `<p><b>Pour modifier ta réponse sans tout ressaisir</b>, indique l'e-mail que tu avais donné :</p>
+    <div class="reprise-ligne"><input type="email" autocomplete="email" placeholder="ton e-mail" aria-label="Ton e-mail de correspondance"><button type="button" class="btn btn-yes">Retrouver mes réponses</button></div>
+    <p class="reprise-msg" aria-live="polite"></p>
+    <p class="petit"><button type="button" class="reprise-oubli">J'ai oublié l'adresse que j'avais donnée</button></p>
+    <div class="reprise-aide petit" aria-live="polite" hidden></div>
+    <p class="petit">Ta nouvelle réponse remplace la précédente : une seule réponse par invitation. Ta photo déjà envoyée est conservée ; pour la changer, joins-en une nouvelle dans le formulaire.${lienVierge ? ` Autre possibilité : <a href="${esc(lienVierge)}" target="_blank" rel="noopener">repartir d'un formulaire vierge</a>.` : ""}</p>`;
+  const inp = d.querySelector("input"), b = d.querySelector(".reprise-ligne button"), m = d.querySelector(".reprise-msg"), ob = d.querySelector(".reprise-oubli"), aide = d.querySelector(".reprise-aide");
+  const vierge = lienVierge ? " Tu peux aussi repartir d'un formulaire vierge." : "";
+  const demande = "mailto:" + CONFIG.mailSecours + "?subject=" + encodeURIComponent("BIDAOUI-60 – Mon lien personnel (" + nomAffiche + ")") + "&body=" + encodeURIComponent("Bonjour Patrick et Henri,\n\nJe voudrais modifier ma réponse pour « De Casablanca au cochonnet », mais je ne retrouve plus l'adresse e-mail que j'avais donnée.\nPouvez-vous m'envoyer mon lien personnel ?\n\nMerci !\n" + nomAffiche);
+  const montrerAide = ind => { aide.hidden = false; aide.innerHTML = (ind ? `<p><b>Indice :</b> ton adresse ressemble à <span class="reprise-indice">${esc(ind)}</span></p>` : "<p>Pas d'indice disponible pour l'instant.</p>") + `<p>Toujours bloqué·e ? <a class="btn btn-ghost" href="${esc(demande)}">Demander mon lien personnel à Patrick et Henri</a></p>`; };
+  const appel = corps => fetch(CONFIG.apiUrl, { method: "POST", body: JSON.stringify(corps) }).then(x => x.json());
+  const go = async () => {
+    const mail = inp.value.trim();
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(mail)) { m.textContent = "Indique une adresse e-mail complète."; return; }
+    if (!CONFIG.apiUrl) { m.textContent = "Recherche impossible pour l'instant." + vierge; return; }
+    b.disabled = true; m.textContent = "Recherche de ta réponse…";
+    try {
+      const r = await appel({ action: "reprise", cle, mail });
+      if (r.ok && r.url) { aide.hidden = true; m.innerHTML = `✓ ${r.deja ? "Réponses retrouvées." : "Ton nom est déjà choisi."}<br><a class="btn btn-main" href="${esc(r.url)}" target="_blank" rel="noopener">Ouvrir mon formulaire ${r.deja ? "déjà rempli" : ""}</a>`; }
+      else { m.textContent = ({ mail: "Cet e-mail ne correspond pas à celui de ta réponse." + vierge, trop: "Trop d'essais : réessaie dans dix minutes." + vierge, sans: "Nous ne retrouvons pas encore ta réponse." + vierge })[r.erreur] || "Recherche impossible pour l'instant." + vierge; if (r.erreur === "mail" || r.erreur === "trop") montrerAide(r.indice || ""); }
+    } catch (e) { m.textContent = "Recherche impossible pour l'instant." + vierge; }
+    b.disabled = false;
+  };
+  b.addEventListener("click", go); inp.addEventListener("keydown", e => { if (e.key === "Enter") { e.preventDefault(); go(); } });
+  ob.addEventListener("click", async () => {
+    ob.disabled = true; aide.hidden = false; aide.innerHTML = "<p>Recherche d'un indice…</p>";
+    try { const r = await appel({ action: "indice", cle }); montrerAide(r && r.ok ? r.indice : ""); } catch (e) { montrerAide(""); }
+    ob.disabled = false;
+  });
+  return d;
+}
+
 /* ===== Invitation personnelle ===== */
 const overlay = document.getElementById("overlay");
 const H = CONFIG.horaires;
@@ -1647,10 +1697,12 @@ function openInvite(id){
         <div><strong>${H[1]}</strong><span>Déjeuner</span></div>
         <div><strong>${H[2]}</strong><span>Soirée inoubliable</span></div>
       </div>
-      ${g.hote ? "" : `<p style="margin-bottom:8px"><b style="color:var(--encre)">Un changement ? Renvoie le formulaire : seule ta dernière réponse compte.</b></p>`}
+      ${g.hote ? "" : `<p style="margin-bottom:8px"><b style="color:var(--encre)">Un changement ? Modifie ta réponse : la nouvelle remplace l'ancienne.</b></p>`}
       <div class="rsvp">
-        <a class="btn btn-yes" data-r="form" href="${formLink(g.hote ? null : g) || "#reponse"}" target="_blank" rel="noopener">${g.hote ? "Répondre à l'invitation" : "Modifier ma réponse"}</a>
+        ${g.hote ? `<a class="btn btn-yes" data-r="form" href="${formLink(null) || "#reponse"}" target="_blank" rel="noopener">Répondre à l'invitation</a>`
+                 : `<button type="button" class="btn btn-yes" data-r="modifier" aria-expanded="false">Modifier ma réponse</button>`}
       </div>
+      <div data-r="reprise"></div>
       <div class="tools">
         <button class="btn btn-ghost" data-t="copy">Copier ${g.hote ? "ce" : "mon"} lien</button>
         <button class="btn btn-ghost" data-t="ics">Ajouter à mon agenda</button>
@@ -1660,9 +1712,17 @@ function openInvite(id){
   overlay.classList.add("show");
   document.body.style.overflow = "hidden";
   box.querySelector(".close").onclick = ()=>closeInvite();
-  box.querySelector('[data-r="form"]').onclick = e=>{
+  const lienForm = box.querySelector('[data-r="form"]');
+  if (lienForm) lienForm.onclick = e=>{
     if (!formLink()){ e.preventDefault(); toast("Le formulaire arrive très bientôt."); return; }
     burst();
+  };
+  const btnModif = box.querySelector('[data-r="modifier"]');   // « Modifier ma réponse » : l'e-mail de la réponse ouvre le formulaire déjà rempli
+  if (btnModif) btnModif.onclick = ()=>{
+    const zone = box.querySelector('[data-r="reprise"]');
+    if (!zone.firstChild) zone.appendChild(blocReprise(g.partenaireDe ? g.guestId : g.id, g.name, formLink(g)));
+    btnModif.setAttribute("aria-expanded", "true");
+    const champ = zone.querySelector("input"); if (champ){ champ.focus(); zone.scrollIntoView({ behavior: "smooth", block: "nearest" }); }
   };
   box.querySelector('[data-t="copy"]').onclick = ()=>{
     const url = location.href.split("#")[0] + "#" + id;
@@ -1874,6 +1934,10 @@ function ficheInv(i){
     `<a class="btn btn-main" href="${esc(lien)}" target="_blank" rel="noopener">Répondre au formulaire</a>` +
     `<p class="note">Ton nom sera déjà choisi dans le formulaire. Pense à ton e-mail de correspondance. La photo se joint dans le formulaire (compte Google) ou <a class="lien-mail" href="#aide">par mail</a>.</p></div>` +
     `<div class="qr"></div>`;
+  const deja = document.createElement("p"); deja.className = "note";
+  deja.innerHTML = `<button type="button" class="reprise-ouvrir">Déjà répondu ? Retrouver mes réponses pour les modifier</button>`;
+  deja.querySelector("button").onclick = ()=>{ const bloc = blocReprise(slug(i[0] + " " + i[1]), invNom(i), lien); deja.replaceWith(bloc); bloc.querySelector("input").focus(); };
+  d.firstElementChild.appendChild(deja);
   const cv = drawQR(lien); if (cv){ cv.setAttribute("role","img"); cv.setAttribute("aria-label","QR code de ton lien personnel"); d.querySelector(".qr").appendChild(cv); }
   return d;
 }
@@ -2072,7 +2136,7 @@ setInterval(directSiBesoin, 30000);          // les réponses et les photos arri
 document.addEventListener("visibilitychange", directSiBesoin);   // au retour sur la page (après avoir rempli le formulaire, par exemple)
 addEventListener("focus", directSiBesoin);
 /* Si une nouvelle version du site a été publiée, on la charge (évite d'afficher une ancienne page gardée par le navigateur) */
-const VERSION_SITE = "20261110181232";
+const VERSION_SITE = "20261112204424";
 (async ()=>{
   try {
     const t = await fetch(location.pathname + "?v=" + Date.now(), { cache: "no-store" }).then(r=>r.text());
