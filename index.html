@@ -217,6 +217,25 @@ section+section{padding-top:20px}
 .news-item{font-weight:700;animation:newsIn .8s both}
 @keyframes newsIn{from{opacity:0;transform:translateY(4px)}to{opacity:1;transform:none}}
 @media (prefers-reduced-motion:reduce){.news-item{animation:none}}
+/* Invités à l'honneur : quatre invités confirmés tirés au sort (accueil et trombinoscope) */
+.honneur{padding:44px 0 6px}
+.honneur .sec-head{margin-bottom:26px}
+.hn-grille{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:26px;max-width:940px;margin:0 auto}
+.hn-carte{position:relative;display:flex;flex-direction:column;align-items:center;gap:6px;text-decoration:none;color:var(--encre);text-align:center;animation:hn-entre .7s cubic-bezier(.2,.8,.2,1) both;animation-delay:calc(var(--k,0) * .12s)}
+.hn-photo{position:relative;display:grid;place-items:center;width:100%;aspect-ratio:4/5;border-radius:48% 48% 16px 16px / 36% 36% 16px 16px;overflow:hidden;border:4px solid var(--or);box-shadow:0 0 0 5px var(--carte),0 0 0 6px var(--filet),0 16px 32px rgba(90,50,20,.22);background:var(--grad,var(--zellige));color:#FFF3DF;font:800 clamp(1.6rem,5vw,2.6rem) var(--f-titre);margin-bottom:8px;transition:transform .3s}
+.hn-photo img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center 22%}
+.hn-carte:hover .hn-photo,.hn-carte:focus-visible .hn-photo{transform:translateY(-5px) rotate(-1.2deg)}
+.hn-etoile{position:absolute;top:-8px;right:4%;width:36px;height:36px;border-radius:50%;display:grid;place-items:center;background:var(--fez);color:#FFE9B8;font-size:1.05rem;line-height:1;border:2px solid var(--or-clair);box-shadow:0 4px 10px rgba(0,0,0,.25);z-index:1}
+.hn-nom{font-family:var(--f-titre);font-weight:800;font-size:clamp(.92rem,2.1vw,1.15rem);color:var(--zellige);line-height:1.15}
+.hn-detail{font-size:.84rem;font-weight:700;color:var(--encre-douce);line-height:1.25}
+.hn-actions{display:flex;flex-wrap:wrap;justify-content:center;gap:10px;margin-top:24px}
+.hn-actions .btn{padding:10px 18px;font-size:.92rem}
+.hn-bloc{max-width:860px;margin:0 auto 34px;padding:20px 22px 18px;border-radius:24px;background:var(--carte);border:2px solid var(--filet)}
+.hn-bloc .hn-grille{gap:20px;max-width:700px}
+.hn-bloc .hn-actions{margin-top:16px}
+.hn-titre{text-align:center;font-family:var(--f-script);font-style:italic;font-weight:700;font-size:1.35rem;color:var(--or);margin-bottom:18px}
+@keyframes hn-entre{from{opacity:0;transform:translateY(18px) scale(.94)}}
+@media(max-width:720px){.honneur{padding-top:34px}.hn-grille,.hn-bloc .hn-grille{grid-template-columns:repeat(2,minmax(0,1fr));gap:22px 18px;max-width:400px}.hn-etoile{width:30px;height:30px;font-size:.9rem}}
 .legende-st{display:inline-flex;flex-wrap:wrap;gap:6px;margin:6px 0;vertical-align:middle}
 p.legende-st{display:flex;justify-content:center;margin:4px 0 10px}
 .lg{border-radius:999px;padding:3px 11px;font-size:.8rem;font-weight:800;white-space:nowrap;border:2px solid transparent}
@@ -800,6 +819,18 @@ footer .script{font-size:1.9rem;color:var(--fez);margin-bottom:6px;display:block
   </div>
   <div class="zellige" aria-hidden="true"></div>
 
+  <section class="honneur hn-zone" id="honneur" hidden>
+    <div class="wrap">
+      <div class="sec-head">
+        <span class="tag">Tirage au sort</span>
+        <h2>Quatre invités à l'honneur</h2>
+        <p>Tirés au sort parmi ceux qui ont dit oui. Le tirage change à chaque visite : reviens voir si c'est ton tour !</p>
+      </div>
+      <div class="hn-grille" data-honneur></div>
+      <p class="hn-actions"><button type="button" class="btn btn-ghost hn-btn">🎲 Quatre autres invités</button><a class="btn btn-ghost" href="#trombi">Tout le trombinoscope</a></p>
+    </div>
+  </section>
+
   <section id="film">
     <div class="wrap">
       <div class="sec-head">
@@ -1110,6 +1141,11 @@ footer .script{font-size:1.9rem;color:var(--fez);margin-bottom:6px;display:block
         <span class="tag">Ils ont dit oui !</span>
         <h2>Le trombinoscope</h2>
         <p id="trombi-intro">Tous les invités qui ont confirmé leur venue, avec leur photo déguisée.</p>
+      </div>
+      <div class="hn-zone hn-bloc" hidden>
+        <p class="hn-titre">★ À l'honneur en ce moment</p>
+        <div class="hn-grille" data-honneur></div>
+        <p class="hn-actions"><button type="button" class="btn btn-ghost hn-btn">🎲 Quatre autres invités</button></p>
       </div>
       <div class="trombi" id="trombi"></div>
     </div>
@@ -1545,7 +1581,7 @@ function renderTrombi(){
   const ordre = c => (c.ph ? 0 : 3) + ({ oui: 0, "peut-etre": 1 }[c.statut] ?? 2);   // photos d'abord, puis présents, peut-être, en attente
   cases.sort((x,y)=> ordre(x) - ordre(y));
   const BADGE = { oui: "Présent·e", "peut-etre": "Peut-être" };
-  const carte = c => `<figure class="t-case t-st-${c.statut}${c.duo ? " t-double" : ""}${c.ph ? "" : " t-sans"}" style="--grad:${c.grad}">${BADGE[c.statut] ? `<span class="t-badge">${c.duo && c.statut === "oui" ? "Présents" : BADGE[c.statut]}</span>` : ""}${c.ph ? `<img src="${esc(c.ph)}" alt="${esc(c.nom)}" loading="lazy" referrerpolicy="no-referrer" onerror="if(!this.dataset.r){this.dataset.r=1;var m=this.src.match(/\/d\/([\w-]+)/);if(m)this.src='https://drive.google.com/thumbnail?id='+m[1]+'&sz=w1000'}">` : `<span class="t-ini">${esc(c.init)}</span>${BADGE[c.statut] ? "" : `<span class="t-attente">photo à venir</span>`}`}<figcaption>${esc(c.nom)}</figcaption></figure>`;
+  const carte = c => `<figure class="t-case t-st-${c.statut}${c.duo ? " t-double" : ""}${c.ph ? "" : " t-sans"}" style="--grad:${c.grad}">${BADGE[c.statut] ? `<span class="t-badge">${c.duo && c.statut === "oui" ? "Présents" : BADGE[c.statut]}</span>` : ""}${c.ph ? `<img src="${esc(c.ph)}" alt="${esc(c.nom)}" loading="lazy" referrerpolicy="no-referrer" onerror="if(!this.dataset.r){this.dataset.r=1;var m=this.src.split('/d/')[1];if(m)this.src='https://drive.google.com/thumbnail?id='+m.split('=')[0].split('?')[0]+'&sz=w1000'}">` : `<span class="t-ini">${esc(c.init)}</span>${BADGE[c.statut] ? "" : `<span class="t-attente">photo à venir</span>`}`}<figcaption>${esc(c.nom)}</figcaption></figure>`;
   const cartes = cases.map(carte).join("");
   /* Taille automatique selon le nombre de cases (personnes) */
   const unites = cases.reduce((a,c)=> a + (c.duo ? 2 : 1), 0);
@@ -1558,8 +1594,43 @@ function renderTrombi(){
   box.innerHTML = stats + legende + `<p class="t-note">Les hôtes du jour (Corinne, Hugo et Patrick ; Stéphanie et Henri) vous accueillent sur <a href="#invitation">l'onglet Invitation</a>.</p>` +
     (cases.length ? `<div class="t-mosaique">${cartes}</div>` : `<div class="trombi-vide">La liste des invités arrive bientôt.</div>`);
 }
+/* ===== Invités à l'honneur : quatre invités confirmés tirés au sort, ceux qui ont une photo d'abord.
+   Nouveau tirage à chaque visite, toutes les 20 secondes et au bouton. Données publiques seulement (prénom + initiale, photo publiée). */
+let HONNEUR = [], HONNEUR_HTML = null;
+function candidatsHonneur(){
+  const partenaire = g => GUESTS.find(x=>x.partenaireDe && x.guestId===g.id);
+  return GUESTS.filter(g=>g.status==="oui" && !g.partenaireDe && !g.hote).map(g=>{
+    const p = partenaire(g);
+    const ph = (p ? (PHOTOS_COUPLES[g.id] || photoDe(g) || photoDe(p)) : photoDe(g)) || PHOTOS_SEULES[g.id] || "";
+    const mot = [g.tenue, g.moments.includes("Pétanque") ? "Tournoi des babouches" : g.moments.includes("Visite") ? "Visite en bus" : ""].filter(Boolean).join(" · ");
+    return { id: g.id, nom: g.name + (p ? " & " + p.first : ""), init: p ? g.first[0] + "&" + p.first[0] : g.first[0] + g.ini, ph, grad: g.grad, mot };
+  });
+}
+function renderHonneur(nouveau){
+  const c = candidatsHonneur(), parId = {}; c.forEach(x=> parId[x.id] = x);
+  const melange = a => a.map(x=>[Math.random(), x]).sort((x,y)=> x[0] - y[0]).map(x=> x[1]);
+  const avec = c.filter(x=> x.ph), sans = c.filter(x=> !x.ph), nb = Math.min(4, c.length);
+  HONNEUR = HONNEUR.filter(id=> parId[id]);
+  /* on retire au sort si on le demande, s'il manque quelqu'un, ou si une photo vient d'arriver pour un invité qui n'est pas affiché */
+  if (nouveau || HONNEUR.length < nb || HONNEUR.filter(id=> !parId[id].ph).length !== Math.max(0, nb - avec.length)){
+    const vus = HONNEUR, neufs = a => melange(a.filter(x=> !vus.includes(x.id))).concat(melange(a.filter(x=> vus.includes(x.id))));   // ceux qu'on ne vient pas de voir passent devant
+    const choix = neufs(avec).slice(0, 4);
+    if (choix.length < 4) choix.push(...neufs(sans).slice(0, 4 - choix.length));
+    HONNEUR = melange(choix).map(x=> x.id);
+  }
+  const html = HONNEUR.map((id, k)=>{ const x = parId[id];
+    return `<a class="hn-carte" href="#${esc(x.id)}" style="--k:${k};--grad:${x.grad}" title="Ouvrir la fiche de ${esc(x.nom)}"><span class="hn-etoile" aria-hidden="true">★</span><span class="hn-photo"><span aria-hidden="true">${esc(x.init)}</span>${x.ph ? `<img src="${esc(x.ph)}" alt="" loading="lazy" referrerpolicy="no-referrer" onerror="if(!this.dataset.r){this.dataset.r=1;var m=this.src.split('/d/')[1];if(m){this.src='https://drive.google.com/thumbnail?id='+m.split('=')[0].split('?')[0]+'&sz=w1000';return}}this.remove()">` : ""}</span><span class="hn-nom">${esc(x.nom)}</span>${x.mot ? `<span class="hn-detail">${esc(x.mot)}</span>` : ""}</a>`; }).join("");
+  if (html !== HONNEUR_HTML){ HONNEUR_HTML = html; document.querySelectorAll("[data-honneur]").forEach(b=>{ b.innerHTML = html; }); }
+  document.querySelectorAll(".hn-zone").forEach(z=>{ z.hidden = !HONNEUR.length; });
+  document.querySelectorAll(".hn-btn").forEach(b=>{ b.hidden = c.length <= 4; });
+}
+document.addEventListener("click", e=>{ if (e.target.closest(".hn-btn")) renderHonneur(true); });
+setInterval(()=>{   // tirage automatique toutes les 20 s (pas pendant qu'on survole une carte, ni si l'appareil demande moins d'animations)
+  if (document.hidden || matchMedia("(prefers-reduced-motion: reduce)").matches || document.querySelector(".hn-carte:hover,.hn-carte:focus")) return;
+  if (candidatsHonneur().length > 4) renderHonneur(true);
+}, 20000);
 function render(){
-  renderStats(); renderHeros(); renderTrombi();
+  renderStats(); renderHeros(); renderTrombi(); renderHonneur();
   /* TOUTES les invitations de la liste, en petites pastilles rondes (une par personne seule, deux pour un couple),
      colorées selon la réponse lue en direct : vert présent, safran peut-être, gris absent, pointillé en attente. */
   const q = slug(document.getElementById("q").value);
@@ -2136,7 +2207,7 @@ setInterval(directSiBesoin, 30000);          // les réponses et les photos arri
 document.addEventListener("visibilitychange", directSiBesoin);   // au retour sur la page (après avoir rempli le formulaire, par exemple)
 addEventListener("focus", directSiBesoin);
 /* Si une nouvelle version du site a été publiée, on la charge (évite d'afficher une ancienne page gardée par le navigateur) */
-const VERSION_SITE = "20261112204424";
+const VERSION_SITE = "20261113030135";
 (async ()=>{
   try {
     const t = await fetch(location.pathname + "?v=" + Date.now(), { cache: "no-store" }).then(r=>r.text());
